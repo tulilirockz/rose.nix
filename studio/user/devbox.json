@@ -9,7 +9,18 @@
     "cmake@latest",
     "mold@latest",
     "zig@latest",
-    "go@latest"
+    "go@latest",
+    "fzf@latest",
+    "nodejs@latest",
+    "poetry@latest",
+    "ninja@latest",
+    "gcc@latest",
+    "darcs@latest",
+    "lldb@latest",
+    "gdb@latest",
+    "valgrind@latest",
+    "python3@latest",
+    "lzip@latest"
   ],
   "shell": {
     "init_hook": [

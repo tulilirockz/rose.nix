@@ -6,7 +6,7 @@
 
 {
   imports = [ ./hardware-configuration.nix ];
-
+  nixpkgs.config.allowUnfree = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
@@ -26,10 +26,10 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    firefox
     virt-manager
     onedrive
     cage
+    weston
     distrobox
     plasma-pa
     waydroid
@@ -42,6 +42,7 @@
     git
     tmux
     nerdfonts
+    vscode
   ];
 
   virtualisation = {
