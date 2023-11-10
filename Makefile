@@ -1,4 +1,4 @@
 CURRENT_MACHINE=$(shell hostname)
 
-deploy:
-	sudo nixos-rebuild switch --flake .#$(CURRENT_MACHINE)
+switch:
+	nixos-rebuild --use-remote-sudo switch --impure --flake .#$(CURRENT_MACHINE)
