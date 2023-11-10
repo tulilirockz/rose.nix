@@ -26,6 +26,8 @@ in
     useBabelfish = true;
   };
 
+  programs.steam.enable = true;
+
   environment.localBinInPath = true;
   
   home-manager.users.tulili = {
@@ -41,6 +43,7 @@ in
       docker-compose
       gnumake
       devbox
+      lutris
     ];
 
     home.sessionVariables = {
