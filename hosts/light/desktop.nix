@@ -4,15 +4,12 @@
   hardware.pulseaudio.enable = false;
   
   xdg.portal.enable = true;
+  xdg.portal.lxqt.enable = true;
 
   services.xserver = {
     enable = true;
     libinput.enable = true;
-    desktopManager = {
-      xterm.enable = false;
-      xfce.enable = true;
-    };
-    displayManager.defaultSession = "xfce";
+    desktopManager.lxqt.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
