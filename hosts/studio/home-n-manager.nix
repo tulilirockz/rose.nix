@@ -1,8 +1,5 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
-let 
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz";
-in
 {
   imports = [
     <home-manager/nixos>
@@ -31,9 +28,11 @@ in
   environment.localBinInPath = true;
   
   home-manager.users.tulili = {
+    programs.home-manager.enable = true;
     home.stateVersion = "23.05";
     home.username = "tulili";
     home.homeDirectory = "/home/tulili";
+
     home.packages = with pkgs; [
       vscode
       nerdfonts
@@ -44,12 +43,11 @@ in
       gnumake
       devbox
       lutris
+      lazygit
     ];
 
     home.sessionVariables = {
       EDITOR = "nvim";
     };
-
-    programs.home-manager.enable = true;
   };
 }
