@@ -5,3 +5,6 @@ switch:
 
 hardware:
 	cp -f /etc/nixos/hardware-configuration.nix hosts/$(CURRENT_MACHINE)/
+
+deploy:
+	nixos-install --root /mnt --flake .#$(CURRENT_MACHINE) --impure
