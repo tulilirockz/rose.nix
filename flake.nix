@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }: 
+  outputs = { self, nixpkgs, ... }: 
     let
       inherit (nixpkgs.lib) genAttrs nixosSystem;
       system = "x86_64-linux";
@@ -14,10 +14,16 @@
         config = { allowUnfree = true; };
       };
     in {
-      nixosConfigurations.studio = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [ ./hosts/studio/configuration.nix ];
-    };
+      nixosConfigurations = {
+        studio = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/studio/configuration.nix ];
+        };
+        light = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/light/configuration.nix ];
+        };
+      };
   };
 }
 
