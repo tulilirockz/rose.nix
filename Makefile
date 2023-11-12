@@ -8,3 +8,6 @@ hardware:
 
 deploy:
 	nixos-install --root /mnt --flake .#$(CURRENT_MACHINE) --impure
+
+build-iso: hosts/live-system/*.nix
+	nix build --impure .#nixosConfigurations.live-system.config.system.build.isoImage

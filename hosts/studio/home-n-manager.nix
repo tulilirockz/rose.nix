@@ -49,6 +49,7 @@ in
       lazygit
       apx
       darcs
+      unzip
     ];
 
     home.sessionVariables = {

@@ -16,7 +16,6 @@
     qpwgraph
     vlc
     keepassxc
-
   ];
   
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [

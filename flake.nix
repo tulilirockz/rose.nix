@@ -23,6 +23,11 @@
           inherit system;
           modules = [ ./hosts/light/configuration.nix ];
         };
+        live-system = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [(nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+          ./hosts/live-system/configuration.nix ];
+        };
       };
   };
 }

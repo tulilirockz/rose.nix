@@ -9,7 +9,7 @@
     vim
   ];
   services.openssh.enable = true;
-  networking.hostName = "nixos";
+  networking.hostName = "live-system";
   networking.wireless.enable = false;
   networking.networkmanager.enable = true;
   time.timeZone = "America/Sao_Paulo";
