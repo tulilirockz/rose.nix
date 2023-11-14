@@ -2,17 +2,28 @@
 
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  myusername = "tulili";
 in
 {
   imports = [
     (import "${home-manager}/nixos")
+    #./${myusername}/firefox.nix
   ]; 
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
+  nixpkgs.config.allowUnfree = true;
+  
+  services.flatpak.enable = true;
   users.defaultUserShell = pkgs.fish;
-  users.users.tulili = {
+  users.users.${myusername} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "vboxusers" "libvirtd" ];
     shell = pkgs.fish;
+  };
+  
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
   };
 
   programs.neovim = {
@@ -30,11 +41,11 @@ in
 
   environment.localBinInPath = true;
   
-  home-manager.users.tulili = {
+  home-manager.users.${myusername} = {
     programs.home-manager.enable = true;
     home.stateVersion = "23.05";
-    home.username = "tulili";
-    home.homeDirectory = "/home/tulili";
+    home.username = "${myusername}";
+    home.homeDirectory = "/home/${myusername}";
 
     home.packages = with pkgs; [
       vscode
@@ -50,8 +61,12 @@ in
       apx
       darcs
       unzip
+      fish
+      qbittorrent
+      just
+      git
+      tmux
     ];
-
     home.sessionVariables = {
       EDITOR = "nvim";
     };

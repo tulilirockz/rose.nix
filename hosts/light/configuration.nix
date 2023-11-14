@@ -1,11 +1,11 @@
 { pkgs, ... }:
 
 {
-
   imports = [
     ./hardware-configuration.nix
-    ./desktop.nix
-    ./home-n-manager.nix
+    ../../modules/kde.nix    
+    ../../modules/tulili.nix    
+    ../../modules/std.nix
   ];
 
   system.stateVersion = "23.11";
@@ -38,9 +38,6 @@
     weston
     distrobox
     waydroid
-    just
-    git
-    tmux
     home-manager
   ];
   services.flatpak.enable = true;
@@ -54,11 +51,6 @@
     waydroid.enable = true;
   };
   
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
     battery = {
