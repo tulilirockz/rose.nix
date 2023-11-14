@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
@@ -10,9 +10,16 @@ in
     #./${myusername}/firefox.nix
   ]; 
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
-  nixpkgs.config.allowUnfree = true;
-  
+  system.autoUpgrade = {
+    enable = true;
+    dates = "04:00";
+    flake = "${config.users.users.${myusername}.home}/opt/tulili.nix";
+    flags = [
+        "--impure"  "--update-input" "nixpkgs"
+    ];
+    allowReboot = true;
+  };
+
   services.flatpak.enable = true;
   users.defaultUserShell = pkgs.fish;
   users.users.${myusername} = {
@@ -66,6 +73,7 @@ in
       just
       git
       tmux
+      android-studio
     ];
     home.sessionVariables = {
       EDITOR = "nvim";

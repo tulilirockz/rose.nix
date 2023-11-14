@@ -1,4 +1,4 @@
-{...}:
+{ ...}:
 
 {
   networking.networkmanager.enable = true;
@@ -6,16 +6,8 @@
   i18n.defaultLocale = "en_US.UTF-8";
   services.printing.enable = true;
   zramSwap.enable = true;
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L"
-    ];
-    dates = "12:00";
-    randomizedDelaySec = "45min";
-  };
   networking.firewall.enable = true;
+  services.fwupd.enable = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
+  nixpkgs.config.allowUnfree = true;
 }
