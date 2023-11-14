@@ -29,6 +29,9 @@
           ./hosts/live-system/configuration.nix ];
         };
       };
+      devShells.${system}.default = pkgs.mkShell {
+      	nativeBuildInputs = with pkgs; [ nil gnumake ];
+      };
   };
 }
 
