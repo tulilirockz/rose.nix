@@ -9,7 +9,6 @@ in
     (import "${home-manager}/nixos")
     #./${myusername}/firefox.nix
   ]; 
-
   system.autoUpgrade = {
     enable = true;
     dates = "04:00";
@@ -17,7 +16,6 @@ in
     flags = [
         "--impure"  "--update-input" "nixpkgs"
     ];
-    allowReboot = true;
   };
 
   services.flatpak.enable = true;
