@@ -20,7 +20,6 @@
     weston
     distrobox
     waydroid
-    home-manager
   ];
   
   virtualisation = {

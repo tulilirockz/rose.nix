@@ -23,7 +23,11 @@
     distrobox
     waydroid
     nixos-generators 
-    home-manager
+    vscode
+    android-studio
+    podman-compose
+    docker-compose
+    nerdfonts
   ];
  
   virtualisation = {
@@ -37,5 +41,10 @@
     libvirtd.enable = true;
     vmware.host.enable = true;
   };
+
   programs.virt-manager.enable = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
+  programs.steam.enable = true;
 }

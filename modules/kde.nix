@@ -18,17 +18,10 @@
     libsForQt5.kasts
     libsForQt5.kolourpaint
     libsForQt5.kweather
-    libsForQt5.okular
     qpwgraph
     vlc
     keepassxc
-  ];
-
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    elisa
-    okular
-    oxygen
-    plasma-browser-integration
+    qbittorrent
   ];
 
   security.rtkit.enable = true;
