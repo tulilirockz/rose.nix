@@ -3,17 +3,19 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/kde.nix    
+    ../../modules/gnome.nix    
     ../../modules/tulili.nix    
     ../../modules/std.nix    
   ];
 
   system.stateVersion = "23.11";
   
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
- 
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelPackages = pkgs.linuxPackages_zen;
+    extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+  };
 
   networking.hostName = "studio";
  
@@ -43,8 +45,6 @@
   };
 
   programs.virt-manager.enable = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   programs.steam.enable = true;
 }

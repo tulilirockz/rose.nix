@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  hardware.pulseaudio.enable = false;
   services.xserver = {
     enable = true;
     libinput.enable = true;
@@ -23,7 +22,10 @@
     keepassxc
     qbittorrent
   ];
+  
+  programs.dconf.enable = true;
 
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
