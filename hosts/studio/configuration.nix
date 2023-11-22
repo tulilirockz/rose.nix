@@ -13,7 +13,7 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
   };
 
@@ -30,6 +30,7 @@
     podman-compose
     docker-compose
     nerdfonts
+    qtcreator
   ];
  
   virtualisation = {

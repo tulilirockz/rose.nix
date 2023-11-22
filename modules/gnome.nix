@@ -13,6 +13,9 @@
     inter 
     adw-gtk3 
     gradience
+    gnome-podcasts
+    newsflash
+    transmission-gtk
   ]) 
   ++
   (with pkgs.gnome; [
