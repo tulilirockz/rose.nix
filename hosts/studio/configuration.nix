@@ -3,13 +3,13 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/gnome.nix    
-    ../../modules/tulili.nix    
-    ../../modules/std.nix    
+    ../../modules/gnome.nix
+    ../../modules/userspace/user.nix
+    ../../modules/std.nix
   ];
 
   system.stateVersion = "23.11";
-  
+
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -18,21 +18,13 @@
   };
 
   networking.hostName = "studio";
- 
+
+  zramSwap.memoryPercent = 75;
+
   environment.systemPackages = with pkgs; [
-    virt-manager
-    cage
-    distrobox
-    waydroid
-    nixos-generators 
-    vscode
     android-studio
-    podman-compose
-    docker-compose
-    nerdfonts
-    qtcreator
   ];
- 
+
   virtualisation = {
     podman = {
       enable = true;
@@ -40,7 +32,6 @@
       defaultNetwork.settings.dns_enabled = true;
     };
     waydroid.enable = true;
-    virtualbox.host.enable = true;
     libvirtd.enable = true;
     vmware.host.enable = true;
   };

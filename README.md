@@ -8,7 +8,7 @@ There are some scripts and helpful things in the Makefile!
 This assumes that you have already setup your disks and everything, only continue after doing that!
 
 1. Generate your config for the hardware-config.nix file in `/etc/nixos`
-```sh 
+```sh
 nixos-generate-config --root /mnt
 ```
 

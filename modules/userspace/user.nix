@@ -4,13 +4,14 @@ let
   myusername = "tulili";
 in
 {
- 
+
   system.autoUpgrade = {
     enable = true;
     dates = "04:00";
     flake = "${config.users.users.${myusername}.home}/opt/tulili.nix";
     flags = [
-        "--update-input" "nixpkgs"
+      "--update-input"
+      "nixpkgs"
     ];
   };
 
@@ -23,7 +24,7 @@ in
     extraGroups = [ "wheel" "vboxusers" "libvirtd" ];
     shell = pkgs.fish;
   };
-  
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -42,15 +43,15 @@ in
 
   environment.localBinInPath = true;
 
+  services.onedrive.enable = true;
+
   environment.systemPackages = with pkgs; [
-    onedrive
-    gnumake
-    lazygit
-    darcs
-    unzip
-    fish
-    just
-    git
-    tmux
+    virt-manager
+    gnome.gnome-boxes
+    cage
+    distrobox
+    waydroid
+    nerdfonts
+    home-manager
   ];
 }

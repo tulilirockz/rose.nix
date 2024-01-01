@@ -1,4 +1,4 @@
-{ ...}:
+{ ... }:
 
 {
   networking.networkmanager.enable = true;
@@ -8,7 +8,7 @@
   zramSwap.enable = true;
   networking.firewall.enable = true;
   services.fwupd.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   nix.gc = {
     automatic = true;

@@ -4,7 +4,10 @@
   services.xserver = {
     enable = true;
     libinput.enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
     desktopManager.plasma5.enable = true;
     displayManager.defaultSession = "plasmawayland";
   };
@@ -22,7 +25,7 @@
     keepassxc
     qbittorrent
   ];
-  
+
   programs.dconf.enable = true;
 
   hardware.pulseaudio.enable = false;

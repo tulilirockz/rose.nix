@@ -9,25 +9,28 @@
   };
 
   environment.systemPackages =
-  (with pkgs; [
-    inter 
-    adw-gtk3 
-    gradience
-    gnome-podcasts
-    newsflash
-    transmission-gtk
-  ]) 
-  ++
-  (with pkgs.gnome; [
-    gnome-tweaks 
-    dconf-editor
-  ]) 
-  ++ 
-  (with pkgs.gnomeExtensions; [
-    dash-to-dock
-    blur-my-shell
-    appindicator
-  ]);
+    (with pkgs; [
+      inter
+      adw-gtk3
+      gradience
+      gnome-podcasts
+      newsflash
+      transmission-gtk
+      gnome-solanum
+      gitg
+    ])
+    ++
+    (with pkgs.gnome; [
+      gnome-tweaks
+      dconf-editor
+    ])
+    ++
+    (with pkgs.gnomeExtensions; [
+      dash-to-dock
+      blur-my-shell
+      appindicator
+      tiling-assistant
+    ]);
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos

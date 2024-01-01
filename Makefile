@@ -1,16 +1,20 @@
 CURRENT_MACHINE=$(shell hostname)
 
-switch:
-	nixos-rebuild --use-remote-sudo switch --flake .#$(CURRENT_MACHINE)
+sys/upgrade:
+nixos-rebuild --use-remote-sudo switch --flake .#$(CURRENT_MACHINE) --upgrade --update-input nixpkgs
 
-hardware:
-	cp -f /etc/nixos/hardware-configuration.nix hosts/$(CURRENT_MACHINE)/
+home/switch:
+home-manager switch --substitute --flake .#$(USER)
 
-deploy:
-	nixos-install --root /mnt --flake .#$(CURRENT_MACHINE)
+sys/switch:
+nixos-rebuild --use-remote-sudo switch --flake .#$(CURRENT_MACHINE)
 
-build-iso: hosts/live-system/*.nix
-	nix build --impure .#nixosConfigurations.live-system.config.system.build.isoImage
+sys/hardware:
+cp -f /etc/nixos/hardware-configuration.nix hosts/$(CURRENT_MACHINE)/
 
-gnome/refresh-dconf:
-	cat config/dconf/main.ini | dconf load /
+sys/deploy:
+nixos-install --root /mnt --flake .#$(CURRENT_MACHINE)
+
+iso/build: hosts/live-system/*.nix
+nix build --impure .#nixosConfigurations.live-system.config.system.build.isoImage
+

@@ -3,9 +3,13 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, ... }: 
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (nixpkgs.lib) genAttrs nixosSystem;
       system = "x86_64-linux";
@@ -13,7 +17,9 @@
         inherit system;
         config = { allowUnfree = true; };
       };
-    in {
+      main_username = "tulili";
+    in
+    {
       nixosConfigurations = {
         studio = nixpkgs.lib.nixosSystem {
           inherit system;
@@ -25,13 +31,21 @@
         };
         live-system = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [(nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-          ./hosts/live-system/configuration.nix ];
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ./hosts/live-system/configuration.nix
+          ];
         };
       };
-      devShells.${system}.default = pkgs.mkShell {
-      	nativeBuildInputs = with pkgs; [ nil gnumake ];
+
+      homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./modules/userspace/home-manager.nix ];
       };
-  };
+
+      devShells.${system}.default = pkgs.mkShell {
+        nativeBuildInputs = with pkgs; [ nil gnumake ];
+      };
+    };
 }
 
