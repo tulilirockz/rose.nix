@@ -9,9 +9,13 @@
     vim
   ];
   services.openssh.enable = true;
-  networking.hostName = "live-system";
-  networking.wireless.enable = false;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "live-system";
+    wireless.enable = false;
+    networkmanager.enable = true;
+    wireless.iwd.enable = true;
+    networkmanager.wifi.backend = "iwd";
+  };
   time.timeZone = "America/Sao_Paulo";
 }
 
