@@ -7,40 +7,44 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nix-flatpak, ... }:
     let
-      inherit (nixpkgs.lib) genAttrs nixosSystem;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config = { allowUnfree = true; };
       };
       main_username = "tulili";
+      hosts-folder = "hosts";
     in
     {
       nixosConfigurations = {
         studio = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./hosts/studio/configuration.nix ];
+          modules = [ ./${hosts-folder}/studio/configuration.nix ];
         };
         light = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./hosts/light/configuration.nix ];
+          modules = [ ./${hosts-folder}/light/configuration.nix ];
         };
         live-system = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-            ./hosts/live-system/configuration.nix
+            ./${hosts-folder}/live-system/configuration.nix
           ];
         };
       };
 
       homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./modules/userspace/home-manager.nix ];
+        modules = [
+          nix-flatpak.homeManagerModules.nix-flatpak
+          ./modules/usr/home-manager.nix 
+        ];
       };
 
       devShells.${system}.default = pkgs.mkShell {

@@ -1,9 +1,11 @@
 { pkgs, ... }:
 
 {
-  services.xserver = {
-    enable = true;
-    libinput.enable = true;
+  imports = [
+    ./shared.nix
+  ];
+
+  services.xserver = {    
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;
@@ -25,15 +27,4 @@
     keepassxc
     qbittorrent
   ];
-
-  programs.dconf.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 }

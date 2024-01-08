@@ -1,13 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   myusername = "tulili";
 in
 {
-
   system.autoUpgrade = {
     enable = true;
-    dates = "04:00";
+    dates = "12:00";
     flake = "${config.users.users.${myusername}.home}/opt/tulili.nix";
     flags = [
       "--update-input"
@@ -21,7 +20,7 @@ in
   users.defaultUserShell = pkgs.fish;
   users.users.${myusername} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "vboxusers" "libvirtd" ];
+    extraGroups = [ "wheel" "libvirtd" "incus-admin" ];
     shell = pkgs.fish;
   };
 

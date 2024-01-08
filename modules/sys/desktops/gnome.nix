@@ -1,9 +1,11 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./shared.nix
+  ];
+
   services.xserver = {
-    enable = true;
-    libinput.enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
@@ -18,6 +20,7 @@
       transmission-gtk
       gnome-solanum
       gitg
+      amberol
     ])
     ++
     (with pkgs.gnome; [
@@ -35,11 +38,11 @@
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
+    gedit
   ]) ++ (with pkgs.gnome; [
     cheese
     gnome-music
     gnome-terminal
-    gedit
     epiphany
     geary
     gnome-characters
@@ -48,14 +51,4 @@
     hitori
     atomix
   ]);
-
-  programs.dconf.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 }

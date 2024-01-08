@@ -3,8 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/kde.nix
-    ../../modules/userspace/user.nix
+    ../../modules/sys/desktops/kde.nix
+    ../../modules/usr/user.nix
     ../../modules/std.nix
   ];
 
@@ -14,14 +14,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "light";
-
-  environment.systemPackages = with pkgs; [
-    cage
-    weston
-    distrobox
-    waydroid
-  ];
-
+  
   virtualisation = {
     podman = {
       enable = true;
@@ -29,6 +22,7 @@
       defaultNetwork.settings.dns_enabled = true;
     };
     waydroid.enable = true;
+    incus.enable = true;
   };
 
   programs.steam.enable = true;
@@ -45,7 +39,5 @@
     };
   };
 
-  services.udev.extraRules = ''
-    SUBSYSTEM=="input", KERNEL=="event[0-9]*", ENV{ID_INPUT_TOUCHSCREEN}=="1", ENV{WL_OUTPUT}="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="2.0994971271086835 0.0 -0.009475882227217559 0.0 3.2251959199264215 -0.002555450541782298 0.0 0.0 1.0"
-  ''
-    }
+  services.udev.extraRules = ''SUBSYSTEM=="input", KERNEL=="event[0-9]*", ENV{ID_INPUT_TOUCHSCREEN}=="1", ENV{WL_OUTPUT}="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="2.0994971271086835 0.0 -0.009475882227217559 0.0 3.2251959199264215 -0.002555450541782298 0.0 0.0 1.0"'';
+}

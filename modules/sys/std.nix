@@ -18,7 +18,8 @@
     networkmanager.enable = true;
     firewall.enable = true;
     wireless.enable = false;
-    wireless.iwd.enable = true;
-    networkmanager.wifi.backend = "iwd";
   };
+
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "breeze";
 }

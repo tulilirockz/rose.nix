@@ -3,9 +3,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/gnome.nix
-    ../../modules/userspace/user.nix
-    ../../modules/std.nix
+    ../../modules/sys/desktops/gnome.nix
+    ../../modules/usr/user.nix
+    ../../modules/sys/std.nix
   ];
 
   system.stateVersion = "23.11";
@@ -23,6 +23,9 @@
 
   environment.systemPackages = with pkgs; [
     android-studio
+    gamescope
+    mangohud
+    gamemode
   ];
 
   virtualisation = {
@@ -34,6 +37,7 @@
     waydroid.enable = true;
     libvirtd.enable = true;
     vmware.host.enable = true;
+    incus.enable = true;
   };
 
   programs.virt-manager.enable = true;
