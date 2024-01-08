@@ -2,15 +2,19 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable"; 
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nix-flatpak, ... }:
+  outputs = { nixpkgs, home-manager, nix-flatpak, nixvim, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -43,6 +47,7 @@
         inherit pkgs;
         modules = [
           nix-flatpak.homeManagerModules.nix-flatpak
+          nixvim.homeManagerModules.nixvim
           ./modules/usr/home-manager.nix 
         ];
       };

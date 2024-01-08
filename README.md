@@ -1,29 +1,9 @@
 # tulili.nix
 
-This is my NixOS configuration and everything needed to actually make it work.
-There are some scripts and helpful things in the Makefile!
+My all-in-one configuration for all my nix-y needs!
+This contains my NixOS configuration, home-manager, neovim, and anything else I may seem fit!
 
-## Installation from Minimal Disk
-
-This assumes that you have already setup your disks and everything, only continue after doing that!
-
-1. Generate your config for the hardware-config.nix file in `/etc/nixos`
-```sh
-nixos-generate-config --root /mnt
-```
-
-2. Then install your system straight from the github flake, making sure to have a `hardware-config.nix` file in it
-```sh
-nix-shell -p git
-git clone https://github.com/tulilirockz/tulili.nix
-cp /mnt/etc/nixos/hardware-config.nix tulili.nix/$(hostname)/
-nixos-install --flake ./tulili.nix/nixos#machine-here
-```
-
-3. Then, on your newly installed system, make sure to clone this repository to `opt/tulili.nix` to have automatic updates!
-```sh
-git clone https://github.com/tulilirockz/tulili.nix $HOME/opt/tulili.nix
-```
+You should be able to use my configurations by just cloning this repository and running any command in the `Makefile`, those being `home-manager switch`, and `nix-rebuild` ones!
 
 ## Making a ISO file with some helpful tools
 

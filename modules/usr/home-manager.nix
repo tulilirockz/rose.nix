@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./home-manager/dconf-theme.nix ];
+  imports = [
+    ./home-manager/dconf-theme.nix
+    ./home-manager/managed-neovim.nix
+  ];
 
   programs.home-manager.enable = true;
   home.username = "tulili";
@@ -44,6 +47,8 @@
   programs.dconf-theme.enable = true;
   programs.dconf-theme.theme = "mine";
 
+  programs.managed-neovim.enable = true;
+  
   services.flatpak.update.auto = {
     enable = true;
     onCalendar = "daily";
