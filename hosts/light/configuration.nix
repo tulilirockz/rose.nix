@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/sys/desktops/kde.nix
@@ -14,7 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "light";
-  
+
   virtualisation = {
     podman = {
       enable = true;

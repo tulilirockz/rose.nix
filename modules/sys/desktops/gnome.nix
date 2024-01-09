@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./shared.nix
   ];
@@ -22,33 +20,33 @@
       gitg
       amberol
     ])
-    ++
-    (with pkgs.gnome; [
+    ++ (with pkgs.gnome; [
       gnome-tweaks
       dconf-editor
     ])
-    ++
-    (with pkgs.gnomeExtensions; [
+    ++ (with pkgs.gnomeExtensions; [
       dash-to-dock
       blur-my-shell
       appindicator
       tiling-assistant
     ]);
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-    gedit
-  ]) ++ (with pkgs.gnome; [
-    cheese
-    gnome-music
-    gnome-terminal
-    epiphany
-    geary
-    gnome-characters
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+      gedit
+    ])
+    ++ (with pkgs.gnome; [
+      cheese
+      gnome-music
+      gnome-terminal
+      epiphany
+      geary
+      gnome-characters
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
 }

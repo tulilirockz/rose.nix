@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./shared.nix
   ];
 
-  services.xserver = {    
+  services.xserver = {
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;

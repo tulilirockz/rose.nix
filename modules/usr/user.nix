@@ -1,9 +1,11 @@
-{ config, pkgs, inputs, ... }:
-
-let
-  myusername = "tulili";
-in
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
+  myusername = "tulili";
+in {
   system.autoUpgrade = {
     enable = true;
     dates = "12:00";
@@ -20,7 +22,7 @@ in
   users.defaultUserShell = pkgs.fish;
   users.users.${myusername} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" "incus-admin" ];
+    extraGroups = ["wheel" "libvirtd" "incus-admin"];
     shell = pkgs.fish;
   };
 

@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
 {
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+  config,
+  pkgs,
+  ...
+}: {
+  boot.extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
   environment.systemPackages = with pkgs; [
     just
     git
@@ -16,4 +19,3 @@
   };
   time.timeZone = "America/Sao_Paulo";
 }
-

@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/sys/desktops/gnome.nix
@@ -14,7 +16,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
-    extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+    extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
   };
 
   networking.hostName = "studio";

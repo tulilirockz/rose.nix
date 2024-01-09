@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./home-manager/dconf-theme.nix
     ./home-manager/managed-neovim.nix
@@ -48,7 +46,7 @@
   programs.dconf-theme.theme = "mine";
 
   programs.managed-neovim.enable = true;
-  
+
   services.flatpak.update.auto = {
     enable = true;
     onCalendar = "daily";

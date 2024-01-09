@@ -1,7 +1,7 @@
 {
   config = {
     globals.mapleader = ",";
-    
+
     clipboard.providers.wl-copy.enable = true;
 
     options = {
@@ -9,9 +9,9 @@
       relativenumber = true;
       shiftwidth = 2;
     };
-    
+
     colorschemes.rose-pine.enable = true;
-      
+
     keymaps = [
       {
         key = "<C-s>";
@@ -31,7 +31,7 @@
         key = "<leader>sf";
         action = "<cmd>Telescope find_files<CR>";
         options.silent = true;
-      }  
+      }
       {
         key = "<leader>gf";
         action = "<cmd>Telescope git_files<CR>";
@@ -58,7 +58,7 @@
       floaterm.enable = true;
       indent-blankline.enable = true;
       lsp-format.enable = true;
-      
+
       lualine = {
         enable = true;
         globalstatus = true;
@@ -90,7 +90,7 @@
           close = "<A-c>";
         };
       };
-      
+
       lsp = {
         enable = true;
         keymaps = {
@@ -99,7 +99,7 @@
             "<leader>k" = "goto_prev";
             "<leader>j" = "goto_next";
           };
-  
+
           lspBuf = {
             gd = "definition";
             K = "hover";
