@@ -25,19 +25,41 @@ in
       };
       
       colorschemes.rose-pine.enable = true;
-
+        
       keymaps = [
-        {
-          action = "<cmd>CHADopen<CR>";
-          key = "<C-m>";
-          options = {
-            silent = true;
-          };
+	{
+          key = "<C-s>";
+          action = ":w<CR>";
         }
-      ]; 
+	{
+          key = "<leader>m";
+          action = "<cmd>CHADopen<CR>";
+	  options.silent = true;
+        }
+	{
+          key = "<leader>sg";
+          action = "<cmd>Telescope fd<CR>";
+	  options.silent = true;
+        }
+	{
+          key = "<leader>sf";
+          action = "<cmd>Telescope find_files<CR>";
+	  options.silent = true;
+        }  
+	{
+          key = "<leader>gf";
+          action = "<cmd>Telescope git_files<CR>";
+	  options.silent = true;
+        }
+	{
+          key = "<leader>t";
+          action = "<cmd>FloatermToggle<CR>";
+	  options.silent = true;
+        }
+      ];
 
       plugins = {
-        lualine.enable = true;
+        
         chadtree.enable = true;
         telescope.enable = true;
         barbecue.enable = true;
@@ -48,6 +70,14 @@ in
         bufferline.enable = true;
         which-key.enable = true;
 	treesitter.enable = true;
+	floaterm.enable = true;
+	indent-blankline.enable = true;
+	lsp-format.enable = true;
+	
+	lualine = {
+	  enable = true;
+	  globalstatus = true;
+	};
 
         coq-nvim = {
           enable = true;
@@ -76,12 +106,6 @@ in
           };
         };
         
-        harpoon = {
-          enable = true;
-          enableTelescope = true;
-          keymaps.addFile = "<leader>a";
-        };
-  
         lsp = {
           enable = true;
           keymaps = {
@@ -91,9 +115,12 @@ in
               "<leader>j" = "goto_next";
             };
   
-            lspBuf = {
-              gd = "definition";
+	    lspBuf = {
+	      gd = "definition";
               K = "hover";
+              "<C-k>" = "signature_help";
+              "<leader>rn" = "rename";
+              "<leader>ca" = "code_action";
             };
           };
           servers = {
