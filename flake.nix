@@ -23,8 +23,16 @@
       };
       main_username = "tulili";
       hosts-folder = "hosts";
+      nixvim' = nixvim.legacyPackages.${system};
+      nvim = nixvim'.makeNixvimWithModule {
+        inherit pkgs;
+        module = import (./modules/usr/home-manager/nixvim/shared.nix);
+      };
     in
     {
+      packages.${system}.default = nvim;
+      packages.${system}.neovim = nvim;
+ 
       nixosConfigurations = {
         studio = nixpkgs.lib.nixosSystem {
           inherit system;

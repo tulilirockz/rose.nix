@@ -9,3 +9,11 @@ You should be able to use my configurations by just cloning this repository and 
 
 There is also a config file for an ISO that has some tools and drivers missing in the original minimal ISO. To make it, you can run
 `make build-iso`, and the `result` folder should have your iso!
+
+## Neovim configuration
+
+There is also an neovim made with [nixvim](https://github.com/nix-community/nixvim) config integrated in this repo, you can run it by running:
+
+```shell
+nix run github:tulilirockz/tulili.nix#neovim
+```

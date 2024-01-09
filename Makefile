@@ -18,3 +18,5 @@ sys/deploy:
 iso/build: hosts/live-system/*.nix
 	nix build --impure .#nixosConfigurations.live-system.config.system.build.isoImage
 
+run/neovim:
+	nix run .#neovim
