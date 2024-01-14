@@ -5,7 +5,6 @@
   zramSwap.enable = true;
   services.fwupd.enable = true;
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config.allowUnfree = true;
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -17,7 +16,4 @@
     firewall.enable = true;
     wireless.enable = false;
   };
-
-  boot.plymouth.enable = true;
-  boot.plymouth.theme = "breeze";
 }

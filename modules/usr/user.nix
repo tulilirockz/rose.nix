@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }: let
   myusername = "tulili";
@@ -19,11 +18,11 @@ in {
   programs.firefox.enable = true;
 
   services.flatpak.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.nushell;
   users.users.${myusername} = {
     isNormalUser = true;
     extraGroups = ["wheel" "libvirtd" "incus-admin"];
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
   };
 
   programs.gnupg.agent = {
@@ -38,7 +37,7 @@ in {
   };
 
   programs.fish = {
-    enable = true;
+    enable = false;
     useBabelfish = true;
   };
 

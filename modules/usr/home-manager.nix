@@ -27,12 +27,12 @@
     nixos-generators
     podman-compose
     docker-compose
-    fish
     tldr
     manix
   ];
 
-  programs.fish.enable = true;
+  programs.fish.enable = false;
+  programs.nushell.enable = true;
 
   home.file = {
     ".gitconfig".source = ./home-manager/dotfiles/gitconfig;
@@ -40,6 +40,7 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    DOCKER_HOST = "unix:///run/podman/podman.sock";
   };
 
   programs.dconf-theme.enable = true;

@@ -1,7 +1,8 @@
 {
   config = {
     globals.mapleader = ",";
-
+    
+    clipboard.register = "unnamedplus";
     clipboard.providers.wl-copy.enable = true;
 
     options = {
@@ -24,12 +25,17 @@
       }
       {
         key = "<leader>sg";
-        action = "<cmd>Telescope fd<CR>";
+        action = "<cmd>Telescope live_grep<CR>";
         options.silent = true;
       }
       {
         key = "<leader>sf";
         action = "<cmd>Telescope find_files<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>sb";
+        action = "<cmd>Telescope current_buffer_fuzzy<CR>";
         options.silent = true;
       }
       {
@@ -58,6 +64,9 @@
       floaterm.enable = true;
       indent-blankline.enable = true;
       lsp-format.enable = true;
+      nvim-lightbulb.enable = true;
+      nix.enable = true;
+      nvim-colorizer.enable = true;
 
       lualine = {
         enable = true;

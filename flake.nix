@@ -15,6 +15,7 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     home-manager,
     nix-flatpak,
@@ -34,8 +35,10 @@
       module = import ./modules/usr/home-manager/nixvim/shared.nix;
     };
   in {
-    packages.${system}.default = nvim;
-    packages.${system}.neovim = nvim;
+    packages.${system} = {
+      neovim = nvim;
+      default = self.packages.${system}.neovim;
+    };
 
     nixosConfigurations = {
       studio = nixpkgs.lib.nixosSystem {
