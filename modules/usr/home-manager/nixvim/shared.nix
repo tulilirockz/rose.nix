@@ -11,9 +11,28 @@
       shiftwidth = 2;
     };
 
-    colorschemes.rose-pine.enable = true;
+    colorschemes.catppuccin = {
+      enable = true;
+      flavour = "mocha";
+    };
 
     keymaps = [
+      #{
+      #  key = "<Up>";
+      #  action = "<Nop>";
+      #}
+      #{
+      #  key = "<Down>";
+      #  action = "<Nop>";
+      #}
+      #{
+      #  key = "<Left>";
+      #  action = "<Nop>";
+      #}
+      #{
+      #  key = "<Right>";
+      #  action = "<Nop>";
+      #}
       {
         key = "<C-s>";
         action = ":w<CR>";
@@ -35,7 +54,7 @@
       }
       {
         key = "<leader>sb";
-        action = "<cmd>Telescope current_buffer_fuzzy<CR>";
+        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
         options.silent = true;
       }
       {
@@ -126,6 +145,10 @@
           rust-analyzer.installRustc = true;
           zls.enable = true;
           nil_ls.enable = true;
+          pyright = {
+            enable = true;
+            autostart = true;
+          };
         };
       };
     };

@@ -10,7 +10,7 @@
     ../../modules/sys/std.nix
   ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -24,7 +24,8 @@
   zramSwap.memoryPercent = 75;
 
   environment.systemPackages = with pkgs; [
-    android-studio
+    # android-studio
+    alacritty 
     gamescope
     mangohud
     gamemode
@@ -34,11 +35,11 @@
     podman = {
       enable = true;
       dockerCompat = true;
+      dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
     waydroid.enable = true;
     libvirtd.enable = true;
-    vmware.host.enable = true;
     incus.enable = true;
   };
 
