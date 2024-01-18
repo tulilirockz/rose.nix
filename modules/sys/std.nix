@@ -14,7 +14,16 @@
 
   networking = {
     networkmanager.enable = true;
+    networkmanager.wifi.backend = "iwd";
+    wireless.iwd.enable = true;
+    wireless.iwd.settings = {
+      Network = {
+        EnableIPV6 = true;
+      };
+      Settings = {
+        AutoConnect = true;
+      };
+    };
     firewall.enable = true;
-    wireless.enable = false;
   };
 }

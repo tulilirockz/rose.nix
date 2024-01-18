@@ -1,13 +1,23 @@
-{pkgs, ...}: {
+{
+  inputs,
+  main_username,
+  theme,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./home-manager/dconf-theme.nix
     ./home-manager/managed-neovim.nix
+    ./home-manager/hyprland.nix
   ];
 
   programs.home-manager.enable = true;
-  home.username = "tulili";
-  home.homeDirectory = "/home/tulili";
+  home.username = main_username;
+  home.homeDirectory = "/home/${main_username}";
   home.stateVersion = "24.05";
+
+  colorScheme = inputs.nix-colors.colorSchemes."${theme}";
 
   home.packages = with pkgs; [
     gnumake
@@ -29,6 +39,7 @@
     docker-compose
     tldr
     manix
+    fira-code-nerdfont
   ];
 
   programs.fish.enable = false;
@@ -48,19 +59,21 @@
     terminal = "xterm-256color";
     keyMode = "vi";
     tmuxp.enable = true;
-    extraConfig = (pkgs.lib.concatMapStringsSep "\n" (string: string) [
-      "set -sg escape-time 10"
-      "set -g @thumbs-osc52 1"
-      "set-window-option -g mode-keys vi"
-      "bind-key -T copy-mode-vi v send-keys -X begin-selection"
-      "bind-key -T copy-mode-vi C-v send-keys -X rectangle toggle"
-      "bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel"
-    ]) + "\n" +
-    (pkgs.lib.concatMapStringsSep "\n" (plugin: "set -g @plugin ${plugin}") [ 
-      "catppuccin/tmux-mocha"
-      "christoomey/vim-tmux-navigator"
-    ]);
-    plugins = with pkgs.tmuxPlugins; [ 
+    extraConfig =
+      (pkgs.lib.concatMapStringsSep "\n" (string: string) [
+        "set -sg escape-time 10"
+        "set -g @thumbs-osc52 1"
+        "set-window-option -g mode-keys vi"
+        "bind-key -T copy-mode-vi v send-keys -X begin-selection"
+        "bind-key -T copy-mode-vi C-v send-keys -X rectangle toggle"
+        "bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel"
+      ])
+      + "\n"
+      + (pkgs.lib.concatMapStringsSep "\n" (plugin: "set -g @plugin ${plugin}") [
+        "catppuccin/tmux-mocha"
+        "christoomey/vim-tmux-navigator"
+      ]);
+    plugins = with pkgs.tmuxPlugins; [
       tmux-fzf
       tmux-thumbs
       catppuccin
@@ -74,98 +87,43 @@
     window = {
       decorations = "Full";
       title = "Amogus";
+      opacity = 0.8;
+      dynamic_title = true;
     };
     scrolling = {
       history = 10000;
     };
-    shell = { 
-      program = "${pkgs.lib.getExe pkgs.bash}";
-      args = [ "--login" "-c" "tmux attach -2 || tmux -2" ];
+    font = {
+      normal.family = "FiraCode Nerd Font Mono";
+      bold.family = config.programs.alacritty.settings.font.normal.family;
+      italic.family = config.programs.alacritty.settings.font.normal.family;
+      bold_italic.family = config.programs.alacritty.settings.font.normal.family;
     };
+    #shell = {
+    #  program = "${pkgs.lib.getExe pkgs.bash}";
+    #  args = [ "--login" "-c" "tmux attach -2 || tmux -2" ];
+    #};
     # Catppuccin Mocha theme
-    colors = {
-      primary = {  
-        background = "#1E1E2E";
-        foreground = "#CDD6F4";
-        dim_foreground = "#CDD6F4";
-        bright_foreground = "#CDD6F4";
-      };
-      cursor = {
-        text = "#1E1E2E";
-        cursor = "#F5E0DC";
-      };
-      vi_mode_cursor = {
-        text = "#1E1E2E";
-        cursor = "#B4BEFE";
-      };
-      search = {
-        matches = {
-          foreground = "#1E1E2E";
-          background = "#A6ADC8";
-        };
-        focused_match = {
-          foreground = "#1E1E2E";
-          background = "#A6E3A1";
-        };
-      };
-      footer_bar = {
-        foreground = "#1E1E2E";
-        background = "#A6ADC8";
-      };
-      hints = {
-        start = {
-          foreground = "#1E1E2E";
-          background = "#F9E2AF";
-        };
-        end = {
-          foreground = "#1E1E2E";
-          background = "#A6ADC8";
-        };
-      };
-      selection = {
-        text = "#1E1E2E";
-        background = "#F5E0DC";
-      };
-      normal = {
-        black = "#45475A";
-        red = "#F38BA8";
-        green = "#A6E3A1";
-        yellow = "#F9E2AF";
-        blue = "#89B4FA";
-        magenta = "#F5C2E7";
-        cyan = "#94E2D5";
-        white = "#BAC2DE";
-      };
-      bright = {
-        black = "#585B70";
-        red = "#F38BA8";
-        green = "#A6E3A1";
-        yellow = "#F9E2AF";
-        blue = "#89B4FA";
-        magenta = "#F5C2E7";
-        cyan = "#94E2D5";
-        white = "#A6ADC8";
-      };
-      dim = {
-        black = "#45475A";
-        red = "#F38BA8";
-        green = "#A6E3A1";
-        yellow = "#F9E2AF";
-        blue = "#89B4FA";
-        magenta = "#F5C2E7";
-        cyan = "#94E2D5";
-        white = "#BAC2DE";
-      };
-      indexed_colors = [ 
-        {
-          index = 16;
-          color = "#FAB387";
-        } 
-        {
-          index = 17;
-          color = "#F5E0DC";
-        }
-      ];
+    colors = import ./home-manager/alacritty/catppuccin.nix;
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3-dark";
+    };
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
     };
   };
 

@@ -1,13 +1,13 @@
 {
   "org/gnome/desktop/interface" = {
     clock-show-weekday = true;
-    cursor-theme = "Adwaita";
+    #cursor-theme = "Adwaita";
     document-font-name = "Cantarell 11";
     enable-hot-corners = true;
     font-antialiasing = "rgba";
     font-hinting = "full";
     font-name = "Cantarell 11";
-    gtk-theme = "adw-gtk3";
+    gtk-theme = "adw-gtk3-dark";
     icon-theme = "Adwaita";
     monospace-font-name = "Source Code Pro Regular 10";
   };
@@ -27,12 +27,12 @@
   "org/gnome/desktop/wm/preferences" = {
     button-layout = ":minimize,maximize,close";
     num-workspaces = "4";
-    title-bar-font = "Cantarell Bold 11";
+    title-bar-font = "Cantarell 11";
   };
 
   "org/gnome/shell" = {
     enabled-extensions = ["appindicatorsupport@rgcjonas.gmail.com" "blur-my-shell@aunetx" "tiling-assistant@leleat-on-github"];
-    favorite-apps = ["org.gnome.Nautilus.desktop" "firefox.desktop" "Alacritty.desktop" "com.rafaelmardojai.Blanket.desktop" "org.gnome.Solanum.desktop" "Waydroid.desktop" "virt-manager.desktop" ];
+    favorite-apps = ["org.gnome.Nautilus.desktop" "firefox.desktop" "Alacritty.desktop" "com.rafaelmardojai.Blanket.desktop" "org.gnome.Solanum.desktop" "Waydroid.desktop" "virt-manager.desktop"];
   };
 
   "org/gnome/desktop/peripherals/touchpad" = {

@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/sys/desktops/gnome.nix
+    ../../modules/sys/desktops/hyprland.nix
     ../../modules/usr/user.nix
     ../../modules/sys/std.nix
   ];
@@ -25,7 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     # android-studio
-    alacritty 
+    alacritty
     gamescope
     mangohud
     gamemode

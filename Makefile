@@ -4,7 +4,7 @@ sys/upgrade:
 	nixos-rebuild --use-remote-sudo switch --flake .#$(CURRENT_MACHINE) --upgrade --update-input nixpkgs
 
 home/switch:
-	home-manager switch --substitute --flake .#$(USER)
+	home-manager switch --substitute -b backup --flake .#$(USER)
 
 sys/switch:
 	nixos-rebuild --use-remote-sudo switch --flake .#$(CURRENT_MACHINE)

@@ -12,6 +12,8 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = {
@@ -20,8 +22,10 @@
     home-manager,
     nix-flatpak,
     nixvim,
+    hyprland,
+    nix-colors,
     ...
-  }: let
+  } @ inputs: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
@@ -34,6 +38,7 @@
       inherit pkgs;
       module = import ./modules/usr/home-manager/nixvim/shared.nix;
     };
+    theme = "catppuccin-mocha";
   in {
     packages.${system} = {
       neovim = nvim;
@@ -43,10 +48,12 @@
     nixosConfigurations = {
       studio = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {inherit inputs;};
         modules = [./${hosts-folder}/studio/configuration.nix];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {inherit inputs;};
         modules = [./${hosts-folder}/light/configuration.nix];
       };
       live-system = nixpkgs.lib.nixosSystem {
@@ -60,10 +67,13 @@
 
     homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
+
       modules = [
+        hyprland.homeManagerModules.default
+        nix-colors.homeManagerModules.default
         nix-flatpak.homeManagerModules.nix-flatpak
         nixvim.homeManagerModules.nixvim
-        ./modules/usr/home-manager.nix
+        ({config,...}: import ./modules/usr/home-manager.nix { inherit pkgs; inherit config; inherit main_username; inherit theme; inherit inputs; })
       ];
     };
 
