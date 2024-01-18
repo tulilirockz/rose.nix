@@ -9,7 +9,7 @@
 
     modules-left = ["hyprland/window"];
     modules-center = ["network" "pulseaudio" "cpu" "hyprland/workspaces" "memory" "disk" "clock"];
-    modules-right = ["custom/themeselector" "custom/notification" "tray"];
+    modules-right = ["custom/notification" "custom/logout" "tray"];
     "hyprland/workspaces" = {
       format = "{icon}";
       format-icons = {
@@ -17,12 +17,11 @@
         active = " ";
         urgent = " ";
       };
-      on-scroll-up = "hyprctl dispatch workspace e+1";
-      on-scroll-down = "hyprctl dispatch workspace e-1";
     };
     "clock" = {
       format = "{: %I:%M %p}";
       tooltip = false;
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.peaclock}\"";
     };
     "hyprland/window" = {
       max-length = 60;
@@ -32,15 +31,18 @@
       interval = 5;
       format = "🐏{}%";
       tooltip = true;
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
     };
     "cpu" = {
       interval = 5;
       format = " {usage:2}%";
       tooltip = true;
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
     };
     "disk" = {
       format = "  {free}";
       tooltip = true;
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.diskonaut} ~\"";
     };
     "network" = {
       format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
@@ -48,6 +50,7 @@
       format-wifi = "{icon} {signalStrength}%";
       format-disconnected = "󰤮";
       tooltip = false;
+      on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
     };
     "tray" = {
       spacing = 12;
@@ -70,11 +73,6 @@
       };
       on-click = "${lib.getExe pkgs.pavucontrol}";
     };
-    "custom/themeselector" = {
-      tooltip = false;
-      format = "";
-      on-click = "theme-selector";
-    };
     "custom/notification" = {
       tooltip = false;
       format = "{icon} {}";
@@ -89,10 +87,14 @@
         dnd-inhibited-none = "";
       };
       return-type = "json";
-      exec-if = "which swaync-client";
-      exec = "swaync-client -swb";
-      on-click = "task-waybar";
+      exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+      on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -op";
       escape = true;
+    };
+    "custom/logout" = {
+      tooltip = false;
+      format = "🔒";
+      on-click = "${lib.getExe pkgs.wlogout}";
     };
     "battery" = {
       states = {

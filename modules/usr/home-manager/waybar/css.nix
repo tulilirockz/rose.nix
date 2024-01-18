@@ -11,7 +11,7 @@
   		    color: #${config.colorScheme.colors.base0F};
   	}
   	#workspaces {
-  		    background: linear-gradient(180deg, #${config.colorScheme.colors.base00}, #${config.colorScheme.colors.base01});
+  		background: linear-gradient(180deg, #${config.colorScheme.colors.base00}, #${config.colorScheme.colors.base01});
       		margin: 5px;
       		padding: 0px 1px;
       		border-radius: 15px;
@@ -127,5 +127,12 @@
       		border-radius: 5px;
       		margin: 5px;
       		padding: 2px 2px;
-      }
+              }
+#custom-logout {
+      		color: #${config.colorScheme.colors.base0C};
+      		background: #${config.colorScheme.colors.base00};
+      		border-radius: 15px 50px 15px 50px;
+      		margin: 5px;
+      		padding: 2px 20px;
+  	}
 ''

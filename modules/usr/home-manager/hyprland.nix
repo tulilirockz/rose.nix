@@ -10,6 +10,21 @@
     splash = false
   '';
 
+  programs.swaylock = {
+    enable = true;
+    package = pkgs.swaylock-effects;
+    settings = {
+      image = "~/.config/wallpaper.png";
+      font = config.programs.alacritty.settings.font.normal.family;
+      ignore-empty-password = true;
+      indicator = true;
+      indicator-radius = 300;
+      indicator-thickness = 10;
+      indicator-capslock = true;
+      effect-blur = "20x6";
+    };
+  };
+
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -37,6 +52,8 @@
       kb_layout = "us";
       accel_profile = "flat";
       sensitivity = 0.0;
+      repeat_delay = 300;
+      repeat_rate = 50;
     };
 
     decoration = {
@@ -92,10 +109,13 @@
       "$mod, mouse:273, resizewindow"
     ];
   };
+
   wayland.windowManager.hyprland.extraConfig = "exec-once=${lib.getExe (pkgs.writeScriptBin "initial_script.sh" ''
     ${lib.getExe pkgs.networkmanagerapplet} --indicator &
     ${lib.getExe pkgs.hyprpaper} &
     ${pkgs.gnome.gnome-keyring}/gnome-keyring-daemon -r --unlock &
-    ${lib.getExe pkgs.mako}
+    ${lib.getExe pkgs.swaynotificationcenter} &
+    ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' timeout 200 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
   '')}";
+
 }

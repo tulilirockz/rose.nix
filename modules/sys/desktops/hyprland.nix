@@ -5,6 +5,7 @@
 
   services.xserver.displayManager.gdm.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.swaylock.text = "auth include login";
 
   programs.hyprland = {
     enable = true;
@@ -14,7 +15,7 @@
   hardware.opengl.enable = true;
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   services.gnome.gnome-keyring.enable = true;
 
@@ -37,6 +38,8 @@
       hyprshade
       hyprnome
       hyprdim
+      swaylock-effects
+      swayidle
       grimblast
     ])
     ++ (with pkgs; [
