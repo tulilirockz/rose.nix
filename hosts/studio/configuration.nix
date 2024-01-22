@@ -14,8 +14,6 @@
 
   boot = {
     loader.systemd-boot.enable = true;
-    loader.systemd-boot.configurationLimit = 5;
-    loader.efi.canTouchEfiVariables = true;
     extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
   };
 
@@ -23,8 +21,9 @@
 
   zramSwap.memoryPercent = 75;
 
+  services.system76-scheduler.enable = true;
+
   environment.systemPackages = with pkgs; [
-    # android-studio
     alacritty
     gamescope
     mangohud

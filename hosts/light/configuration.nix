@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/sys/desktops/kde.nix
+    ../../modules/sys/desktops/hyprland.nix
     ../../modules/usr/user.nix
     ../../modules/std.nix
   ];
@@ -9,7 +9,6 @@
   system.stateVersion = "24.05";
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "light";
 
@@ -17,9 +16,11 @@
     podman = {
       enable = true;
       dockerCompat = true;
+      dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
     waydroid.enable = true;
+    libvirtd.enable = true;
     incus.enable = true;
   };
 
@@ -38,4 +39,20 @@
   };
 
   services.udev.extraRules = ''SUBSYSTEM=="input", KERNEL=="event[0-9]*", ENV{ID_INPUT_TOUCHSCREEN}=="1", ENV{WL_OUTPUT}="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="2.0994971271086835 0.0 -0.009475882227217559 0.0 3.2251959199264215 -0.002555450541782298 0.0 0.0 1.0"'';
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+  };
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 }

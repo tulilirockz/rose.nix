@@ -1,14 +1,24 @@
 {...}: {
+  boot = {
+    loader.systemd-boot.configurationLimit = 5;
+    loader.efi.canTouchEfiVariables = true;
+  };
+
   time.timeZone = "America/Sao_Paulo";
+
   i18n.defaultLocale = "en_US.UTF-8";
+
   services.printing.enable = true;
+
   zramSwap.enable = true;
   services.fwupd.enable = true;
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
+
   nix.gc = {
     automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
+    dates = "daily";
+    options = "--delete-older-than 2d";
   };
   nixpkgs.config.allowUnfree = true;
 
@@ -26,4 +36,11 @@
     };
     firewall.enable = true;
   };
+
+  hardware.opentabletdriver = {
+    enable = true;
+    daemon.enable = true;
+  };
+
+  hardware.bluetooth.enable = true;
 }
