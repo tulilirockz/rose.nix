@@ -4,8 +4,10 @@
   ];
 
   services.xserver.displayManager.gdm.enable = true;
+  programs.seahorse.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = "auth include login";
+  services.gnome.gnome-keyring.enable = true;
 
   programs.hyprland = {
     enable = true;
@@ -15,9 +17,7 @@
   hardware.opengl.enable = true;
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
-
-  services.gnome.gnome-keyring.enable = true;
+  xdg.portal.extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
 
   environment.sessionVariables = {NIXOS_OZONE_WL = "1";};
 
@@ -28,16 +28,12 @@
           mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
         })
       )
-      mako
       hyprpaper
       wofi
       libnotify
       networkmanagerapplet
       hyprland-protocols
       hyprland-autoname-workspaces
-      hyprshade
-      hyprnome
-      hyprdim
       swaylock-effects
       swayidle
       grimblast
@@ -63,7 +59,6 @@
     ])
     ++ (with pkgs.gnome; [
       gnome-tweaks
-      gnome-control-center
       dconf-editor
       nautilus
       totem
@@ -73,24 +68,5 @@
       gnome-calendar
       gnome-calculator
       gnome-system-monitor
-    ]);
-
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-      gedit
-    ])
-    ++ (with pkgs.gnome; [
-      cheese
-      gnome-music
-      gnome-terminal
-      epiphany
-      geary
-      gnome-characters
-      tali
-      iagno
-      hitori
-      atomix
     ]);
 }

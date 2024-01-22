@@ -2,19 +2,31 @@
   config,
   pkgs,
   lib,
+  user_wallpaper,
   ...
 }: {
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ~/.config/wallpaper.png
-    wallpaper = HDMI-A-1,~/.config/wallpaper.png
+    preload = ${user_wallpaper} 
+    wallpaper = HDMI-A-1,${user_wallpaper}
     splash = false
   '';
+
+  programs.wlogout = {
+    enable = true;
+    layout = import ./wlogout/layout.nix; 
+    style = import ./wlogout/style.nix { inherit config; };
+  };
+
+  programs.wofi = {
+    enable = true;
+    style = import ./wofi-style.nix { inherit config; };
+  };
 
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
     settings = {
-      image = "~/.config/wallpaper.png";
+      image = user_wallpaper; 
       font = config.programs.alacritty.settings.font.normal.family;
       ignore-empty-password = true;
       indicator = true;
@@ -28,7 +40,7 @@
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    style = import ./waybar/css.nix {
+    style = import ./waybar/style.nix {
       inherit config;
     };
     settings = import ./waybar/settings.nix {
@@ -47,6 +59,11 @@
     "$screenshot" = "${lib.getExe pkgs.grimblast}";
 
     windowrulev2 = "nomaximizerequest, class:.*";
+
+    general = with config.colorScheme.colors; {
+      "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
+      "col.inactive_border" = "rgba(${base00}ff)"; 
+    };
 
     input = {
       kb_layout = "us";
@@ -74,12 +91,14 @@
         "$mod, F, exec, $browser"
         "$mod, Q, exec, $terminal"
         "$mod, E, exec, $file"
+        "$mod, L, exec, ${lib.getExe pkgs.swaylock-effects}"
         "$mod, R, exec, $selector --show drun --exec-start --show-icons"
         ", Print, exec, $screenshot copy area"
         "$mod, V, togglefloating"
+        "$mod, X, fullscreen"
         "$mod, C, killactive"
         "$mod, P, pseudo"
-        "$mod, M, exit"
+        "$mod, M, exec, ${lib.getExe pkgs.wlogout}"
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
@@ -89,7 +108,6 @@
         "$mod, mouse_up, workspace, e-1"
       ]
       ++ (
-        # workspaces
         # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
         builtins.concatLists (builtins.genList (
             x: let
@@ -115,7 +133,6 @@
     ${lib.getExe pkgs.hyprpaper} &
     ${pkgs.gnome.gnome-keyring}/gnome-keyring-daemon -r --unlock &
     ${lib.getExe pkgs.swaynotificationcenter} &
-    ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' timeout 200 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+    ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f'
   '')}";
-
 }

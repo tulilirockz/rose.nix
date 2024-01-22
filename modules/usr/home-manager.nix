@@ -1,15 +1,22 @@
 {
   inputs,
   main_username,
+  user_wallpaper,
   theme,
   config,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
     ./home-manager/dconf-theme.nix
     ./home-manager/managed-neovim.nix
-    ./home-manager/hyprland.nix
+    (import ./home-manager/hyprland.nix { 
+      inherit pkgs;
+      inherit config;
+      inherit user_wallpaper;
+      inherit lib;
+    })
   ];
 
   programs.home-manager.enable = true;
@@ -40,6 +47,7 @@
     tldr
     manix
     fira-code-nerdfont
+    mumble
   ];
 
   programs.fish.enable = false;

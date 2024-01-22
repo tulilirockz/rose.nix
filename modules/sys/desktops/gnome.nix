@@ -8,6 +8,8 @@
     desktopManager.gnome.enable = true;
   };
 
+  programs.seahorse.enable = true;
+
   environment.systemPackages =
     (with pkgs; [
       inter

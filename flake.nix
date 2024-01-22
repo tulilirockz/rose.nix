@@ -73,7 +73,16 @@
         nix-colors.homeManagerModules.default
         nix-flatpak.homeManagerModules.nix-flatpak
         nixvim.homeManagerModules.nixvim
-        ({config,...}: import ./modules/usr/home-manager.nix { inherit pkgs; inherit config; inherit main_username; inherit theme; inherit inputs; })
+        ({config, ...}:
+          import ./modules/usr/home-manager.nix {
+            inherit pkgs;
+            lib = pkgs.lib;
+            inherit config;
+            inherit main_username;
+            inherit theme;
+            inherit inputs;
+            user_wallpaper = "~/.config/wallpaper.png";
+          })
       ];
     };
 

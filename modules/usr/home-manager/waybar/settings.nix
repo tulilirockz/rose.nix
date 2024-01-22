@@ -21,7 +21,7 @@
     "clock" = {
       format = "{: %I:%M %p}";
       tooltip = false;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.peaclock}\"";
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${pkgs.peaclock}/bin/peaclock\"";
     };
     "hyprland/window" = {
       max-length = 60;

@@ -17,25 +17,14 @@
     };
 
     keymaps = [
-      #{
-      #  key = "<Up>";
-      #  action = "<Nop>";
-      #}
-      #{
-      #  key = "<Down>";
-      #  action = "<Nop>";
-      #}
-      #{
-      #  key = "<Left>";
-      #  action = "<Nop>";
-      #}
-      #{
-      #  key = "<Right>";
-      #  action = "<Nop>";
-      #}
       {
         key = "<C-s>";
         action = ":w<CR>";
+      }
+      {
+        key = "<leader>n";
+        action = "<cmd>Lspsaga outline<CR>";
+        options.silent = true;
       }
       {
         key = "<leader>m";
@@ -64,7 +53,27 @@
       }
       {
         key = "<leader>t";
-        action = "<cmd>FloatermToggle<CR>";
+        action = "<cmd>Lspsaga term_toggle<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>rn";
+        action = "<cmd>Lspsaga rename<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>ca";
+        action = "<cmd>Lspsaga rename<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>k";
+        action = "<cmd>Lspsaga hover_doc<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gd";
+        action = "<cmd>Lspsaga goto_definition<CR>";
         options.silent = true;
       }
     ];
@@ -72,7 +81,6 @@
     plugins = {
       chadtree.enable = true;
       telescope.enable = true;
-      barbecue.enable = true;
       coq-thirdparty.enable = true;
       cursorline.enable = true;
       fidget.enable = true;
@@ -80,12 +88,19 @@
       bufferline.enable = true;
       which-key.enable = true;
       treesitter.enable = true;
-      floaterm.enable = true;
       indent-blankline.enable = true;
       lsp-format.enable = true;
-      nvim-lightbulb.enable = true;
       nix.enable = true;
       nvim-colorizer.enable = true;
+
+      lspsaga = {
+        enable = true;
+        beacon.enable = true;
+        callhierarchy.layout = "normal";
+        codeAction.showServerName = true;
+        lightbulb.enable = true;
+        lightbulb.sign = false;
+      };
 
       lualine = {
         enable = true;
@@ -126,14 +141,6 @@
           diagnostic = {
             "<leader>k" = "goto_prev";
             "<leader>j" = "goto_next";
-          };
-
-          lspBuf = {
-            gd = "definition";
-            K = "hover";
-            "<C-k>" = "signature_help";
-            "<leader>rn" = "rename";
-            "<leader>ca" = "code_action";
           };
         };
         servers = {

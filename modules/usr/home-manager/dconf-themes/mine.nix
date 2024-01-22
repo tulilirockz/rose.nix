@@ -12,6 +12,10 @@
     monospace-font-name = "Source Code Pro Regular 10";
   };
 
+  "org/gnome/desktop/wm/preferences" = {
+    titlebar-font = "Cantarell Bold 11";
+  };
+
   "org/gnome/desktop/sound" = {
     theme-name = "Adwaita";
   };
