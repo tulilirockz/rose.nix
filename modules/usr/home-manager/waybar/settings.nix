@@ -42,7 +42,7 @@
     "disk" = {
       format = "  {free}";
       tooltip = true;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.diskonaut} ~\"";
+      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
     };
     "network" = {
       format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];

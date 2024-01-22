@@ -1,5 +1,5 @@
 {config, ...}: ''
-    * {
+        * {
     		font-size: 16px;
     		font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
         		font-weight: bold;
@@ -80,7 +80,7 @@
         		padding: 2px 20px;
     	}
     	#disk {
-        		color: #${config.colorScheme.colors.base03};
+        		color: #${config.colorScheme.colors.base07};
         		background: #${config.colorScheme.colors.base00};
         		border-radius: 15px 50px 15px 50px;
         		margin: 5px;

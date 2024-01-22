@@ -14,7 +14,7 @@
   programs.wlogout = {
     enable = true;
     layout = import ./wlogout/layout.nix; 
-    style = import ./wlogout/style.nix { inherit config; };
+    style = import ./wlogout/style.nix { inherit config; inherit pkgs; };
   };
 
   programs.wofi = {
@@ -27,6 +27,7 @@
     package = pkgs.swaylock-effects;
     settings = {
       image = user_wallpaper; 
+      clock = true;
       font = config.programs.alacritty.settings.font.normal.family;
       ignore-empty-password = true;
       indicator = true;
@@ -34,6 +35,8 @@
       indicator-thickness = 10;
       indicator-capslock = true;
       effect-blur = "20x6";
+      ring-color = 000000;
+      line-color = 000000;
     };
   };
 
@@ -133,6 +136,7 @@
     ${lib.getExe pkgs.hyprpaper} &
     ${pkgs.gnome.gnome-keyring}/gnome-keyring-daemon -r --unlock &
     ${lib.getExe pkgs.swaynotificationcenter} &
+    ${pkgs.ssh-agents}/bin/ssh-agent &
     ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f'
   '')}";
 }

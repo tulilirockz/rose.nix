@@ -33,7 +33,6 @@
       libnotify
       networkmanagerapplet
       hyprland-protocols
-      hyprland-autoname-workspaces
       swaylock-effects
       swayidle
       grimblast

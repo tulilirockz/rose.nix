@@ -1,4 +1,4 @@
-{config,...}:
+{config,pkgs, ...}:
 with config.colorScheme.colors; ''
 window {
     font-size: 16px;
