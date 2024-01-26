@@ -48,6 +48,4 @@
   security.sudo-rs.enable = true;
 
   environment.systemPackages = with pkgs; [home-manager git];
-
-  programs.home-manager.enable = true;
 }

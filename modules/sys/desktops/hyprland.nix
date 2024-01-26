@@ -11,6 +11,13 @@
         path = ../../../assets/lockscreen.png;
         fit = "Contain";
       };
+      GTK = {
+      	application_prefer_dark_theme = true;
+	cursor_theme_name = "Bibata-Modern-Classic";
+	font_name = "Cantarell 16";
+	icon_theme_name = "Adwaita";
+	theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
+      };
     };
   };
   programs.seahorse.enable = true;
@@ -67,6 +74,7 @@
       pavucontrol
       loupe
       catppuccin-gtk
+      cantarell-fonts
     ])
     ++ (with pkgs.gnome; [
       gnome-tweaks

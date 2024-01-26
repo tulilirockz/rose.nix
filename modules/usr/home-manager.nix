@@ -50,6 +50,8 @@
     manix
     fira-code-nerdfont
     mumble
+    catppuccin-gtk
+    cantarell-fonts
   ];
 
   programs.fish.enable = false;
