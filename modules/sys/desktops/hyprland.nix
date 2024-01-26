@@ -3,9 +3,10 @@
     ./shared.nix
   ];
 
-  services.xserver.displayManager.gdm.enable = true;
+  services.greetd.enable = true;
+  programs.regreet.enable = true;
   programs.seahorse.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = "auth include login";
   services.gnome.gnome-keyring.enable = true;
 
