@@ -49,12 +49,24 @@
       studio = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
-        modules = [./${hosts-folder}/studio/configuration.nix];
+        modules = [
+          ({config, ...}:
+          import ./${hosts-folder}/studio/configuration.nix {
+            inherit pkgs;
+            inherit config;
+            inherit main_username;
+          })
+        ];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
-        modules = [./${hosts-folder}/light/configuration.nix];
+        modules = [({config, ...}:
+          import ./${hosts-folder}/light/configuration.nix {
+            inherit pkgs;
+            inherit config;
+            inherit main_username;
+          })];
       };
       live-system = nixpkgs.lib.nixosSystem {
         inherit system;

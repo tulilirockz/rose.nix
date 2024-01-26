@@ -1,14 +1,13 @@
 {
   config,
   pkgs,
+  main_username,
   ...
-}: let
-  myusername = "tulili";
-in {
+}: {
   system.autoUpgrade = {
     enable = true;
     dates = "12:00";
-    flake = "${config.users.users.${myusername}.home}/opt/tulili.nix";
+    flake = "${config.users.users.${main_username}.home}/opt/tulili.nix";
     flags = [
       "--update-input"
       "nixpkgs"
@@ -19,8 +18,10 @@ in {
 
   services.flatpak.enable = true;
   users.defaultUserShell = pkgs.nushell;
-  users.users.${myusername} = {
+  users.mutableUsers = false;
+  users.users.${main_username} = {
     isNormalUser = true;
+    hashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
     extraGroups = ["wheel" "libvirtd" "incus-admin"];
     shell = pkgs.nushell;
   };

@@ -26,6 +26,8 @@
 
   colorScheme = inputs.nix-colors.colorSchemes."${theme}";
 
+  xdg.userDirs.createDirectories = true;
+
   home.packages = with pkgs; [
     gnumake
     lazygit

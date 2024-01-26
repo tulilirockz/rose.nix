@@ -1,9 +1,14 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  main_username,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/sys/desktops/hyprland.nix
-    ../../modules/usr/user.nix
     ../../modules/sys/std.nix
+    (import ../../modules/usr/user.nix { inherit pkgs; inherit config; inherit main_username;})
   ];
 
   system.stateVersion = "24.05";
