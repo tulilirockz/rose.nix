@@ -4,7 +4,15 @@
   ];
 
   services.greetd.enable = true;
-  programs.regreet.enable = true;
+  programs.regreet = {
+    enable = true;
+    settings = {
+      background = {
+        path = ../../../assets/lockscreen.png;
+        fit = "Contain";
+      };
+    };
+  };
   programs.seahorse.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = "auth include login";
@@ -58,6 +66,7 @@
       gnome-firmware
       pavucontrol
       loupe
+      catppuccin-gtk
     ])
     ++ (with pkgs.gnome; [
       gnome-tweaks
