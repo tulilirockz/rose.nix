@@ -1,4 +1,4 @@
-{...}: {
+{pkgs,...}: {
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
@@ -43,4 +43,9 @@
   };
 
   hardware.bluetooth.enable = true;
+
+  security.sudo.enable = false;
+  security.sudo-rs.enable = true;
+
+  environment.systemPackages = with pkgs; [home-manager git];
 }

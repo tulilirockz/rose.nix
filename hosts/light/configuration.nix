@@ -3,7 +3,7 @@
     ./hardware-configuration.nix
     ../../modules/sys/desktops/hyprland.nix
     ../../modules/usr/user.nix
-    ../../modules/std.nix
+    ../../modules/sys/std.nix
   ];
 
   system.stateVersion = "24.05";

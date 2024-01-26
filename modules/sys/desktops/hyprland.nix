@@ -36,6 +36,7 @@
       swaylock-effects
       swayidle
       grimblast
+      udiskie
     ])
     ++ (with pkgs; [
       inter
@@ -55,6 +56,7 @@
       snapshot
       gnome-firmware
       pavucontrol
+      loupe
     ])
     ++ (with pkgs.gnome; [
       gnome-tweaks

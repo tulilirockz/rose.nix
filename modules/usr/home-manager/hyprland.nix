@@ -137,6 +137,7 @@
     ${pkgs.gnome.gnome-keyring}/gnome-keyring-daemon -r --unlock &
     ${lib.getExe pkgs.swaynotificationcenter} &
     ${pkgs.ssh-agents}/bin/ssh-agent &
+    ${lib.getExe pkgs.udiskie} &
     ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f'
   '')}";
 }
