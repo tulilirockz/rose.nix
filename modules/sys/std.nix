@@ -1,4 +1,4 @@
-{pkgs,...}: {
+{pkgs, ...}: {
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;

@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  boot = { 
+  boot = {
     extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
   };
   environment.systemPackages = with pkgs; [
@@ -17,7 +17,6 @@
   time.timeZone = "America/Sao_Paulo";
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-    
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
@@ -33,6 +32,4 @@
     };
     firewall.enable = true;
   };
-
-
 }

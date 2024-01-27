@@ -12,11 +12,11 @@
         fit = "Contain";
       };
       GTK = {
-      	application_prefer_dark_theme = true;
-	cursor_theme_name = "Bibata-Modern-Classic";
-	font_name = "Cantarell 16";
-	icon_theme_name = "Adwaita";
-	theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
+        application_prefer_dark_theme = true;
+        cursor_theme_name = "Bibata-Modern-Classic";
+        font_name = "Cantarell 12";
+        icon_theme_name = "Adwaita";
+        theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
       };
     };
   };

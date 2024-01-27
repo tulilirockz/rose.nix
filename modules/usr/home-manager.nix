@@ -11,7 +11,7 @@
   imports = [
     ./home-manager/dconf-theme.nix
     ./home-manager/managed-neovim.nix
-    (import ./home-manager/hyprland.nix { 
+    (import ./home-manager/hyprland.nix {
       inherit pkgs;
       inherit config;
       inherit user_wallpaper;
@@ -25,6 +25,9 @@
   home.stateVersion = "24.05";
 
   colorScheme = inputs.nix-colors.colorSchemes."${theme}";
+  xdg.configFile."libvirt/qemu.conf".text = ''
+    nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
+  '';
 
   xdg.userDirs.createDirectories = true;
 

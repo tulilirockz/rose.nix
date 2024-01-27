@@ -8,7 +8,11 @@
     ./hardware-configuration.nix
     ../../modules/sys/desktops/hyprland.nix
     ../../modules/sys/std.nix
-    (import ../../modules/usr/user.nix { inherit pkgs; inherit config; inherit main_username;})
+    (import ../../modules/usr/user.nix {
+      inherit pkgs;
+      inherit config;
+      inherit main_username;
+    })
   ];
 
   system.stateVersion = "24.05";

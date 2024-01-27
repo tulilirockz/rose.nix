@@ -6,27 +6,30 @@
   ...
 }: {
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ${user_wallpaper} 
+    preload = ${user_wallpaper}
     wallpaper = HDMI-A-1,${user_wallpaper}
     splash = false
   '';
 
   programs.wlogout = {
     enable = true;
-    layout = import ./wlogout/layout.nix; 
-    style = import ./wlogout/style.nix { inherit config; inherit pkgs; };
+    layout = import ./wlogout/layout.nix;
+    style = import ./wlogout/style.nix {
+      inherit config;
+      inherit pkgs;
+    };
   };
 
   programs.wofi = {
     enable = true;
-    style = import ./wofi-style.nix { inherit config; };
+    style = import ./wofi-style.nix {inherit config;};
   };
 
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
     settings = {
-      image = user_wallpaper; 
+      image = user_wallpaper;
       clock = true;
       font = config.programs.alacritty.settings.font.normal.family;
       ignore-empty-password = true;
@@ -65,7 +68,7 @@
 
     general = with config.colorScheme.colors; {
       "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
-      "col.inactive_border" = "rgba(${base00}ff)"; 
+      "col.inactive_border" = "rgba(${base00}ff)";
     };
 
     input = {
