@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{inputs, pkgs, ...}: let
+  apps = import ./apps.nix {inherit pkgs;};
+in {
   imports = [
     ./shared.nix
   ];
@@ -27,15 +29,13 @@
 
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     xwayland.enable = true;
   };
 
   hardware.opengl.enable = true;
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
-
-  environment.sessionVariables = {NIXOS_OZONE_WL = "1";};
 
   environment.systemPackages =
     (with pkgs; [
@@ -53,39 +53,7 @@
       swayidle
       grimblast
       udiskie
-    ])
-    ++ (with pkgs; [
-      inter
-      adw-gtk3
-      gradience
-      gnome-podcasts
-      newsflash
-      transmission-gtk
-      gnome-solanum
-      gitg
-      amberol
-      nautilus-open-any-terminal
-      baobab
-      blanket
-      audacity
-      helvum
-      snapshot
-      gnome-firmware
-      pavucontrol
-      loupe
       catppuccin-gtk
-      cantarell-fonts
     ])
-    ++ (with pkgs.gnome; [
-      gnome-tweaks
-      dconf-editor
-      nautilus
-      totem
-      sushi
-      gnome-weather
-      gnome-clocks
-      gnome-calendar
-      gnome-calculator
-      gnome-system-monitor
-    ]);
+    ++ apps.gnomeApps;
 }

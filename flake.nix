@@ -80,7 +80,7 @@
     };
 
     homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      inherit pkgs; 
 
       modules = [
         hyprland.homeManagerModules.default

@@ -13,7 +13,11 @@
   zramSwap.enable = true;
   services.fwupd.enable = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    experimental-features = ["nix-command" "flakes"];
+  };
 
   nix.gc = {
     automatic = true;
@@ -47,5 +51,8 @@
   security.sudo.enable = false;
   security.sudo-rs.enable = true;
 
-  environment.systemPackages = with pkgs; [home-manager git];
+  environment.systemPackages = with pkgs; [home-manager git bubblewrap];
+
+  security.apparmor.enable = true;
+  services.dbus.apparmor = "required";
 }

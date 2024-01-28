@@ -28,7 +28,6 @@
   xdg.configFile."libvirt/qemu.conf".text = ''
     nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
   '';
-
   xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [
@@ -55,6 +54,19 @@
     mumble
     catppuccin-gtk
     cantarell-fonts
+    stremio
+    krita
+    halftone
+    upscayl
+    czkawka
+    lagrange
+    obs-studio
+    vscodium
+    podman-desktop
+    audacity
+    inkscape
+    krita
+    godot_4
   ];
 
   programs.fish.enable = false;
@@ -118,7 +130,6 @@
     #  program = "${pkgs.lib.getExe pkgs.bash}";
     #  args = [ "--login" "-c" "tmux attach -2 || tmux -2" ];
     #};
-    # Catppuccin Mocha theme
     colors = import ./home-manager/alacritty/catppuccin.nix;
   };
 
@@ -154,27 +165,4 @@
   programs.dconf-theme.enable = true;
   programs.dconf-theme.theme = "mine";
   programs.managed-neovim.enable = true;
-
-  services.flatpak.update.auto = {
-    enable = true;
-    onCalendar = "daily";
-  };
-  services.flatpak.packages = [
-    "com.obsproject.Studio"
-    "com.bitwarden.desktop"
-    "com.github.tchx84.Flatseal"
-    "com.mattjakeman.ExtensionManager"
-    "com.rafaelmardojai.Blanket"
-    "io.github.flattool.Warehouse"
-    "io.podman_desktop.PodmanDesktop"
-    "net.lutris.Lutris"
-    "org.audacityteam.Audacity"
-    "org.chromium.Chromium"
-    "org.gnome.Epiphany"
-    "org.gnome.Firmware"
-    "org.godotengine.Godot"
-    "org.inkscape.Inkscape"
-    "org.kde.krita"
-    "org.onlyoffice.desktopeditors"
-  ];
 }

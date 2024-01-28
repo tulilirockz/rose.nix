@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  apps = import ./apps.nix {inherit pkgs;};
+in {
   imports = [
     ./shared.nix
   ];
@@ -12,17 +14,5 @@
     displayManager.defaultSession = "plasmawayland";
   };
 
-  environment.systemPackages = with pkgs; [
-    plasma-pa
-    libsForQt5.kclock
-    libsForQt5.alligator
-    libsForQt5.kamoso
-    libsForQt5.kasts
-    libsForQt5.kolourpaint
-    libsForQt5.kweather
-    qpwgraph
-    vlc
-    keepassxc
-    qbittorrent
-  ];
+  environment.systemPackages = [pkgs.plasma-pa] ++ apps.qtApps;
 }
