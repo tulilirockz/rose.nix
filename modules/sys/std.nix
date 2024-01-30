@@ -52,7 +52,4 @@
   security.sudo-rs.enable = true;
 
   environment.systemPackages = with pkgs; [home-manager git bubblewrap];
-
-  security.apparmor.enable = true;
-  services.dbus.apparmor = "required";
 }

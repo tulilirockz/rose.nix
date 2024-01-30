@@ -78,6 +78,8 @@
       }
     ];
 
+    editorconfig.enable = true;
+
     plugins = {
       chadtree.enable = true;
       telescope.enable = true;

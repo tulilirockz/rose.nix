@@ -75,6 +75,13 @@
   programs.fzf.enable = true;
   programs.fzf.tmux.enableShellIntegration = true;
 
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
+    enableBashIntegration = true;
+  };
+
   programs.tmux = {
     enable = true;
     disableConfirmationPrompt = true;
