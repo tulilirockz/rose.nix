@@ -33,7 +33,7 @@
     incus.enable = true;
   };
 
-  programs.steam.enable = true;
+  environment.systemPackages = with pkgs; [acpi batstat powertop];
 
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {

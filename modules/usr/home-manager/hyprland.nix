@@ -70,7 +70,8 @@
     };
 
     input = {
-      kb_layout = "us";
+      kb_layout = "us,br";
+      kb_options = ["grp:win_space_toggle"];
       accel_profile = "flat";
       sensitivity = 0.0;
       repeat_delay = 300;
