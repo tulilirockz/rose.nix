@@ -51,7 +51,6 @@
     cage
     distrobox
     waydroid
-    nerdfonts
     home-manager
   ];
 }

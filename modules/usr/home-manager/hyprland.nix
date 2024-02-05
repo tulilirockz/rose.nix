@@ -38,8 +38,6 @@
       indicator-thickness = 10;
       indicator-capslock = true;
       effect-blur = "20x6";
-      ring-color = 000000;
-      line-color = 000000;
     };
   };
 
@@ -66,7 +64,7 @@
 
     windowrulev2 = "nomaximizerequest, class:.*";
 
-    general = with config.colorScheme.colors; {
+    general = with config.colorScheme.palette; {
       "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
       "col.inactive_border" = "rgba(${base00}ff)";
     };

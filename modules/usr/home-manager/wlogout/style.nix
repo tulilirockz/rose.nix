@@ -3,7 +3,7 @@
   pkgs,
   ...
 }:
-with config.colorScheme.colors; ''
+with config.colorScheme.palette; ''
   window {
       font-size: 16px;
       color: #${base05};

@@ -1,5 +1,5 @@
 {config, ...}:
-with config.colorScheme.colors; ''
+with config.colorScheme.palette; ''
   window {
   margin: 0px;
   border: 1px solid #${base05};

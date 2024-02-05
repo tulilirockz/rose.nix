@@ -10,7 +10,7 @@
 }: {
   imports = [
     ./home-manager/dconf-theme.nix
-    ./home-manager/managed-neovim.nix
+    ./home-manager/devtools.nix
     (import ./home-manager/hyprland.nix {
       inherit pkgs;
       inherit config;
@@ -31,7 +31,6 @@
   xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [
-    gnumake
     lazygit
     darcs
     unzip
@@ -67,6 +66,10 @@
     inkscape
     krita
     godot_4
+    gitg
+    gource
+    scc
+    just 
   ];
 
   programs.fish.enable = false;

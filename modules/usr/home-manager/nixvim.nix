@@ -57,13 +57,18 @@
         options.silent = true;
       }
       {
+        key = "<leader>e";
+        action = "<cmd>Lspsaga show_buf_diagnostics<CR>";
+        options.silent = true;
+      }
+      {
         key = "<leader>rn";
         action = "<cmd>Lspsaga rename<CR>";
         options.silent = true;
       }
       {
         key = "<leader>ca";
-        action = "<cmd>Lspsaga rename<CR>";
+        action = "<cmd>Lspsaga code_action<CR>";
         options.silent = true;
       }
       {
