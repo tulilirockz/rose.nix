@@ -3,7 +3,7 @@
 My all-in-one configuration for all my nix-y needs!
 This contains my NixOS configuration, home-manager, neovim, and anything else I may seem fit!
 
-You should be able to use my configurations by just cloning this repository and running any command in the `Makefile`, those being `home-manager switch`, and `nix-rebuild` ones!
+You should be able to use my configurations by cloning this repository and running any command in the `Justfile`, those being `home-manager switch`, and `nix-rebuild` ones!
 
 ## Making a ISO file with some helpful tools
 
