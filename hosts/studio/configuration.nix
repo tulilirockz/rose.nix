@@ -20,6 +20,7 @@
   boot = {
     loader.systemd-boot.enable = true;
     extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
+    #kernelPackages = pkgs.linuxPackages_latest;
   };
 
   networking.hostName = "studio";

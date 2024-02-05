@@ -51,5 +51,17 @@
   security.sudo.enable = false;
   security.sudo-rs.enable = true;
 
-  environment.systemPackages = with pkgs; [home-manager git bubblewrap];
+  environment.systemPackages = with pkgs; [home-manager git bubblewrap just];
+
+  programs.rust-motd.enable = true;
+  programs.rust-motd.settings = {
+    banner = {
+      color = "magenta";
+      command = "${pkgs.busybox}/bin/busybox hostname | ${pkgs.figlet}/bin/figlet";
+    };
+  };
+
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+  };
 }

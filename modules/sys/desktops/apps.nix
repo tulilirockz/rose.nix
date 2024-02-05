@@ -14,40 +14,38 @@
       gnome-tweaks
       gitg
       dconf-editor
+      polari
     ])
     ++ (with pkgs; [
       newsflash
+      shortwave
     ]);
 
-  sharedApps =
-    (with pkgs; [
-      inter
-      adw-gtk3
-      gradience
-      gnome-podcasts
-      transmission-gtk
-      gnome-solanum
-      gitg
-      amberol
-      nautilus-open-any-terminal
-      baobab
-      blanket
-      audacity
-      helvum
-      snapshot
-      gnome-firmware
-      pavucontrol
-      loupe
-      cantarell-fonts
-      fractal
-      mumble
-      impression
-      onlyoffice-bin
-      libreoffice
-    ])
-    ++ (with pkgs.gnome; [
-      polari
-    ]);
+  sharedApps = with pkgs; [
+    inter
+    adw-gtk3
+    gradience
+    gnome-podcasts
+    transmission-gtk
+    gnome-solanum
+    gitg
+    amberol
+    nautilus-open-any-terminal
+    baobab
+    blanket
+    audacity
+    helvum
+    snapshot
+    gnome-firmware
+    pavucontrol
+    loupe
+    cantarell-fonts
+    fractal
+    mumble
+    impression
+    onlyoffice-bin
+    libreoffice
+  ];
 
   qtApps = with pkgs; [
     libsForQt5.kclock

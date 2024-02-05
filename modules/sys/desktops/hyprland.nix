@@ -1,4 +1,8 @@
-{inputs, pkgs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
   apps = import ./apps.nix {inherit pkgs;};
 in {
   imports = [

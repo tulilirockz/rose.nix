@@ -36,7 +36,7 @@
     nixvim' = nixvim.legacyPackages.${system};
     nvim = nixvim'.makeNixvimWithModule {
       inherit pkgs;
-      module = import ./modules/usr/home-manager/nixvim/shared.nix;
+      module = import ./modules/usr/home-manager/nixvim.nix;
     };
     theme = "catppuccin-mocha";
   in {
@@ -80,7 +80,7 @@
     };
 
     homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs; 
+      inherit pkgs;
 
       modules = [
         hyprland.homeManagerModules.default
@@ -101,7 +101,7 @@
     };
 
     devShells.${system}.default = pkgs.mkShell {
-      nativeBuildInputs = with pkgs; [nil gnumake];
+      nativeBuildInputs = with pkgs; [nil just];
     };
 
     formatter.${system} = pkgs.alejandra;
