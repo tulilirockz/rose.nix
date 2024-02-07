@@ -17,6 +17,19 @@
       inherit user_wallpaper;
       inherit lib;
     })
+    (import ./home-manager/river.nix {
+      inherit pkgs;
+      inherit config;
+      inherit user_wallpaper;
+      inherit lib;
+    })
+    (import ./home-manager/wm.nix {
+      inherit pkgs;
+      inherit config;
+      inherit user_wallpaper;
+      inherit lib;
+    })
+   
   ];
 
   programs.home-manager.enable = true;
@@ -69,7 +82,9 @@
     gitg
     gource
     scc
-    just 
+    just
+    iotop
+    nix-prefetch-git
   ];
 
   programs.fish.enable = false;

@@ -45,6 +45,9 @@
     impression
     onlyoffice-bin
     libreoffice
+    input-leap
+    input-remapper
+    vieb
   ];
 
   qtApps = with pkgs; [

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
@@ -38,7 +42,14 @@
         AutoConnect = true;
       };
     };
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      allowedUDPPorts = [
+        51413 # Transmission
+        24800 # Input Leap
+      ];
+      allowedTCPPorts = config.networking.firewall.allowedUDPPorts;
+    };
   };
 
   hardware.opentabletdriver = {
@@ -64,4 +75,6 @@
   boot.kernel.sysctl = {
     "kernel.sysrq" = 1;
   };
+
+  services.input-remapper.enable = true;
 }
