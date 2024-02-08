@@ -99,5 +99,5 @@
     ${pkgs.openssh}/bin/ssh-agent &
     ${pkgs.udiskie}/bin/udiskie &
     ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f'
-    '')}";
+  '')}";
 }

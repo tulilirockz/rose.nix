@@ -43,21 +43,9 @@ in {
 
   environment.systemPackages =
     (with pkgs; [
-      (
-        pkgs.waybar.overrideAttrs (oldAttrs: {
-          mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-        })
-      )
       hyprpaper
-      wofi
-      libnotify
-      networkmanagerapplet
       hyprland-protocols
-      swaylock-effects
-      swayidle
-      grimblast
-      udiskie
-      catppuccin-gtk
     ])
+    ++ apps.wmApps
     ++ apps.gnomeApps;
 }

@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   apps = import ./apps.nix {inherit pkgs;};
 in {
   imports = [
@@ -23,6 +19,7 @@ in {
       appindicator
       tiling-assistant
     ])
+    ++ [pkgs.gnome-randr]
     ++ apps.gnomeApps;
 
   environment.gnome.excludePackages =

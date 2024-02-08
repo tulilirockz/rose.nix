@@ -1,4 +1,10 @@
-{config, pkgs, lib, user_wallpaper,...}:{
+{
+  config,
+  pkgs,
+  lib,
+  user_wallpaper,
+  ...
+}: {
   programs.wlogout = {
     enable = true;
     layout = import ./wlogout/layout.nix;
@@ -11,6 +17,26 @@
   programs.wofi = {
     enable = true;
     style = import ./wofi-style.nix {inherit config;};
+  };
+
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      colors = {
+        background = "${config.colorScheme.palette.base00}FF";
+        text = "${config.colorScheme.palette.base05}FF";
+        match = "${config.colorScheme.palette.base08}FF";
+        selection-match = "${config.colorScheme.palette.base09}FF";
+        selection = "${config.colorScheme.palette.base02}FF";
+        selection-text = "${config.colorScheme.palette.base0A}FF";
+        border = "${config.colorScheme.palette.base07}FF";
+      };
+
+      border = {
+        width = 2;
+        radius = 3;
+      };
+    };
   };
 
   programs.swaylock = {

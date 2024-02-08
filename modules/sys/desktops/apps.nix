@@ -62,4 +62,22 @@
     keepassxc
     qbittorrent
   ];
+
+  wmApps = with pkgs; [
+    (
+      pkgs.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
+    libnotify
+    networkmanagerapplet
+    swaylock-effects
+    swayidle
+    grimblast
+    udiskie
+    catppuccin-gtk
+    wlay
+    wlr-randr
+    blueman
+  ];
 }

@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   apps = import ./apps.nix {inherit pkgs;};
 in {
   imports = [
@@ -37,22 +33,5 @@ in {
 
   xdg.portal.enable = true;
 
-  environment.systemPackages =
-    (with pkgs; [
-      (
-        pkgs.waybar.overrideAttrs (oldAttrs: {
-          mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-        })
-      )
-      swww
-      wofi
-      libnotify
-      networkmanagerapplet
-      swaylock-effects
-      swayidle
-      grimblast
-      udiskie
-      catppuccin-gtk
-    ])
-    ++ apps.gnomeApps;
+  environment.systemPackages = apps.wmApps ++ apps.gnomeApps;
 }

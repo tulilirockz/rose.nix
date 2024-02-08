@@ -29,7 +29,6 @@
       inherit user_wallpaper;
       inherit lib;
     })
-   
   ];
 
   programs.home-manager.enable = true;

@@ -46,11 +46,5 @@
 
   services.onedrive.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    virt-manager
-    cage
-    distrobox
-    waydroid
-    home-manager
-  ];
+  security.pam.services.${main_username}.showMotd = true;
 }

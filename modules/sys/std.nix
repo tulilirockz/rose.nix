@@ -62,15 +62,30 @@
   security.sudo.enable = false;
   security.sudo-rs.enable = true;
 
-  environment.systemPackages = with pkgs; [home-manager git bubblewrap just];
+  environment.systemPackages = with pkgs; [
+    home-manager
+    git
+    bubblewrap
+    just
+    waypipe
+    cage
+    distrobox
+  ];
 
   programs.rust-motd.enable = true;
   programs.rust-motd.settings = {
     banner = {
-      color = "magenta";
-      command = "${pkgs.busybox}/bin/busybox hostname | ${pkgs.figlet}/bin/figlet";
+      command = "${pkgs.busybox}/bin/busybox hostname | ${pkgs.figlet}/bin/figlet | ${pkgs.lolcat}/bin/lolcat -p 2 -S 35";
+    };
+    memory = {
+      swap_pos = "below";
+    };
+    uptime = {
+      prefix = "Up";
     };
   };
+
+  users.motdFile = "/var/lib/rust-motd/motd";
 
   boot.kernel.sysctl = {
     "kernel.sysrq" = 1;

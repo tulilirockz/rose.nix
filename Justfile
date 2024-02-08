@@ -4,6 +4,10 @@ USER := `whoami`
 _default:
   @just --choose
 
+all-switch:
+  @just sys-switch
+  @just home-switch
+
 sys-upgrade EXTRA_FLAGS:
 	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo switch --flake .#{{CURRENT_MACHINE}} --upgrade --update-input nixpkgs {{EXTRA_FLAGS}}
 
