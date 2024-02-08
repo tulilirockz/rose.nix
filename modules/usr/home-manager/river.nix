@@ -37,7 +37,6 @@
       riverctl map normal $mod Print spawn ${lib.getExe pkgs.grimblast} copy area
       riverctl map normal $mod C close
 
-
       for i in $(seq 1 9)
       do
           tags=$((1 << ($i - 1)))
@@ -55,7 +54,7 @@
           riverctl map normal $mod+Shift+Control $i toggle-view-tags $tags
       done
       tags1to9=$(((1 << 9) - 1))
-      riverctl map normal $mod Tab focus-previous-tags
+      
 
       for mode in normal locked
       do
@@ -80,6 +79,8 @@
           riverctl input $pointer pointer-accel 0
       done
 
+      riverctl map normal $mod Tab focus-previous-tags
+      
       riverctl map-pointer normal $mod BTN_LEFT move-view
       riverctl map-pointer normal $mod BTN_RIGHT resize-view
       riverctl map-pointer normal $mod BTN_MIDDLE toggle-float
@@ -89,6 +90,10 @@
 
       riverctl map normal $mod Up focus-view next
       riverctl map normal $mod Down focus-view previous
+     
+      riverctl map normal $mod J focus-view next
+      riverctl map normal $mod K focus-view previous
+
 
       riverctl map normal $mod+Shift Period send-to-output next
       riverctl map normal $mod+Shift Comma send-to-output previous
@@ -118,17 +123,17 @@
       riverctl map normal $mod+Shift 9 keyboard-layout br
       riverctl map normal $mod+Shift 0 keyboard-layout us
 
-      riverctl map normal Super Left send-layout-cmd rivertile "main-ratio -0.05"
-      riverctl map normal Super Right send-layout-cmd rivertile "main-ratio +0.05"
+      riverctl map normal $mod Left send-layout-cmd rivertile "main-ratio -0.05"
+      riverctl map normal $mod Right send-layout-cmd rivertile "main-ratio +0.05"
 
-      riverctl map normal Super H send-layout-cmd rivertile "main-ratio -0.05"
-      riverctl map normal Super L send-layout-cmd rivertile "main-ratio +0.05"
+      riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
+      riverctl map normal $mod L send-layout-cmd rivertile "main-ratio +0.05"
 
-      riverctl map normal Super+Shift Left send-layout-cmd rivertile "main-count +1"
-      riverctl map normal Super+Shift Right send-layout-cmd rivertile "main-count -1"
+      riverctl map normal $mod+Shift Left send-layout-cmd rivertile "main-count +1"
+      riverctl map normal $mod+Shift Right send-layout-cmd rivertile "main-count -1"
 
-      riverctl map normal Super+Shift H send-layout-cmd rivertile "main-count +1"
-      riverctl map normal Super+Shift L send-layout-cmd rivertile "main-count -1"
+      riverctl map normal $mod+Shift H send-layout-cmd rivertile "main-count +1"
+      riverctl map normal $mod+Shift L send-layout-cmd rivertile "main-count -1"
 
       riverctl set-repeat 50 300
 
