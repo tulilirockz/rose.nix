@@ -1,5 +1,11 @@
 {config, ...}:
-with config.colorScheme.palette; ''
+with config.colorScheme.palette; 
+
+let
+  left_bubble = "15px 50px 15px 50px";
+  right_bubble = "50px 15px 50px 15px";
+in
+  ''
   * {
     font-size: 16px;
     font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
@@ -60,30 +66,30 @@ with config.colorScheme.palette; ''
     padding: 2px 20px;
   }
   #memory {
-    color: #${base0F};
+    color: #${base0D};
     background: #${base00};
-    border-radius: 15px 50px 15px 50px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
   #clock {
-    color: #${base0B};
+    color: #${base0D};
     background: #${base00};
-    border-radius: 15px 50px 15px 50px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
   #cpu {
-    color: #${base07};
+    color: #${base0D};
     background: #${base00};
-    border-radius: 50px 15px 50px 15px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
   #disk {
     color: #${base07};
     background: #${base00};
-    border-radius: 15px 50px 15px 50px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
@@ -95,9 +101,9 @@ with config.colorScheme.palette; ''
     padding: 2px 20px;
   }
   #network {
-    color: #${base09};
+    color: #${base0D};
     background: #${base00};
-    border-radius: 50px 15px 50px 15px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
@@ -111,14 +117,14 @@ with config.colorScheme.palette; ''
   #pulseaudio {
     color: #${base0D};
     background: #${base00};
-    border-radius: 50px 15px 50px 15px;
+    border-radius: ${right_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
   #custom-notification {
-    color: #${base0C};
+    color: #${base0D};
     background: #${base00};
-    border-radius: 15px 50px 15px 50px;
+    border-radius: ${left_bubble};
     margin: 5px;
     padding: 2px 20px;
   }
@@ -132,7 +138,7 @@ with config.colorScheme.palette; ''
   #custom-logout {
     color: #${base0C};
     background: #${base00};
-    border-radius: 15px 50px 15px 50px;
+    border-radius: ${left_bubble};
     margin: 5px;
     padding: 2px 20px;
   }

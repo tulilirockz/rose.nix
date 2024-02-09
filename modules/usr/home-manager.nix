@@ -71,7 +71,6 @@
     upscayl
     czkawka
     lagrange
-    obs-studio
     vscodium
     podman-desktop
     audacity
@@ -84,10 +83,23 @@
     just
     iotop
     nix-prefetch-git
+    kind
   ];
 
   programs.fish.enable = false;
   programs.nushell.enable = true;
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-vaapi
+      obs-vkcapture
+      obs-gstreamer
+      input-overlay
+      obs-pipewire-audio-capture
+    ];
+  };
 
   programs.fzf.enable = true;
   programs.fzf.tmux.enableShellIntegration = true;
@@ -97,6 +109,21 @@
     enableFishIntegration = true;
     enableNushellIntegration = true;
     enableBashIntegration = true;
+  };
+
+  programs.yazi = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  programs.broot = {
+    enable = true;
+    enableNushellIntegration = true;
   };
 
   programs.tmux = {
@@ -181,6 +208,7 @@
     ".gitconfig".source = ./home-manager/dotfiles/gitconfig;
   };
 
+  programs.nushell.extraEnv = "$env.EDITOR = nvim";
   home.sessionVariables = {
     EDITOR = "nvim";
     DOCKER_HOST = "unix:///run/podman/podman.sock";

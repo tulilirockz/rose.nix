@@ -2,14 +2,19 @@
   pkgs,
   lib,
   ...
-}: [
+}: 
+
+let
+  consoleRun = "${lib.getExe pkgs.alacritty} -e";
+in
+[
   {
     layer = "top";
     position = "top";
 
-    modules-left = ["hyprland/window"];
-    modules-center = ["network" "pulseaudio" "cpu" "hyprland/workspaces" "memory" "disk" "clock"];
+    modules-left = ["network" "pulseaudio" "cpu" "memory" "disk" "clock"];
     modules-right = ["custom/notification" "custom/logout" "tray"];
+
     "hyprland/workspaces" = {
       format = "{icon}";
       format-icons = {
@@ -21,7 +26,7 @@
     "clock" = {
       format = "{: %I:%M %p}";
       tooltip = false;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${pkgs.peaclock}/bin/peaclock\"";
+      on-click = "${consoleRun} \"${pkgs.peaclock}/bin/peaclock\"";
     };
     "hyprland/window" = {
       max-length = 60;
@@ -31,18 +36,18 @@
       interval = 5;
       format = "🐏{}%";
       tooltip = true;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
+      on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "cpu" = {
       interval = 5;
       format = " {usage:2}%";
       tooltip = true;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
+      on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "disk" = {
       format = "  {free}";
       tooltip = true;
-      on-click = "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.btop}\"";
+      on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "network" = {
       format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];

@@ -79,5 +79,12 @@
     wlay
     wlr-randr
     blueman
+    lf
+    mpv
+    zathura
+    newsboat
+    vieb
+    imv
+    kanshi
   ];
 }

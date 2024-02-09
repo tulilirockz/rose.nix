@@ -16,8 +16,8 @@
     "$mod" = "SUPER";
     "$browser" = "${lib.getExe pkgs.firefox}";
     "$terminal" = "${lib.getExe pkgs.alacritty}";
-    "$file" = "${pkgs.gnome.nautilus}/bin/nautilus";
-    "$selector" = "${lib.getExe pkgs.wofi}";
+    "$file" = "$terminal -e \"${lib.getExe pkgs.yazi}\"";
+    "$selector" = "${lib.getExe pkgs.fuzzel}";
     "$screenshot" = "${lib.getExe pkgs.grimblast}";
 
     windowrulev2 = "nomaximizerequest, class:.*";
@@ -55,7 +55,7 @@
         "$mod, Q, exec, $terminal"
         "$mod, E, exec, $file"
         "$mod, L, exec, ${lib.getExe pkgs.swaylock-effects}"
-        "$mod, R, exec, $selector --show drun --exec-start --show-icons"
+        "$mod, R, exec, $selector"
         ", Print, exec, $screenshot copy area"
         "$mod, V, togglefloating"
         "$mod, X, fullscreen"

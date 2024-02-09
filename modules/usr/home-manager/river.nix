@@ -31,10 +31,10 @@
       riverctl map normal $mod F spawn ${lib.getExe pkgs.firefox}
       riverctl map normal $mod Q spawn ${lib.getExe pkgs.alacritty}
       riverctl map normal $mod L spawn ${lib.getExe pkgs.swaylock-effects}
-      riverctl map normal $mod E spawn ${pkgs.gnome.nautilus}/bin/nautilus
+      riverctl map normal $mod E spawn "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.nushell} -e ${lib.getExe pkgs.yazi}\""
       riverctl map normal $mod R spawn ${lib.getExe pkgs.fuzzel}
       riverctl map normal $mod M spawn ${lib.getExe pkgs.wlogout}
-      riverctl map normal $mod Print spawn ${lib.getExe pkgs.grimblast} copy area
+      riverctl map normal None Print spawn "${lib.getExe pkgs.grimblast} copy area"
       riverctl map normal $mod C close
 
       for i in $(seq 1 9)
