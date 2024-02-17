@@ -38,7 +38,7 @@
       inherit pkgs;
       module = import ./modules/usr/home-manager/nixvim.nix;
     };
-    theme = "catppuccin-mocha";
+    theme = "paraiso";
   in {
     packages.${system} = {
       neovim = nvim;

@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   user_wallpaper,
@@ -14,11 +15,7 @@
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' &
-      ${lib.getExe (
-        pkgs.waybar.overrideAttrs (oldAttrs: {
-          mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-        })
-      )}
+      ${lib.getExe pkgs.waybar}
     '';
 
     "river/init".executable = true;
@@ -27,11 +24,12 @@
       amixer="${pkgs.alsa-utils}/bin/amixer"
       light="${lib.getExe pkgs.light}"
       playerctl="${lib.getExe pkgs.playerctl}"
+      terminal="${pkgs.foot}/bin/footclient"
 
       riverctl map normal $mod F spawn ${lib.getExe pkgs.firefox}
-      riverctl map normal $mod Q spawn ${lib.getExe pkgs.alacritty}
+      riverctl map normal $mod Q spawn $terminal
       riverctl map normal $mod L spawn ${lib.getExe pkgs.swaylock-effects}
-      riverctl map normal $mod E spawn "${lib.getExe pkgs.alacritty} -e \"${lib.getExe pkgs.nushell} -e ${lib.getExe pkgs.yazi}\""
+      riverctl map normal $mod E spawn "$terminal -e \"${lib.getExe pkgs.yazi}\""
       riverctl map normal $mod R spawn ${lib.getExe pkgs.fuzzel}
       riverctl map normal $mod M spawn ${lib.getExe pkgs.wlogout}
       riverctl map normal None Print spawn "${lib.getExe pkgs.grimblast} copy area"
@@ -54,7 +52,7 @@
           riverctl map normal $mod+Shift+Control $i toggle-view-tags $tags
       done
       tags1to9=$(((1 << 9) - 1))
-      
+
 
       for mode in normal locked
       do
@@ -80,7 +78,7 @@
       done
 
       riverctl map normal $mod Tab focus-previous-tags
-      
+
       riverctl map-pointer normal $mod BTN_LEFT move-view
       riverctl map-pointer normal $mod BTN_RIGHT resize-view
       riverctl map-pointer normal $mod BTN_MIDDLE toggle-float
@@ -90,7 +88,7 @@
 
       riverctl map normal $mod Up focus-view next
       riverctl map normal $mod Down focus-view previous
-     
+
       riverctl map normal $mod J focus-view next
       riverctl map normal $mod K focus-view previous
 
@@ -143,6 +141,12 @@
       riverctl rule-add -app-id "wlogout" csd
       riverctl rule-add -app-id "wlogout" fullscreen
       riverctl default-layout rivertile
+
+      riverctl border-color-focused 0x${config.colorScheme.palette.base0E}FF
+      riverctl border-color-unfocused 0x${config.colorScheme.palette.base00}FF
+      riverctl border-color-urgent 0x${config.colorScheme.palette.base07}FF
+
+      riverctl map-switch normal lid close "systemctl suspend"
 
       $HOME/.config/river/autostart.sh &
       rivertile -view-padding 6 -outer-padding 6

@@ -7,7 +7,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/sys/desktops/hyprland.nix
-    ../../modules/sys/desktops/river.nix
     ../../modules/sys/std.nix
     (import ../../modules/usr/user.nix {
       inherit pkgs;

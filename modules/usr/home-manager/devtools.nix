@@ -1,12 +1,13 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }: let
-  cfg = config.programs.managed-neovim;
+  cfg = config.programs.devtools;
 in {
   options = {
-    programs.managed-neovim.enable = lib.mkEnableOption {
+    programs.devtools.enable = lib.mkEnableOption {
       description = "Enable my managed development configuration";
       example = true;
       default = false;
@@ -20,5 +21,35 @@ in {
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
+    home.packages = with pkgs; [
+      lazygit
+      darcs
+      unzip
+      just
+      git
+      tmux
+      ollama
+      buildah
+      gh
+      glab
+      fd
+      ripgrep
+      nixos-generators
+      podman-compose
+      docker-compose
+      tldr
+      manix
+      vscodium
+      podman-desktop
+      godot_4
+      gitg
+      gource
+      scc
+      just
+      iotop
+      nix-prefetch-git
+      kind
+      pre-commit
+    ];
   };
 }

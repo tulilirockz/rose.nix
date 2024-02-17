@@ -53,7 +53,7 @@
       }
       {
         key = "<leader>t";
-        action = "<cmd>Lspsaga term_toggle<CR>";
+        action = "<cmd>term<CR>";
         options.silent = true;
       }
       {
@@ -81,6 +81,11 @@
         action = "<cmd>Lspsaga goto_definition<CR>";
         options.silent = true;
       }
+      {
+        key = "<leader><space>";
+        action = "<cmd>Startify<CR>";
+        options.silent = true;
+      }
     ];
 
     editorconfig.enable = true;
@@ -99,6 +104,17 @@
       lsp-format.enable = true;
       nix.enable = true;
       nvim-colorizer.enable = true;
+      lint.enable = true;
+      molten.enable = true;
+
+      netman.enable = true;
+
+      startify = {
+        enable = true;
+        enableUnsafe = true;
+        changeToVcsRoot = true;
+        updateOldFiles = true;
+      };
 
       lspsaga = {
         enable = true;
@@ -145,10 +161,6 @@
         enable = true;
         keymaps = {
           silent = true;
-          diagnostic = {
-            "<leader>k" = "goto_prev";
-            "<leader>j" = "goto_next";
-          };
         };
         servers = {
           bashls.enable = true;

@@ -2,14 +2,12 @@
   inputs,
   main_username,
   user_wallpaper,
-  theme,
   config,
   pkgs,
   lib,
   ...
 }: {
   imports = [
-    ./home-manager/dconf-theme.nix
     ./home-manager/devtools.nix
     (import ./home-manager/hyprland.nix {
       inherit pkgs;
@@ -36,58 +34,36 @@
   home.homeDirectory = "/home/${main_username}";
   home.stateVersion = "24.05";
 
-  colorScheme = inputs.nix-colors.colorSchemes."${theme}";
+  colorScheme = (inputs.nix-colors.lib.contrib {inherit pkgs;}).colorSchemeFromPicture {
+    path = ../../assets/lockscreen.png;
+    variant = "dark";
+  };
+
   xdg.configFile."libvirt/qemu.conf".text = ''
     nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
   '';
   xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [
-    lazygit
-    darcs
-    unzip
-    just
-    git
-    tmux
-    ollama
-    buildah
-    gh
-    glab
-    wl-clipboard
-    fd
-    ripgrep
-    nixos-generators
-    podman-compose
-    docker-compose
-    tldr
-    manix
-    fira-code-nerdfont
-    mumble
-    catppuccin-gtk
-    cantarell-fonts
-    stremio
-    krita
-    halftone
-    upscayl
     czkawka
+    mumble
     lagrange
-    vscodium
-    podman-desktop
     audacity
     inkscape
+    cantarell-fonts
+    upscayl
+    stremio
+    halftone
     krita
-    godot_4
-    gitg
-    gource
-    scc
-    just
-    iotop
-    nix-prefetch-git
-    kind
+    fira-code-nerdfont
   ];
 
-  programs.fish.enable = false;
   programs.nushell.enable = true;
+
+  programs.zoxide = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
 
   programs.obs-studio = {
     enable = true;
@@ -160,6 +136,28 @@
     ];
   };
 
+  programs.foot = {
+    enable = true;
+    server.enable = true;
+    settings = {
+      main = {
+        font = "${config.programs.alacritty.settings.font.normal.family}:size=12";
+        shell = pkgs.lib.getExe pkgs.nushell;
+        title = "amogus";
+        locked-title = true;
+        bold-text-in-bright = true;
+      };
+      environment = {
+        "EDITOR" = lib.getExe pkgs.neovim;
+      };
+      colors = with config.colorScheme.palette; {
+        alpha = 0.7;
+        background = base00;
+        foreground = base05;
+      };
+    };
+  };
+
   programs.alacritty.enable = true;
   programs.alacritty.settings = {
     window = {
@@ -214,7 +212,7 @@
     DOCKER_HOST = "unix:///run/podman/podman.sock";
   };
 
-  programs.dconf-theme.enable = true;
-  programs.dconf-theme.theme = "mine";
-  programs.managed-neovim.enable = true;
+  programs.devtools.enable = true;
+
+  dconf.settings = import ./home-manager/dconf-themes/mine.nix;
 }

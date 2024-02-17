@@ -2,12 +2,9 @@
   pkgs,
   lib,
   ...
-}: 
-
-let
-  consoleRun = "${lib.getExe pkgs.alacritty} -e";
-in
-[
+}: let
+  consoleRun = "${pkgs.foot}/bin/footclient -e";
+in [
   {
     layer = "top";
     position = "top";

@@ -64,11 +64,6 @@
   ];
 
   wmApps = with pkgs; [
-    (
-      pkgs.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-      })
-    )
     libnotify
     networkmanagerapplet
     swaylock-effects
@@ -86,5 +81,9 @@
     vieb
     imv
     kanshi
+    wl-clipboard
+    mediainfo
+    exiftool
+    swayimg
   ];
 }
