@@ -14,7 +14,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    programs.nixvim = lib.mkMerge [{enable = true;} (import ./nixvim.nix).config];
+    programs.nixvim = lib.mkMerge [{enable = true;} (import ./nixvim.nix {inherit config;}).config];
     programs.direnv = {
       enable = true;
       enableNushellIntegration = true;
@@ -50,6 +50,7 @@ in {
       nix-prefetch-git
       kind
       pre-commit
+      atuin
     ];
   };
 }

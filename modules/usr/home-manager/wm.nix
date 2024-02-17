@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  user_wallpaper,
+  preferences,
   ...
 }: {
   programs.wlogout = {
@@ -12,11 +12,6 @@
       inherit config;
       inherit pkgs;
     };
-  };
-
-  programs.wofi = {
-    enable = true;
-    style = import ./wofi-style.nix {inherit config;};
   };
 
   programs.fuzzel = {
@@ -43,9 +38,9 @@
     enable = true;
     package = pkgs.swaylock-effects;
     settings = with config.colorScheme.palette; {
-      image = user_wallpaper;
+      image = preferences.user_wallpaper;
       clock = true;
-      font = config.programs.alacritty.settings.font.normal.family;
+      font = preferences.font_family;
       ignore-empty-password = true;
       indicator = true;
       indicator-capslock = true;
@@ -97,5 +92,5 @@
     };
   };
 
-  xdg.configFile."swaync/style.css".text = import ./swaync-theme.nix {inherit config;};
+  xdg.configFile."swaync/style.css".text = import ./swaync-theme.nix {inherit config; inherit preferences;};
 }

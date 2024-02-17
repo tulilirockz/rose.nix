@@ -27,76 +27,65 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config = {allowUnfree = true;};
+    pkgs = import nixpkgs {inherit system;};
+    preferences = rec {
+      theme = "catppucin";
+      main_username = "tulili";
+      font_family = "FiraCode Nerd Font Mono";
+      wallpaper = ./assets/lockscreen.png;
+      user_wallpaper = "${wallpaper}";
     };
-    main_username = "tulili";
-    hosts-folder = "hosts";
-    nixvim' = nixvim.legacyPackages.${system};
-    nvim = nixvim'.makeNixvimWithModule {
-      inherit pkgs;
-      module = import ./modules/usr/home-manager/nixvim.nix;
-    };
-    theme = "paraiso";
   in {
     packages.${system} = {
-      neovim = nvim;
+      neovim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = import ./modules/usr/home-manager/nixvim.nix { config = {colorScheme.palette = nix-colors.colorScheme.catppucin;}; };
+      };
       default = self.packages.${system}.neovim;
+      nvim = self.packages.${system}.neovim;
     };
 
     nixosConfigurations = {
       studio = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
-        modules = [
-          ({config, ...}:
-            import ./${hosts-folder}/studio/configuration.nix {
-              inherit pkgs;
-              inherit config;
-              inherit main_username;
-            })
-        ];
+        specialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [./hosts/studio/configuration.nix];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
-        modules = [
-          ({config, ...}:
-            import ./${hosts-folder}/light/configuration.nix {
-              inherit pkgs;
-              inherit config;
-              inherit main_username;
-            })
-        ];
+        specialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+        modules = [import ./hosts/light/configuration.nix];
       };
       live-system = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-          ./${hosts-folder}/live-system/configuration.nix
+          ./hosts/live-system/configuration.nix
         ];
       };
     };
 
-    homeConfigurations.${main_username} = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.${preferences.main_username} = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
+
+      extraSpecialArgs = {
+        inherit inputs;
+        inherit preferences;
+      };
 
       modules = [
         hyprland.homeManagerModules.default
         nix-colors.homeManagerModules.default
         nix-flatpak.homeManagerModules.nix-flatpak
         nixvim.homeManagerModules.nixvim
-        ({config, ...}:
-          import ./modules/usr/home-manager.nix {
-            inherit pkgs;
-            inherit (pkgs) lib;
-            inherit config;
-            inherit main_username;
-            inherit theme;
-            inherit inputs;
-            user_wallpaper = "~/.config/wallpaper.png";
-          })
+        ./modules/usr/home-manager.nix
       ];
     };
 

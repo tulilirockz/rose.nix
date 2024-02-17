@@ -2,19 +2,20 @@
   config,
   pkgs,
   lib,
-  user_wallpaper,
+  preferences,
   ...
 }: {
   xdg.configFile = {
     "river/autostart.sh".executable = true;
     "river/autostart.sh".text = ''
       ${lib.getExe pkgs.networkmanagerapplet} --indicator &
-      ${lib.getExe pkgs.swaybg} -m fill -i ${user_wallpaper} &
+      ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.wallpaper} &
       ${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon -r --unlock &
       ${lib.getExe pkgs.swaynotificationcenter} &
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' &
+      ${lib.getExe pkgs.foot} --server &
       ${lib.getExe pkgs.waybar}
     '';
 

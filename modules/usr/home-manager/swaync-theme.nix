@@ -1,9 +1,9 @@
-{config, ...}:
+{config, preferences, ...}:
 with config.colorScheme.palette; ''
   * {
     all: unset;
     font-size: 14px;
-    font-family: "#${config.programs.alacritty.settings.font.normal.family}";
+    font-family: "#${preferences.font_family}";
     transition: 200ms;
   }
 

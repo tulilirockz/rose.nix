@@ -2,24 +2,26 @@
   config,
   pkgs,
   lib,
-  user_wallpaper,
+  preferences,
   ...
 }: {
   wayland.windowManager.hyprland.extraConfig = "exec-once=${lib.getExe (pkgs.writeScriptBin "initial_script.sh" ''
     ${lib.getExe pkgs.networkmanagerapplet} --indicator &
-    ${lib.getExe pkgs.hyprpaper} &
+    ${lib.getExe (pkgs.hyprpaper.overrideAttrs (oldAttrs: {patches = [../../../assets/bebea-hyprpaper.patch];}))} &
     ${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon -r --unlock &
     ${lib.getExe pkgs.swaynotificationcenter} &
     ${pkgs.openssh}/bin/ssh-agent &
     ${pkgs.udiskie}/bin/udiskie &
     ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' &
+    ${lib.getExe pkgs.foot} --server &
     ${lib.getExe pkgs.waybar}
   '')}";
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ${user_wallpaper}
-    wallpaper = HDMI-A-1,${user_wallpaper}
-    splash = false
+    preload = ${preferences.user_wallpaper}
+    wallpaper = HDMI-A-1,${preferences.user_wallpaper}
+    splash = true 
+    ipc = off
   '';
 
   wayland.windowManager.hyprland.enable = true;
@@ -27,11 +29,9 @@
     "$mod" = "SUPER";
     "$browser" = "${lib.getExe pkgs.firefox}";
     "$terminal" = "${pkgs.foot}/bin/footclient";
-    "$file" = "$terminal -e \"${lib.getExe pkgs.yazi}\"";
+    "$file" = "${pkgs.foot}/bin/footclient -e ${lib.getExe pkgs.yazi}";
     "$selector" = "${lib.getExe pkgs.fuzzel}";
     "$screenshot" = "${lib.getExe pkgs.grimblast}";
-
-    windowrulev2 = "nomaximizerequest, class:.*";
 
     general = with config.colorScheme.palette; {
       "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
@@ -59,9 +59,9 @@
       shadow_range = 4;
       shadow_render_power = 3;
     };
-    
+
     animation = "workspaces,1,8,default,slidefade 20%";
-    
+
     bind =
       [
         "$mod, F, exec, $browser"

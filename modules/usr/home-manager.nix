@@ -1,7 +1,6 @@
 {
   inputs,
-  main_username,
-  user_wallpaper,
+  preferences,
   config,
   pkgs,
   lib,
@@ -9,29 +8,14 @@
 }: {
   imports = [
     ./home-manager/devtools.nix
-    (import ./home-manager/hyprland.nix {
-      inherit pkgs;
-      inherit config;
-      inherit user_wallpaper;
-      inherit lib;
-    })
-    (import ./home-manager/river.nix {
-      inherit pkgs;
-      inherit config;
-      inherit user_wallpaper;
-      inherit lib;
-    })
-    (import ./home-manager/wm.nix {
-      inherit pkgs;
-      inherit config;
-      inherit user_wallpaper;
-      inherit lib;
-    })
+    ./home-manager/hyprland.nix 
+    ./home-manager/river.nix
+    ./home-manager/wm.nix
   ];
 
   programs.home-manager.enable = true;
-  home.username = main_username;
-  home.homeDirectory = "/home/${main_username}";
+  home.username = preferences.main_username;
+  home.homeDirectory = "/home/${preferences.main_username}";
   home.stateVersion = "24.05";
 
   colorScheme = (inputs.nix-colors.lib.contrib {inherit pkgs;}).colorSchemeFromPicture {
@@ -138,10 +122,10 @@
 
   programs.foot = {
     enable = true;
-    server.enable = true;
+    server.enable = false;
     settings = {
       main = {
-        font = "${config.programs.alacritty.settings.font.normal.family}:size=12";
+        font = "${preferences.font_family}:size=12";
         shell = pkgs.lib.getExe pkgs.nushell;
         title = "amogus";
         locked-title = true;
@@ -156,30 +140,6 @@
         foreground = base05;
       };
     };
-  };
-
-  programs.alacritty.enable = true;
-  programs.alacritty.settings = {
-    window = {
-      decorations = "Full";
-      title = "Amogus";
-      opacity = 0.8;
-      dynamic_title = true;
-    };
-    scrolling = {
-      history = 10000;
-    };
-    font = {
-      normal.family = "FiraCode Nerd Font Mono";
-      bold.family = config.programs.alacritty.settings.font.normal.family;
-      italic.family = config.programs.alacritty.settings.font.normal.family;
-      bold_italic.family = config.programs.alacritty.settings.font.normal.family;
-    };
-    #shell = {
-    #  program = "${pkgs.lib.getExe pkgs.bash}";
-    #  args = [ "--login" "-c" "tmux attach -2 || tmux -2" ];
-    #};
-    colors = import ./home-manager/alacritty/catppuccin.nix;
   };
 
   home.pointerCursor = {

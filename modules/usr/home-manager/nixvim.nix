@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   config = {
     globals.mapleader = ",";
 
@@ -11,9 +11,9 @@
       shiftwidth = 2;
     };
 
-    colorschemes.catppuccin = {
+    colorschemes.base16 = {
       enable = true;
-      flavour = "mocha";
+      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") config.colorScheme.palette;
     };
 
     keymaps = [
@@ -108,6 +108,8 @@
       molten.enable = true;
 
       netman.enable = true;
+
+      gitblame.enable = true;
 
       startify = {
         enable = true;
