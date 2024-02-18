@@ -14,13 +14,27 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    programs.nixvim = lib.mkMerge [{enable = true;} (import ./nixvim.nix {inherit config;}).config];
+    programs.nixvim = lib.mkMerge [
+      {enable = true;}
+      (import ./nixvim.nix {
+        inherit pkgs;
+        inherit config;
+      })
+      .config
+    ];
+
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+    };
+
     programs.direnv = {
       enable = true;
       enableNushellIntegration = true;
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
+
     home.packages = with pkgs; [
       lazygit
       darcs
@@ -39,7 +53,6 @@ in {
       docker-compose
       tldr
       manix
-      vscodium
       podman-desktop
       godot_4
       gitg
@@ -51,6 +64,8 @@ in {
       kind
       pre-commit
       atuin
+      fh
+      (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };
 }

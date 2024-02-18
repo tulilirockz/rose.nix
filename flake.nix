@@ -2,7 +2,7 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=a4d4fe8c5002202493e87ec8dbc91335ff55552c";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -39,7 +39,10 @@
     packages.${system} = {
       neovim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
         inherit pkgs;
-        module = import ./modules/usr/home-manager/nixvim.nix { config = {colorScheme.palette = nix-colors.colorScheme.catppucin;}; };
+        module = import ./modules/usr/home-manager/nixvim.nix {
+          inherit pkgs;
+          config = {colorScheme.palette = nix-colors.colorScheme.catppucin;};
+        };
       };
       default = self.packages.${system}.neovim;
       nvim = self.packages.${system}.neovim;

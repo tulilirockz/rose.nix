@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   config = {
     globals.mapleader = ",";
 
@@ -15,6 +19,10 @@
       enable = true;
       customColorScheme = builtins.mapAttrs (attr: value: "#${value}") config.colorScheme.palette;
     };
+
+    extraPlugins = with pkgs.vimPlugins; [
+      nvim-remote-containers
+    ];
 
     keymaps = [
       {
@@ -106,10 +114,14 @@
       nvim-colorizer.enable = true;
       lint.enable = true;
       molten.enable = true;
-
       netman.enable = true;
-
       gitblame.enable = true;
+
+      nvim-bqf = {
+        enable = true;
+        autoEnable = true;
+        autoResizeHeight = true;
+      };
 
       startify = {
         enable = true;
@@ -171,6 +183,9 @@
           rust-analyzer.enable = true;
           rust-analyzer.installCargo = true;
           rust-analyzer.installRustc = true;
+          dockerls.enable = true;
+          tailwindcss.enable = true;
+          yamlls.enable = true;
           zls.enable = true;
           nil_ls.enable = true;
           pyright = {

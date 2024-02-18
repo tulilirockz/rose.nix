@@ -92,5 +92,8 @@
     };
   };
 
-  xdg.configFile."swaync/style.css".text = import ./swaync-theme.nix {inherit config; inherit preferences;};
+  xdg.configFile."swaync/style.css".text = import ./swaync-theme.nix {
+    inherit config;
+    inherit preferences;
+  };
 }

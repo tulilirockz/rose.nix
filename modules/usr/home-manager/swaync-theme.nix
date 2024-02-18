@@ -1,4 +1,8 @@
-{config, preferences, ...}:
+{
+  config,
+  preferences,
+  ...
+}:
 with config.colorScheme.palette; ''
   * {
     all: unset;

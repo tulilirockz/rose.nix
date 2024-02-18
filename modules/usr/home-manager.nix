@@ -8,7 +8,7 @@
 }: {
   imports = [
     ./home-manager/devtools.nix
-    ./home-manager/hyprland.nix 
+    ./home-manager/hyprland.nix
     ./home-manager/river.nix
     ./home-manager/wm.nix
   ];
@@ -43,7 +43,73 @@
   ];
 
   programs.nushell.enable = true;
+  programs.nushell.extraConfig = with config.colorScheme.palette; ''
 
+    let base00 = "#${base00}"
+    let base01 = "#${base01}"
+    let base02 = "#${base02}"
+    let base03 = "#${base03}"
+    let base04 = "#${base04}"
+    let base05 = "#${base05}"
+    let base06 = "#${base06}"
+    let base07 = "#${base07}"
+    let base08 = "#${base08}"
+    let base09 = "#${base09}"
+    let base0a = "#${base0A}"
+    let base0b = "#${base0B}"
+    let base0c = "#${base0C}"
+    let base0d = "#${base0D}"
+    let base0e = "#${base0E}"
+    let base0f = "#${base0F}"
+
+      let base16_theme = {
+        separator: $base03
+        leading_trailing_space_bg: $base04
+        header: $base0b
+        date: $base0e
+        filesize: $base0d
+        row_index: $base0c
+        bool: $base08
+        int: $base0b
+        duration: $base08
+        range: $base08
+        float: $base08
+        string: $base04
+        nothing: $base08
+        binary: $base08
+        cellpath: $base08
+        hints: dark_gray
+
+        # shape_garbage: { fg: $base07 bg: $base08 attr: b} # base16 white on red
+        # but i like the regular white on red for parse errors
+        shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
+        shape_bool: $base0d
+        shape_int: { fg: $base0e attr: b}
+        shape_float: { fg: $base0e attr: b}
+        shape_range: { fg: $base0a attr: b}
+        shape_internalcall: { fg: $base0c attr: b}
+        shape_external: $base0c
+        shape_externalarg: { fg: $base0b attr: b}
+        shape_literal: $base0d
+        shape_operator: $base0a
+        shape_signature: { fg: $base0b attr: b}
+        shape_string: $base0b
+        shape_filepath: $base0d
+        shape_globpattern: { fg: $base0d attr: b}
+        shape_variable: $base0e
+        shape_flag: { fg: $base0d attr: b}
+        shape_custom: {attr: b}
+      }
+
+      $env.config.color_config = $base16_theme
+      $env.config.use_grid_icons = true
+      $env.config.footer_mode = always #always, never, number_of_rows, auto
+      $env.config.float_precision = 2
+      $env.config.use_ansi_coloring = true
+      $env.config.edit_mode = vi
+      $env.config.show_banner = false
+  '';
+  programs.nushell.extraEnv = "$env.EDITOR = nvim";
   programs.zoxide = {
     enable = true;
     enableNushellIntegration = true;
@@ -166,7 +232,6 @@
     ".gitconfig".source = ./home-manager/dotfiles/gitconfig;
   };
 
-  programs.nushell.extraEnv = "$env.EDITOR = nvim";
   home.sessionVariables = {
     EDITOR = "nvim";
     DOCKER_HOST = "unix:///run/podman/podman.sock";
