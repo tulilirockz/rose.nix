@@ -1,12 +1,14 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/sys/desktops/hyprland.nix
     ../../modules/sys/std.nix
+    ../../modules/sys/sunshine.nix
     ../../modules/usr/user.nix
   ];
 
@@ -19,6 +21,22 @@
   };
 
   networking.hostName = "studio";
+  networking.firewall = {
+    allowedUDPPorts = lib.mkForce [
+      51413 # Transmission
+      24800 # Input Leap
+    ];
+    allowedTCPPorts = lib.mkForce [
+      51413 # Transmission
+      24800 # Input Leap
+    ];
+    extraInputRules = ''
+      ip saddr 192.168.0.0/24 accept
+    '';
+    extraCommands = ''
+      iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
+    '';
+  };
 
   zramSwap.memoryPercent = 75;
 
@@ -42,12 +60,13 @@
       dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
+
     waydroid.enable = true;
     libvirtd.enable = true;
     incus.enable = true;
   };
 
   programs.virt-manager.enable = true;
-
+  programs.sunshine.enable = true;
   programs.steam.enable = true;
 }

@@ -27,16 +27,19 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
+
     pkgs = import nixpkgs {inherit system;};
+
     preferences = rec {
       theme = "catppucin";
       main_username = "tulili";
       font_family = "FiraCode Nerd Font Mono";
-      wallpaper = ./assets/lockscreen.png;
+      wallpaper = ./assets/surface.jpg;
       user_wallpaper = "${wallpaper}";
+      theme_type = "dark";
     };
   in {
-    packages.${system} = {
+    packages.${system} = rec {
       neovim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
         inherit pkgs;
         module = import ./modules/usr/home-manager/nixvim.nix {
@@ -44,8 +47,8 @@
           config = {colorScheme.palette = nix-colors.colorScheme.catppucin;};
         };
       };
-      default = self.packages.${system}.neovim;
-      nvim = self.packages.${system}.neovim;
+      default = neovim;
+      nvim = neovim;
     };
 
     nixosConfigurations = {

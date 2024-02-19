@@ -7,7 +7,7 @@ index 34f2720..8be05ca 100644
  
      if (**PRENDERSPLASH && getenv("HYPRLAND_INSTANCE_SIGNATURE")) {
 -        auto SPLASH = execAndGet("hyprctl splash");
-+        auto SPLASH = execAndGet("printf \"eu amo A BEBEA\"");
++        auto SPLASH = execAndGet("printf \"TE AMO BEBEA.\"");
          SPLASH.pop_back();
  
          Debug::log(LOG, "Rendering splash: %s", SPLASH.c_str());

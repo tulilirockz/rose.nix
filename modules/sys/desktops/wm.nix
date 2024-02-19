@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  preferences,
+  ...
+}: let
   apps = import ./apps.nix {inherit pkgs;};
 in {
   services.greetd.enable = true;
@@ -6,11 +10,11 @@ in {
     enable = true;
     settings = {
       background = {
-        path = ../../../assets/lockscreen.png;
-        fit = "Contain";
+        path = preferences.wallpaper;
+        fit = "";
       };
       GTK = {
-        application_prefer_dark_theme = true;
+        application_prefer_dark_theme = preferences.theme_type == "dark";
         cursor_theme_name = "Bibata-Modern-Classic";
         font_name = "Cantarell 12";
         icon_theme_name = "Adwaita";

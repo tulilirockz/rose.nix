@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
@@ -30,6 +26,7 @@
   };
   nixpkgs.config.allowUnfree = true;
 
+  networking.nftables.enable = false;
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
@@ -48,7 +45,16 @@
         51413 # Transmission
         24800 # Input Leap
       ];
-      allowedTCPPorts = config.networking.firewall.allowedUDPPorts;
+      allowedTCPPorts = [
+        51413 # Transmission
+        24800 # Input Leap
+      ];
+      extraInputRules = ''
+        ip saddr 192.168.0.0/24 accept
+      '';
+      extraCommands = ''
+        iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
+      '';
     };
   };
 

@@ -40,7 +40,6 @@
     pavucontrol
     loupe
     cantarell-fonts
-    fractal
     mumble
     impression
     onlyoffice-bin

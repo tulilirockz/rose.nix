@@ -19,8 +19,8 @@
   home.stateVersion = "24.05";
 
   colorScheme = (inputs.nix-colors.lib.contrib {inherit pkgs;}).colorSchemeFromPicture {
-    path = ../../assets/lockscreen.png;
-    variant = "dark";
+    path = preferences.wallpaper;
+    variant = preferences.theme_type;
   };
 
   xdg.configFile."libvirt/qemu.conf".text = ''
@@ -140,6 +140,13 @@
   programs.yazi = {
     enable = true;
     enableNushellIntegration = true;
+    settings = {
+      manager.prepend_keymap = {
+        on = ["<C-s>"];
+        exec = "shell \"$SHELL\" --block --confirm";
+        desc = "Open shell here";
+      };
+    };
   };
 
   programs.carapace = {

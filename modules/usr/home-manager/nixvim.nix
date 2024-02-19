@@ -6,6 +6,8 @@
   config = {
     globals.mapleader = ",";
 
+    enableMan = true;
+
     clipboard.register = "unnamedplus";
     clipboard.providers.wl-copy.enable = true;
 
@@ -22,7 +24,11 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       nvim-remote-containers
+      plenary-nvim
+      octo-nvim
     ];
+
+    extraConfigLua = import ./nixvim-octo-config.nix;
 
     keymaps = [
       {
@@ -142,6 +148,7 @@
       lualine = {
         enable = true;
         globalstatus = true;
+        extensions = ["fzf" "quickfix" "chadtree" "man" "symbols-outline"];
       };
 
       coq-nvim = {
