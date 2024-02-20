@@ -11,13 +11,8 @@
       ".gnupg"
       ".ssh"
       ".nixops"
-      ".local/share/keyrings"
-      ".local/share/atuin"
-      ".local/share/zoxide"
-      ".local/share/applications"
-      ".local/share/containers"
+      ".local/share"
       ".var"
-      ".local/share/direnv"
       {
         directory = ".local/share/Steam";
         method = "symlink";
