@@ -8,4 +8,5 @@
   home.homeDirectory = "/home/${preferences.main_username}";
   home.stateVersion = "24.05";
   programs.devtools.enable = true;
+  programs.clitools.enable = true;
 }

@@ -102,7 +102,7 @@
     };
 
     homeConfigurations = rec {
-      default = portable;
+      default = portable-strict;
 
       portable-full = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
