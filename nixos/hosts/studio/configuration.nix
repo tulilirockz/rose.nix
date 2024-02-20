@@ -1,15 +1,17 @@
 {
   config,
+  inputs,
   pkgs,
-  lib,
+  preferences,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/sys/desktops/hyprland.nix
-    ../../modules/sys/std.nix
-    ../../modules/sys/sunshine.nix
-    ../../modules/usr/user.nix
+    ../../modules/desktops/hyprland.nix
+    ../../modules/std.nix
+    ../../modules/sunshine.nix
+    ../../modules/user.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   system.stateVersion = "24.05";
@@ -21,22 +23,6 @@
   };
 
   networking.hostName = "studio";
-  networking.firewall = {
-    allowedUDPPorts = lib.mkForce [
-      51413 # Transmission
-      24800 # Input Leap
-    ];
-    allowedTCPPorts = lib.mkForce [
-      51413 # Transmission
-      24800 # Input Leap
-    ];
-    extraInputRules = ''
-      ip saddr 192.168.0.0/24 accept
-    '';
-    extraCommands = ''
-      iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
-    '';
-  };
 
   zramSwap.memoryPercent = 75;
 
@@ -69,4 +55,22 @@
   programs.virt-manager.enable = true;
   programs.sunshine.enable = true;
   programs.steam.enable = true;
+  home-manager = {
+    extraSpecialArgs = {
+      inherit preferences;
+      inherit inputs;
+    };
+    useGlobalPkgs = true;
+    users = {
+      ${preferences.main_username} = {...}: {
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          inputs.nix-colors.homeManagerModules.default
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          inputs.nixvim.homeManagerModules.nixvim
+          ../../../home-manager/configurations/tulip-nixos.nix
+        ];
+      };
+    };
+  };
 }

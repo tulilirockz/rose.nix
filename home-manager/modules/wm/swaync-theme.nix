@@ -3,7 +3,7 @@
   preferences,
   ...
 }:
-with config.colorScheme.palette; ''
+with preferences.colorScheme.palette; ''
   * {
     all: unset;
     font-size: 14px;

@@ -7,7 +7,7 @@
   system.autoUpgrade = {
     enable = true;
     dates = "12:00";
-    flake = "${config.users.users.${preferences.main_username}.home}/opt/tulili.nix";
+    flake = "/etc/nixos";
     flags = [
       "--update-input"
       "nixpkgs"

@@ -30,19 +30,33 @@
 
     pkgs = import nixpkgs {inherit system;};
 
+    portable = {
+      enable = false;
+      user = "tulili";
+    };
+
     preferences = rec {
       theme = "catppucin";
-      main_username = "tulili";
+      main_username = if (portable.enable == true) then portable.user else "tulili";
       font_family = "FiraCode Nerd Font Mono";
       wallpaper = ./assets/surface.jpg;
       user_wallpaper = "${wallpaper}";
       theme_type = "dark";
+      theme_wallpaper = true;
+      colorScheme =
+        if (theme_wallpaper == true)
+        then
+          (nix-colors.lib.contrib {inherit pkgs;}).colorSchemeFromPicture {
+            path = preferences.wallpaper;
+            variant = preferences.theme_type;
+          }
+        else nix-colors.colorSchemes.${theme};
     };
   in {
     packages.${system} = rec {
       neovim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
         inherit pkgs;
-        module = import ./modules/usr/home-manager/nixvim.nix {
+        module = import ./home-manager/modules/nixvim/default.nix {
           inherit pkgs;
           config = {colorScheme.palette = nix-colors.colorScheme.catppucin;};
         };
@@ -54,12 +68,15 @@
     nixosConfigurations = {
       studio = nixpkgs.lib.nixosSystem {
         inherit system;
+
         specialArgs = {
           inherit inputs;
           inherit preferences;
         };
 
-        modules = [./hosts/studio/configuration.nix];
+        modules = [
+          ./nixos/hosts/studio/configuration.nix
+        ];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -67,32 +84,52 @@
           inherit inputs;
           inherit preferences;
         };
-        modules = [import ./hosts/light/configuration.nix];
+        modules = [import ./nixos/hosts/light/configuration.nix];
       };
       live-system = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-          ./hosts/live-system/configuration.nix
+          ./nixos/hosts/live-system/configuration.nix
         ];
       };
     };
 
-    homeConfigurations.${preferences.main_username} = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+    homeConfigurations = rec {
+      default = portable;
+      portable = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
 
-      extraSpecialArgs = {
-        inherit inputs;
-        inherit preferences;
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [
+          hyprland.homeManagerModules.default
+          nix-colors.homeManagerModules.default
+          nix-flatpak.homeManagerModules.nix-flatpak
+          nixvim.homeManagerModules.nixvim
+          ./home-manager/configurations/portable.nix
+        ];
       };
 
-      modules = [
-        hyprland.homeManagerModules.default
-        nix-colors.homeManagerModules.default
-        nix-flatpak.homeManagerModules.nix-flatpak
-        nixvim.homeManagerModules.nixvim
-        ./modules/usr/home-manager.nix
-      ];
+      ${preferences.main_username} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [
+          hyprland.homeManagerModules.default
+          nix-colors.homeManagerModules.default
+          nix-flatpak.homeManagerModules.nix-flatpak
+          nixvim.homeManagerModules.nixvim
+          ./home-manager/configurations/tulip-nixos.nix
+        ];
+      };
     };
 
     devShells.${system}.default = pkgs.mkShell {

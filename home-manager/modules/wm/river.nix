@@ -143,9 +143,9 @@
       riverctl rule-add -app-id "wlogout" fullscreen
       riverctl default-layout rivertile
 
-      riverctl border-color-focused 0x${config.colorScheme.palette.base0E}FF
-      riverctl border-color-unfocused 0x${config.colorScheme.palette.base00}FF
-      riverctl border-color-urgent 0x${config.colorScheme.palette.base07}FF
+      riverctl border-color-focused 0x${preferences.colorScheme.palette.base0E}FF
+      riverctl border-color-unfocused 0x${preferences.colorScheme.palette.base00}FF
+      riverctl border-color-urgent 0x${preferences.colorScheme.palette.base07}FF
 
       riverctl map-switch normal lid close "systemctl suspend"
 

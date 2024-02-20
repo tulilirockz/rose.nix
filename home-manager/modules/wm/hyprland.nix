@@ -33,7 +33,7 @@
     "$selector" = "${lib.getExe pkgs.fuzzel}";
     "$screenshot" = "${lib.getExe pkgs.grimblast}";
 
-    general = with config.colorScheme.palette; {
+    general = with preferences.colorScheme.palette; {
       "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
       "col.inactive_border" = "rgba(${base00}ff)";
     };

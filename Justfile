@@ -12,6 +12,9 @@ sys-upgrade EXTRA_FLAGS:
 	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo switch --flake .#{{CURRENT_MACHINE}} --upgrade --update-input nixpkgs {{EXTRA_FLAGS}}
 
 home-switch:
+	nix run nixpkgs#home-manager -- switch --substitute -b backup --flake .#portable
+
+home-switch-tulili:
 	nix run nixpkgs#home-manager -- switch --substitute -b backup --flake .#{{USER}}
 
 sys-switch:

@@ -9,7 +9,7 @@
     enable = true;
     layout = import ./wlogout/layout.nix;
     style = import ./wlogout/style.nix {
-      inherit config;
+      inherit preferences;
       inherit pkgs;
     };
   };
@@ -17,14 +17,14 @@
   programs.fuzzel = {
     enable = true;
     settings = {
-      colors = {
-        background = "${config.colorScheme.palette.base00}FF";
-        text = "${config.colorScheme.palette.base05}FF";
-        match = "${config.colorScheme.palette.base08}FF";
-        selection-match = "${config.colorScheme.palette.base09}FF";
-        selection = "${config.colorScheme.palette.base02}FF";
-        selection-text = "${config.colorScheme.palette.base0A}FF";
-        border = "${config.colorScheme.palette.base07}FF";
+      colors = with preferences.colorScheme.palette; {
+        background = "${base00}FF";
+        text = "${base05}FF";
+        match = "${base08}FF";
+        selection-match = "${base09}FF";
+        selection = "${base02}FF";
+        selection-text = "${base0A}FF";
+        border = "${base07}FF";
       };
 
       border = {
@@ -37,7 +37,7 @@
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
-    settings = with config.colorScheme.palette; {
+    settings = with preferences.colorScheme.palette; {
       image = preferences.user_wallpaper;
       clock = true;
       font = preferences.font_family;
@@ -84,7 +84,7 @@
   programs.waybar = {
     enable = true;
     style = import ./waybar/style.nix {
-      inherit config;
+      inherit preferences;
     };
     settings = import ./waybar/settings.nix {
       inherit pkgs;

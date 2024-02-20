@@ -1,8 +1,10 @@
 {
-  config,
+  preferences,
   pkgs,
   ...
-}: {
+}:
+# Made to be imported by programs.nixvim
+{
   config = {
     globals.mapleader = ",";
 
@@ -19,7 +21,7 @@
 
     colorschemes.base16 = {
       enable = true;
-      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") config.colorScheme.palette;
+      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") preferences.colorScheme.palette;
     };
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -28,7 +30,7 @@
       octo-nvim
     ];
 
-    extraConfigLua = import ./nixvim-octo-config.nix;
+    extraConfigLua = import ./octo-config.nix;
 
     keymaps = [
       {

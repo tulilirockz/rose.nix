@@ -1,9 +1,9 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/sys/desktops/hyprland.nix
-    ../../modules/sys/std.nix
-    ../../modules/usr/user.nix
+    ../../modules/desktops/hyprland.nix
+    ../../modules/std.nix
+    ../../modules/user.nix
   ];
 
   system.stateVersion = "24.05";

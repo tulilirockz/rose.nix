@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  preferences,
   ...
 }: let
   cfg = config.programs.devtools;
@@ -14,11 +15,32 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      DOCKER_HOST = "unix:///run/podman/podman.sock";
+    };
+    programs.git = {
+      enable = true;
+      userEmail = "tulilirockz@outlook.com";
+      userName = "Tulili";
+      signing.key = "/home/tulili/.ssh/id_ed25519.pub";
+      signing.signByDefault = true;
+      extraConfig = {
+        gpg.format = "ssh";
+        init.defaultBranch = "main";
+      };
+    };
+
+    xdg.configFile."libvirt/qemu.conf".text = ''
+      nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
+    '';
+
     programs.nixvim = lib.mkMerge [
       {enable = true;}
-      (import ./nixvim.nix {
+      (import ./devtools/nixvim/dev-general.nix {
         inherit pkgs;
         inherit config;
+        inherit preferences;
       })
       .config
     ];

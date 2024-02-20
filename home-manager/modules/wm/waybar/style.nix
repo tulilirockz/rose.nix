@@ -1,5 +1,5 @@
-{config, ...}:
-with config.colorScheme.palette; let
+{preferences, ...}:
+with preferences.colorScheme.palette; let
   left_bubble = "15px 50px 15px 50px";
   right_bubble = "50px 15px 50px 15px";
 in ''
