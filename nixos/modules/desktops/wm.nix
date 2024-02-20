@@ -11,7 +11,7 @@ in {
     settings = {
       background = {
         path = preferences.wallpaper;
-        fit = "";
+        fit = "Fill";
       };
       GTK = {
         application_prefer_dark_theme = preferences.theme_type == "dark";

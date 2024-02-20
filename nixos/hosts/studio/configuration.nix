@@ -1,8 +1,6 @@
 {
   config,
-  inputs,
   pkgs,
-  preferences,
   ...
 }: {
   imports = [
@@ -11,7 +9,6 @@
     ../../modules/std.nix
     ../../modules/sunshine.nix
     ../../modules/user.nix
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   system.stateVersion = "24.05";
@@ -23,11 +20,7 @@
   };
 
   networking.hostName = "studio";
-
-  zramSwap.memoryPercent = 75;
-
-  services.system76-scheduler.enable = true;
-
+ 
   environment.systemPackages = with pkgs; [
     alacritty
     gamescope
@@ -55,22 +48,4 @@
   programs.virt-manager.enable = true;
   programs.sunshine.enable = true;
   programs.steam.enable = true;
-  home-manager = {
-    extraSpecialArgs = {
-      inherit preferences;
-      inherit inputs;
-    };
-    useGlobalPkgs = true;
-    users = {
-      ${preferences.main_username} = {...}: {
-        imports = [
-          inputs.hyprland.homeManagerModules.default
-          inputs.nix-colors.homeManagerModules.default
-          inputs.nix-flatpak.homeManagerModules.nix-flatpak
-          inputs.nixvim.homeManagerModules.nixvim
-          ../../../home-manager/configurations/tulip-nixos.nix
-        ];
-      };
-    };
-  };
 }

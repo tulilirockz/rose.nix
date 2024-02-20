@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  preferences,
+  inputs,
+  pkgs,
+  ...
+}: {
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
@@ -62,6 +67,10 @@
     enable = true;
     daemon.enable = true;
   };
+  
+  zramSwap.memoryPercent = 75;
+
+  services.system76-scheduler.enable = true;
 
   hardware.bluetooth.enable = true;
 
@@ -98,4 +107,23 @@
   };
 
   services.input-remapper.enable = true;
+
+  home-manager = {
+    extraSpecialArgs = {
+      inherit preferences;
+      inherit inputs;
+    };
+    useGlobalPkgs = true;
+    users = {
+      ${preferences.main_username} = {...}: {
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          inputs.nix-colors.homeManagerModules.default
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          inputs.nixvim.homeManagerModules.nixvim
+          ../../home-manager/configurations/tulip-nixos.nix
+        ];
+      };
+    };
+  };
 }

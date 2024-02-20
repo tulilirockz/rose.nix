@@ -37,7 +37,10 @@
 
     preferences = rec {
       theme = "catppucin";
-      main_username = if (portable.enable == true) then portable.user else "tulili";
+      main_username =
+        if (portable.enable == true)
+        then portable.user
+        else "tulili";
       font_family = "FiraCode Nerd Font Mono";
       wallpaper = ./assets/surface.jpg;
       user_wallpaper = "${wallpaper}";
@@ -75,8 +78,9 @@
         };
 
         modules = [
-          ./nixos/hosts/studio/configuration.nix
-        ];
+
+          inputs.home-manager.nixosModules.home-manager
+          ./nixos/hosts/studio/configuration.nix];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -84,7 +88,9 @@
           inherit inputs;
           inherit preferences;
         };
-        modules = [import ./nixos/hosts/light/configuration.nix];
+        modules = [
+          inputs.home-manager.nixosModules.home-manager
+          import ./nixos/hosts/light/configuration.nix];
       };
       live-system = nixpkgs.lib.nixosSystem {
         inherit system;

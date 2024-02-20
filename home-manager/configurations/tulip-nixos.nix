@@ -59,6 +59,7 @@
     };
   };
 
+  programs.devtools.enable = true;
   programs.clitools.enable = true;
   programs.wm.enable = true;
   programs.wm.hyprland.enable = true;
