@@ -3,7 +3,13 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+# Used for both my main systems
+{
+  imports = [
+    ./impermanence.nix
+  ];
+
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
@@ -30,6 +36,29 @@
     options = "--delete-older-than 2d";
   };
   nixpkgs.config.allowUnfree = true;
+
+  system.nixos.impermanence.enable = true;
+  system.nixos.impermanence.home.enable = true;
+  home-manager = {
+    extraSpecialArgs = {
+      inherit preferences;
+      inherit inputs;
+    };
+    useGlobalPkgs = true;
+    users = {
+      ${preferences.main_username} = {...}: {
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          inputs.nix-colors.homeManagerModules.default
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          inputs.nixvim.homeManagerModules.nixvim
+          inputs.impermanence.nixosModules.home-manager.impermanence
+          ../../home-manager/modules/impermanence.nix
+          ../../home-manager/configurations/tulip-nixos.nix
+        ];
+      };
+    };
+  };
 
   networking.nftables.enable = false;
   networking = {
@@ -67,7 +96,7 @@
     enable = true;
     daemon.enable = true;
   };
-  
+
   zramSwap.memoryPercent = 75;
 
   services.system76-scheduler.enable = true;
@@ -107,23 +136,4 @@
   };
 
   services.input-remapper.enable = true;
-
-  home-manager = {
-    extraSpecialArgs = {
-      inherit preferences;
-      inherit inputs;
-    };
-    useGlobalPkgs = true;
-    users = {
-      ${preferences.main_username} = {...}: {
-        imports = [
-          inputs.hyprland.homeManagerModules.default
-          inputs.nix-colors.homeManagerModules.default
-          inputs.nix-flatpak.homeManagerModules.nix-flatpak
-          inputs.nixvim.homeManagerModules.nixvim
-          ../../home-manager/configurations/tulip-nixos.nix
-        ];
-      };
-    };
-  };
 }

@@ -11,6 +11,12 @@ all-switch:
 sys-upgrade EXTRA_FLAGS:
 	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo switch --flake .#{{CURRENT_MACHINE}} --upgrade --update-input nixpkgs {{EXTRA_FLAGS}}
 
+build-vm CONFIGURATION:
+	nix run nixpkgs#nixos-rebuild -- build-vm --flake .#{{CONFIGURATION}}
+
+format-disko DEVICE:
+	sudo nix run github:nix-community/disko -- --mode disko ./nixos/generic/disko.nix --arg device '"{{DEVICE}}"'
+
 home-switch:
 	nix run nixpkgs#home-manager -- switch --substitute -b backup --flake .#portable
 

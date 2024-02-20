@@ -14,6 +14,11 @@
     };
     hyprland.url = "github:hyprwm/Hyprland";
     nix-colors.url = "github:misterio77/nix-colors";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = {
@@ -78,9 +83,11 @@
         };
 
         modules = [
-
           inputs.home-manager.nixosModules.home-manager
-          ./nixos/hosts/studio/configuration.nix];
+          inputs.disko.nixosModules.disko
+          inputs.impermanence.nixosModules.impermanence
+          ./nixos/hosts/studio/configuration.nix
+        ];
       };
       light = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -90,7 +97,10 @@
         };
         modules = [
           inputs.home-manager.nixosModules.home-manager
-          import ./nixos/hosts/light/configuration.nix];
+          inputs.disko.nixosModules.disko
+          inputs.impermanence.nixosModules.impermanence
+          ./nixos/hosts/light/configuration.nix
+        ];
       };
       live-system = nixpkgs.lib.nixosSystem {
         inherit system;
