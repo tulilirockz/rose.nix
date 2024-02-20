@@ -103,7 +103,28 @@
 
     homeConfigurations = rec {
       default = portable;
-      portable = home-manager.lib.homeManagerConfiguration {
+
+      portable-full = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [
+          hyprland.homeManagerModules.default
+          nix-colors.homeManagerModules.default
+          nix-flatpak.homeManagerModules.nix-flatpak
+          nixvim.homeManagerModules.nixvim
+          ./home-manager/configurations/tulip-nixos.nix
+          ({...}: {
+            targets.genericLinux.enable = true;
+          })
+        ];
+      };
+
+      portable-strict = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         extraSpecialArgs = {
