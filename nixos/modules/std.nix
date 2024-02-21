@@ -53,7 +53,7 @@
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
-          ../../home-manager/modules/impermanence.nix
+          (import ../../home-manager/modules/impermanence.nix { inherit preferences; })
           ../../home-manager/configurations/tulip-nixos.nix
         ];
       };

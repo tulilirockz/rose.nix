@@ -1,5 +1,5 @@
-{...}: {
-  home.persistence."/persist/home" = {
+{preferences,...}: {
+  home.persistence."/persist/home/${preferences.main_username}" = {
     directories = [
       "Downloads"
       "Music"
@@ -8,18 +8,23 @@
       "Videos"
       "OneDrive"
       "Games"
+      "opt"
       ".gnupg"
       ".ssh"
       ".nixops"
       ".local/share"
+      ".mozilla"
+      ".vscode"
+      ".vscodium"
       ".var"
       {
         directory = ".local/share/Steam";
         method = "symlink";
       }
-    ];
-    files = [
-      ".screenrc"
+      {
+        directory = ".local/share/containers";
+        method = "symlink";
+      }
     ];
     allowOther = true;
   };
