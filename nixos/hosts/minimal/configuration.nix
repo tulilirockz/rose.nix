@@ -18,7 +18,7 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking = {
-    hostname = "minimal";
+    hostName = "minimal";
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
     wireless.enable = pkgs.lib.mkForce false;
