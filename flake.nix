@@ -109,6 +109,13 @@
           ./nixos/hosts/live-system/configuration.nix
         ];
       };
+      minimal = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          inputs.disko.nixosModules.disko
+          ./nixos/hosts/minimal/configuration.nix
+        ];
+      };
     };
 
     homeConfigurations = rec {

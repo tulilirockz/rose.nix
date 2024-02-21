@@ -1,4 +1,5 @@
 {config,pkgs,...}: {
+  imports = [./hardware-configuration.nix ../../generic/disko.nix { device = "/dev/vda";}];
   boot = {
     extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
     loader.systemd-boot.enable = true;
