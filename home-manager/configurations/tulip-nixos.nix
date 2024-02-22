@@ -1,6 +1,7 @@
 {
   preferences,
   pkgs,
+  config,
   ...
 }: {
   imports = [
@@ -18,7 +19,14 @@
     name = "Bibata-Modern-Classic";
     size = 16;
   };
-
+  home.sessionVariables = rec {
+    #GTK2_RC_FILES = lib.mkForce "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
+    GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
+    XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
+    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+    XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
+    XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
+  };
   xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [

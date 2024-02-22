@@ -28,6 +28,7 @@
     substituters = ["https://hyprland.cachix.org"];
     trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     experimental-features = ["nix-command" "flakes"];
+    use-xdg-base-directories = true;
   };
 
   nix.gc = {
@@ -46,14 +47,14 @@
     };
     useGlobalPkgs = true;
     users = {
-      ${preferences.main_username} = {...}: {
+      ${preferences.main_username} = {config, preferences,...}: {
         imports = [
           inputs.hyprland.homeManagerModules.default
           inputs.nix-colors.homeManagerModules.default
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
-          (import ../../home-manager/modules/impermanence.nix { inherit preferences; })
+          (import ../../home-manager/modules/impermanence.nix {inherit config; inherit preferences;})
           ../../home-manager/configurations/tulip-nixos.nix
         ];
       };

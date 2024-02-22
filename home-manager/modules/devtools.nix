@@ -18,6 +18,7 @@ in {
     home.sessionVariables = {
       EDITOR = "nvim";
       DOCKER_HOST = "unix:///run/podman/podman.sock";
+      GOPATH = "${config.home.homeDirectory}/.local/share/gopath";
     };
     programs.git = {
       enable = true;

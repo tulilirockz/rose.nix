@@ -1,5 +1,9 @@
-{config,pkgs,...}: {
-  imports = [./hardware-configuration.nix (import ../../generic/disko.nix { device = "/dev/vda";})];
+{
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [./hardware-configuration.nix (import ../../generic/disko.nix {device = "/dev/vda";})];
   boot = {
     extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
     loader.systemd-boot.enable = true;
@@ -34,4 +38,3 @@
     firewall.enable = false;
   };
 }
-
