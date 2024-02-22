@@ -14,8 +14,6 @@
     ];
   };
 
-  programs.firefox.enable = true;
-
   services.flatpak.enable = true;
   users.defaultUserShell = pkgs.nushell;
   users.mutableUsers = false;

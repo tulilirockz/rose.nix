@@ -27,7 +27,7 @@
       playerctl="${lib.getExe pkgs.playerctl}"
       terminal="${pkgs.foot}/bin/footclient"
 
-      riverctl map normal $mod F spawn ${lib.getExe pkgs.firefox}
+      riverctl map normal $mod F spawn ${lib.getExe config.programs.firefox.package}
       riverctl map normal $mod Q spawn $terminal
       riverctl map normal $mod L spawn ${lib.getExe pkgs.swaylock-effects}
       riverctl map normal $mod E spawn "$terminal -e \"${lib.getExe pkgs.yazi}\""

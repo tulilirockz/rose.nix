@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  preferences,
   inputs,
   ...
 }: let
@@ -144,6 +143,7 @@ in {
           toolkit.telemetry.updatePing.enabled = false;
           webgl.renderer-string-override = " ";
           webgl.vendor-string-override = " ";
+          javascript.options.baselinejit = false;
         };
       };
     };

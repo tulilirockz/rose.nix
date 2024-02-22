@@ -27,7 +27,7 @@
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    "$browser" = "${lib.getExe pkgs.firefox}";
+    "$browser" = "${lib.getExe config.programs.firefox.package}";
     "$terminal" = "${pkgs.foot}/bin/footclient";
     "$file" = "${pkgs.foot}/bin/footclient -e ${lib.getExe pkgs.yazi}";
     "$selector" = "${lib.getExe pkgs.fuzzel}";
