@@ -47,14 +47,21 @@
     };
     useGlobalPkgs = true;
     users = {
-      ${preferences.main_username} = {config, preferences,...}: {
+      ${preferences.main_username} = {
+        config,
+        preferences,
+        ...
+      }: {
         imports = [
           inputs.hyprland.homeManagerModules.default
           inputs.nix-colors.homeManagerModules.default
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
-          (import ../../home-manager/modules/impermanence.nix {inherit config; inherit preferences;})
+          (import ../../home-manager/modules/impermanence.nix {
+            inherit config;
+            inherit preferences;
+          })
           ../../home-manager/configurations/tulip-nixos.nix
         ];
       };

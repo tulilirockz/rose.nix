@@ -73,6 +73,7 @@
   programs.wm.hyprland.enable = true;
   programs.wm.river.enable = true;
   programs.wm.apps.enable = true;
+  programs.browsers.enable = true;
 
   dconf.settings = import ../modules/dconf-themes/mine.nix;
 }

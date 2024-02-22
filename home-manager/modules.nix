@@ -5,5 +5,6 @@ in {
     "clitools.nix"
     "devtools.nix"
     "wm.nix"
+    "browsers.nix"
   ];
 }
