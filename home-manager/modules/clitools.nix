@@ -16,7 +16,6 @@ in {
   };
   config = lib.mkIf cfg.enable {
     programs.fzf.enable = true;
-    programs.fzf.tmux.enableShellIntegration = true;
 
     programs.atuin = {
       enable = true;
@@ -48,7 +47,7 @@ in {
     };
 
     programs.tmux = {
-      enable = true;
+      enable = false;
       disableConfirmationPrompt = true;
       historyLimit = 10000;
       mouse = true;
@@ -57,7 +56,6 @@ in {
       newSession = true;
       terminal = "xterm-256color";
       keyMode = "vi";
-      tmuxp.enable = true;
       extraConfig =
         (pkgs.lib.concatMapStringsSep "\n" (string: string) [
           "set -sg escape-time 10"
@@ -170,7 +168,9 @@ in {
         $env.config.edit_mode = vi
         $env.config.show_banner = false
     '';
-    programs.nushell.extraEnv = "$env.EDITOR = nvim";
+    programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
+      pkgs.lib.attrsets.mapAttrsToList (var: value: if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR") then "$env.${toString var} = ${toString value}" else "") config.home.sessionVariables
+    );
     programs.zoxide = {
       enable = true;
       enableNushellIntegration = true;

@@ -18,7 +18,7 @@ in {
     home.sessionVariables = {
       EDITOR = "nvim";
       DOCKER_HOST = "unix:///run/podman/podman.sock";
-      GOPATH = "${config.home.homeDirectory}/.local/share/gopath";
+      GOPATH = "${config.home.homeDirectory}/.local/share/go";
     };
     programs.git = {
       enable = true;
@@ -64,7 +64,7 @@ in {
       unzip
       just
       git
-      tmux
+      #tmux
       ollama
       buildah
       gh

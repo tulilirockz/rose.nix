@@ -1,9 +1,9 @@
 {
   preferences,
-  config,
   ...
 }: {
   home.persistence."/persist/home/${preferences.main_username}" = {
+    allowOther = true;
     directories = [
       "Downloads"
       "Music"
@@ -13,7 +13,6 @@
       "OneDrive"
       "Games"
       "opt"
-      "go"
       ".gnupg"
       ".ssh"
       ".nixops"
@@ -29,16 +28,15 @@
       ".local/share/keyrings"
       ".local/share/zoxide"
       ".local/share/nvim"
-      "${config.home.sessionVariables.GOPATH}"
-      {
-        directory = ".local/share/Steam";
-        method = "symlink";
-      }
+      ".local/share/gopath"
       {
         directory = ".local/share/containers";
         method = "symlink";
       }
+      {
+        directory = ".local/share/Steam";
+        method = "symlink";
+      }
     ];
-    allowOther = true;
   };
 }

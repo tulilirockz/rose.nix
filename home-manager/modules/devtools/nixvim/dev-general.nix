@@ -1,5 +1,4 @@
 {
-  preferences,
   pkgs,
   ...
 }:
@@ -7,7 +6,7 @@
 {
   config = {
     globals.mapleader = ",";
-
+    
     enableMan = true;
 
     clipboard.register = "unnamedplus";
@@ -19,9 +18,8 @@
       shiftwidth = 2;
     };
 
-    colorschemes.base16 = {
+    colorschemes.melange = {
       enable = true;
-      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") preferences.colorScheme.palette;
     };
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -109,7 +107,6 @@
     plugins = {
       chadtree.enable = true;
       telescope.enable = true;
-      coq-thirdparty.enable = true;
       cursorline.enable = true;
       fidget.enable = true;
       nix-develop.enable = true;
@@ -124,6 +121,10 @@
       molten.enable = true;
       netman.enable = true;
       gitblame.enable = true;
+
+      image.enable = true;
+
+      fugitive.enable = true;
 
       nvim-bqf = {
         enable = true;
@@ -158,6 +159,7 @@
         alwaysComplete = true;
         autoStart = true;
         installArtifacts = true;
+        recommendedKeymaps = true;
       };
 
       barbar = {

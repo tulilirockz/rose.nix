@@ -122,6 +122,7 @@
     waypipe
     cage
     distrobox
+    fuse
   ];
 
   programs.rust-motd.enable = true;
