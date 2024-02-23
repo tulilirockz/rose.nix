@@ -26,6 +26,7 @@
       nvim-remote-containers
       plenary-nvim
       octo-nvim
+      vim-rhubarb
     ];
 
     extraConfigLua = import ./octo-config.nix;
@@ -98,6 +99,36 @@
       {
         key = "<leader><space>";
         action = "<cmd>Startify<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>ga";
+        action = "<cmd>Git add -i<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gc";
+        action = "<cmd>Git commit<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gp";
+        action = "<cmd>Git push<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gP";
+        action = "<cmd>Git pull<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gb";
+        action = "<cmd>Git blame<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<leader>gg";
+        action = "<cmd>Git<CR>";
         options.silent = true;
       }
     ];
