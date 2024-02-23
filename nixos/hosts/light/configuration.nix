@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    (import ../../generic/disko.nix {device = "/dev/sda";})
     ../../modules/desktops/hyprland.nix
     ../../modules/std.nix
     ../../modules/user.nix

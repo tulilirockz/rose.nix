@@ -23,6 +23,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -33,6 +37,7 @@
     nixvim,
     hyprland,
     nix-colors,
+    nixos-generators,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -90,6 +95,8 @@
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
+          inputs.nixos-generators.nixosModules.all-formats
+          (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/studio/configuration.nix
         ];
       };
@@ -103,6 +110,8 @@
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
+          inputs.nixos-generators.nixosModules.all-formats
+          (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/light/configuration.nix
         ];
       };
@@ -117,6 +126,8 @@
         inherit system;
         modules = [
           inputs.disko.nixosModules.disko
+          inputs.nixos-generators.nixosModules.all-formats
+          (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/minimal/configuration.nix
         ];
       };
