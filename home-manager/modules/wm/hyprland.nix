@@ -12,7 +12,6 @@
     ${lib.getExe pkgs.swaynotificationcenter} &
     ${pkgs.openssh}/bin/ssh-agent &
     ${pkgs.udiskie}/bin/udiskie &
-    ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' &
     ${lib.getExe pkgs.foot} --server &
     ${lib.getExe pkgs.waybar}
   '')}";
@@ -23,6 +22,34 @@
     splash = true
     ipc = off
   '';
+
+  services.hypridle = {
+    enable = true;
+    lockCmd = "${lib.getExe config.programs.hyprlock.package}";
+    listeners = [
+      {
+        onTimeout = "${lib.getExe pkgs.playerctl} pause";
+        onResume = "${lib.getExe pkgs.playerctl} play";
+      }
+      {
+        onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+        onResume = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";
+      }
+    ];
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    backgrounds = [{path = preferences.user_wallpaper;}];
+    input-fields = with preferences.colorScheme.palette ; [{
+      outer_color = "rgb(${base02})";
+      inner_color = "rgb(${base00})";
+      font_color = "rgb(${base05})";
+    }];
+    labels = with preferences.colorScheme.palette ; [{
+      color = "rgba(${base05}DD)";
+    }];
+  };
 
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
@@ -67,7 +94,7 @@
         "$mod, F, exec, $browser"
         "$mod, Q, exec, $terminal"
         "$mod, E, exec, $file"
-        "$mod, L, exec, ${lib.getExe pkgs.swaylock-effects}"
+        "$mod, L, exec, ${lib.getExe config.programs.hyprlock.package}"
         "$mod, R, exec, $selector"
         ", Print, exec, $screenshot copy area"
         "$mod, V, togglefloating"

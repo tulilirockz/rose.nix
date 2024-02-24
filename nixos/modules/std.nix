@@ -58,6 +58,8 @@
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
+          inputs.hyprlock.homeManagerModules.hyprlock
+          inputs.hypridle.homeManagerModules.hypridle
           (import ../../home-manager/modules/impermanence.nix {
             inherit config;
             inherit preferences;

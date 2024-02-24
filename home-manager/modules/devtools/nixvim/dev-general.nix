@@ -1,5 +1,6 @@
 {
   pkgs,
+  preferences,
   ...
 }:
 # Made to be imported by programs.nixvim
@@ -18,8 +19,9 @@
       shiftwidth = 2;
     };
 
-    colorschemes.melange = {
+    colorschemes.base16 = {
       enable = true;
+      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") preferences.colorScheme.palette;
     };
 
     extraPlugins = with pkgs.vimPlugins; [

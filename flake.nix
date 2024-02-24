@@ -13,6 +13,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-colors.url = "github:misterio77/nix-colors";
     disko = {
       url = "github:nix-community/disko";
@@ -37,7 +45,7 @@
     nixvim,
     hyprland,
     nix-colors,
-    nixos-generators,
+    nixos-generators, hyprlock, hypridle,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -56,7 +64,7 @@
         then portable.user
         else "tulili";
       font_family = "FiraCode Nerd Font Mono";
-      wallpaper = ./assets/surface.jpg;
+      wallpaper = ./assets/wserver2025.png;
       user_wallpaper = "${wallpaper}";
       theme_type = "dark";
       theme_wallpaper = true;
@@ -149,6 +157,8 @@
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
+          inputs.hyprlock.homeManagerModules.hyprlock
+          inputs.hypridle.homeManagerModules.hypridle
           ./home-manager/configurations/tulip-nixos.nix
           ({...}: {
             targets.genericLinux.enable = true;
@@ -186,6 +196,8 @@
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
+          inputs.hyprlock.homeManagerModules.hyprlock
+          inputs.hypridle.homeManagerModules.hypridle
           ./home-manager/configurations/tulip-nixos.nix
         ];
       };
