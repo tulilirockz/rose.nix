@@ -1,4 +1,5 @@
 {
+  lib,
   preferences,
   pkgs,
   config,
@@ -26,6 +27,7 @@
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
     XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
     XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
+    MOZ_ENABLE_WAYLAND = "1";
   };
   xdg.userDirs.createDirectories = true;
 
@@ -70,10 +72,24 @@
   programs.devtools.enable = true;
   programs.clitools.enable = true;
   programs.wm.enable = true;
-  programs.wm.hyprland.enable = true;
+  programs.wm.niri.enable = true;
   programs.wm.river.enable = true;
   programs.wm.apps.enable = true;
   programs.browsers.enable = true;
 
-  dconf.settings = import ../modules/dconf-themes/mine.nix;
+  xdg.configFile."gnome-boxes/sources/QEMU System".text = ''
+    [source]
+    name=QEMU Session
+    type=libvirt
+    uri=qemu+unix:///session
+    save-on-quit=true
+  '';
+
+  dconf.settings = lib.mkMerge [ 
+    (import ../modules/dconf-themes/mine.nix)
+    ({"org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };})
+  ];
 }

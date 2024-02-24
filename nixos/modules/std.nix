@@ -25,8 +25,6 @@
   services.fwupd.enable = true;
 
   nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     experimental-features = ["nix-command" "flakes"];
     use-xdg-base-directories = true;
   };
@@ -53,13 +51,10 @@
         ...
       }: {
         imports = [
-          inputs.hyprland.homeManagerModules.default
           inputs.nix-colors.homeManagerModules.default
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
-          inputs.hyprlock.homeManagerModules.hyprlock
-          inputs.hypridle.homeManagerModules.hypridle
           (import ../../home-manager/modules/impermanence.nix {
             inherit config;
             inherit preferences;

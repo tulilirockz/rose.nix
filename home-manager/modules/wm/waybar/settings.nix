@@ -6,28 +6,17 @@
   consoleRun = "${pkgs.foot}/bin/footclient -e";
 in [
   {
+    mainBar.layer = "top";
     layer = "top";
     position = "top";
 
     modules-left = ["network" "pulseaudio" "cpu" "memory" "disk" "clock"];
     modules-right = ["custom/notification" "custom/logout" "tray"];
 
-    "hyprland/workspaces" = {
-      format = "{icon}";
-      format-icons = {
-        default = " ";
-        active = " ";
-        urgent = " ";
-      };
-    };
     "clock" = {
       format = "{: %I:%M %p}";
       tooltip = false;
       on-click = "${consoleRun} \"${pkgs.peaclock}/bin/peaclock\"";
-    };
-    "hyprland/window" = {
-      max-length = 60;
-      separate-outputs = false;
     };
     "memory" = {
       interval = 5;

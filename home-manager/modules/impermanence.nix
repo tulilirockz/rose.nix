@@ -20,15 +20,19 @@
       ".vscode"
       ".vscodium"
       ".var"
+      ".tldrc"
+      ".cache/nvim"
       ".config/carapace"
       ".config/lazygit"
       ".local/state/wireplumber"
+      ".local/state/nvim"
       ".local/share/atuin"
       ".local/share/flatpak"
       ".local/share/keyrings"
       ".local/share/zoxide"
       ".local/share/nvim"
       ".local/share/gopath"
+      ".local/share/gnome-boxes"
       {
         directory = ".local/share/containers";
         method = "symlink";

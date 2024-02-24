@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  preferences,
   ...
 }:
 with lib; let
@@ -57,6 +56,7 @@ in {
         "/var/lib/incus"
         "/var/lib/systemd/coredump"
         "/var/lib/containers"
+        "/var/lib/libvirt/images"
         "/var/cache/regreet"
         "/var/lib/iwd"
         "/etc/NetworkManager/system-connections"

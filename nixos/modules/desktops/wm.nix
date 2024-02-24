@@ -35,7 +35,5 @@ in {
     "application/pdf" = "zathura.desktop";
   };
 
-  environment.systemPackages =
-    apps.wmApps
-    ++ apps.gnomeApps;
+  environment.systemPackages = apps.wmApps;
 }

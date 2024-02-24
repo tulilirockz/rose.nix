@@ -2,7 +2,7 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=a4d4fe8c5002202493e87ec8dbc91335ff55552c";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -10,15 +10,6 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hypridle = {
-      url = "github:hyprwm/hypridle";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
@@ -35,6 +26,7 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs = {
@@ -43,9 +35,8 @@
     home-manager,
     nix-flatpak,
     nixvim,
-    hyprland,
     nix-colors,
-    nixos-generators, hyprlock, hypridle,
+    nixos-generators,    
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -99,7 +90,8 @@
           inherit preferences;
         };
 
-        modules = [
+        modules = [        
+          inputs.niri.nixosModules.niri
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
@@ -115,6 +107,7 @@
           inherit preferences;
         };
         modules = [
+          inputs.niri.nixosModules.niri
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
@@ -153,7 +146,6 @@
         };
 
         modules = [
-          hyprland.homeManagerModules.default
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
@@ -175,7 +167,6 @@
         };
 
         modules = [
-          hyprland.homeManagerModules.default
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
@@ -192,7 +183,6 @@
         };
 
         modules = [
-          hyprland.homeManagerModules.default
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim

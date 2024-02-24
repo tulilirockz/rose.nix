@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktops/hyprland.nix
+    ../../modules/desktops/niri.nix
     ../../modules/std.nix
     ../../modules/sunshine.nix
     ../../modules/user.nix

@@ -81,7 +81,7 @@
     };
   };
 
-  programs.waybar = {
+  programs.waybar = { 
     enable = true;
     style = import ./waybar/style.nix {
       inherit preferences;

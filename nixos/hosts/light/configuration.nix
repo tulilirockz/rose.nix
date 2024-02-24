@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktops/hyprland.nix
+    ../../modules/desktops/niri.nix
     ../../modules/std.nix
     ../../modules/user.nix
   ];

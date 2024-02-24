@@ -15,7 +15,7 @@
           inherit preferences;
           inherit lib;
         })
-    ) ["apps" "hyprland" "river"]
+    ) ["apps" "niri" "river"]
   );
 in {
   options = {
@@ -40,14 +40,14 @@ in {
               };
             });
           };
-          hyprland = lib.mkOption {
+          niri = lib.mkOption {
             default = {};
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
                   type = lib.types.bool;
                   default = true;
-                  description = "Enable hyprland managed configuration";
+                  description = "Enable niri managed configuration";
                 };
               };
             });
