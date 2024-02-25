@@ -27,11 +27,11 @@
       ".local/state/wireplumber"
       ".local/state/nvim"
       ".local/share/atuin"
+      ".local/share/go"
       ".local/share/flatpak"
       ".local/share/keyrings"
       ".local/share/zoxide"
       ".local/share/nvim"
-      ".local/share/gopath"
       ".local/share/gnome-boxes"
       {
         directory = ".local/share/containers";
