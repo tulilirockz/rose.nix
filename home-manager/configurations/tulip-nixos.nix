@@ -33,6 +33,8 @@
     upscayl
     stremio
     halftone
+    cantarell-fonts
+    fira-code-nerdfont 
     krita
   ];
 
@@ -50,8 +52,8 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.graphite-cursors;
-    name = "Graphite-Dark";
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
     size = 16;
   };
 

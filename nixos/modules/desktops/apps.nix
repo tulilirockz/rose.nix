@@ -40,13 +40,13 @@
     helvum
     pavucontrol
     cantarell-fonts
+    fira-code-nerdfont
     mumble
     onlyoffice-bin
     input-leap
     input-remapper
     catppuccin-gtk
     gnome.nautilus
-    fira-code-nerdfont
   ];
 
   qtApps = with pkgs; [
