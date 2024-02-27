@@ -36,7 +36,7 @@
     nix-flatpak,
     nixvim,
     nix-colors,
-    nixos-generators,    
+    nixos-generators,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -90,12 +90,11 @@
           inherit preferences;
         };
 
-        modules = [        
+        modules = [
           inputs.niri.nixosModules.niri
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
-          inputs.nixos-generators.nixosModules.all-formats
           (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/studio/configuration.nix
         ];
@@ -111,7 +110,6 @@
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
-          inputs.nixos-generators.nixosModules.all-formats
           (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/light/configuration.nix
         ];
@@ -127,7 +125,6 @@
         inherit system;
         modules = [
           inputs.disko.nixosModules.disko
-          inputs.nixos-generators.nixosModules.all-formats
           (import ./nixos/generic/disko.nix {device = "/dev/sda";})
           ./nixos/hosts/minimal/configuration.nix
         ];
@@ -149,8 +146,6 @@
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
-          inputs.hyprlock.homeManagerModules.hyprlock
-          inputs.hypridle.homeManagerModules.hypridle
           ./home-manager/configurations/tulip-nixos.nix
           ({...}: {
             targets.genericLinux.enable = true;
@@ -186,8 +181,6 @@
           nix-colors.homeManagerModules.default
           nix-flatpak.homeManagerModules.nix-flatpak
           nixvim.homeManagerModules.nixvim
-          inputs.hyprlock.homeManagerModules.hyprlock
-          inputs.hypridle.homeManagerModules.hypridle
           ./home-manager/configurations/tulip-nixos.nix
         ];
       };

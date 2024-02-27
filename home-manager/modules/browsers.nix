@@ -13,8 +13,13 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      lagrange
+    ];
+
     programs.chromium = {
       enable = true;
+      package = pkgs.ungoogled-chromium;
       commandLineArgs = [
         "--enable-features=VaapiVideoDecodeLinuxGL"
         "--ozone-platform=wayland"
@@ -23,11 +28,13 @@ in {
       ];
       extensions = [
         {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
+        {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # dark-reader
+        {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
       ];
     };
 
     programs.firefox = {
-      enable = true;
+      enable = false;
       package = pkgs.firefox;
       policies = {
         "CaptivePortal" = false;
@@ -45,28 +52,6 @@ in {
           youtube-shorts-block
         ];
 
-        search.engines = {
-          "Nix Packages" = {
-            urls = [
-              {
-                template = "https://search.nixos.org/packages";
-                params = [
-                  {
-                    name = "type";
-                    value = "packages";
-                  }
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = ["@np"];
-          };
-        };
         search.force = true;
 
         settings = {

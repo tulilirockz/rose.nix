@@ -7,8 +7,6 @@
 {
   config = {
     globals.mapleader = ",";
-    
-    enableMan = true;
 
     clipboard.register = "unnamedplus";
     clipboard.providers.wl-copy.enable = true;

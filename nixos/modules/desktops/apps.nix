@@ -12,41 +12,41 @@
       gnome-calculator
       gnome-system-monitor
       gnome-tweaks
-      gitg
-      dconf-editor
-      polari
     ])
     ++ (with pkgs; [
       newsflash
       shortwave
+      gitg
+      dconf-editor
+      polari
+      transmission-gtk
+      gnome-solanum
+      gitg
+      gradience
+      impression
+      amberol
+      baobab
+      blanket
+      snapshot
+      loupe
+      gnome-firmware
+      gnome-podcasts
     ]);
 
   sharedApps = with pkgs; [
     inter
     adw-gtk3
-    gradience
-    gnome-podcasts
-    transmission-gtk
-    gnome-solanum
-    gitg
-    amberol
-    nautilus-open-any-terminal
-    baobab
-    blanket
     audacity
     helvum
-    snapshot
-    gnome-firmware
     pavucontrol
-    loupe
     cantarell-fonts
     mumble
-    impression
     onlyoffice-bin
-    libreoffice
     input-leap
     input-remapper
-    vieb
+    catppuccin-gtk
+    gnome.nautilus
+    fira-code-nerdfont
   ];
 
   qtApps = with pkgs; [
@@ -63,21 +63,11 @@
   ];
 
   wmApps = with pkgs; [
-    libnotify
-    networkmanagerapplet
-    swaylock-effects
-    swayidle
-    grimblast
-    udiskie
-    catppuccin-gtk
     wlay
-    wlr-randr
     blueman
-    lf
     mpv
     zathura
     newsboat
-    vieb
     imv
     kanshi
     wl-clipboard

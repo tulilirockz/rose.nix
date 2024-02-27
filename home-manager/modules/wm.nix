@@ -6,17 +6,6 @@
   ...
 }: let
   cfg = config.programs.wm;
-  contents = lib.mkMerge (
-    builtins.map (
-      module:
-        lib.mkIf (cfg.${module}.enable == true) (import ./wm/${module}.nix {
-          inherit pkgs;
-          inherit config;
-          inherit preferences;
-          inherit lib;
-        })
-    ) ["apps" "niri" "river"]
-  );
 in {
   options = {
     programs.wm = lib.mkOption {
@@ -52,21 +41,19 @@ in {
               };
             });
           };
-          river = lib.mkOption {
-            default = {};
-            type = lib.types.submodule (_: {
-              options = {
-                enable = lib.mkEnableOption {
-                  type = lib.types.bool;
-                  default = true;
-                  description = "Enable river managed configuration";
-                };
-              };
-            });
-          };
         };
       });
     };
   };
-  config = lib.mkIf cfg.enable contents;
+  config = lib.mkIf cfg.enable (lib.mkMerge (
+    builtins.map (
+      module:
+        lib.mkIf (cfg.${module}.enable == true) (import ./wm/${module}.nix {
+          inherit pkgs;
+          inherit config;
+          inherit preferences;
+          inherit lib;
+        })
+    ) ["apps" "niri"]
+  ));
 }

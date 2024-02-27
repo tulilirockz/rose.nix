@@ -13,13 +13,7 @@
   home.username = preferences.main_username;
   home.homeDirectory = "/home/${preferences.main_username}";
   home.stateVersion = "24.05";
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 16;
-  };
+
   home.sessionVariables = rec {
     #GTK2_RC_FILES = lib.mkForce "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
     GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
@@ -34,27 +28,31 @@
   home.packages = with pkgs; [
     czkawka
     mumble
-    lagrange
     audacity
     inkscape
-    cantarell-fonts
     upscayl
     stremio
     halftone
     krita
-    fira-code-nerdfont
   ];
 
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
       obs-vaapi
       obs-vkcapture
       obs-gstreamer
       input-overlay
       obs-pipewire-audio-capture
     ];
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.graphite-cursors;
+    name = "Graphite-Dark";
+    size = 16;
   };
 
   gtk = {
@@ -73,7 +71,6 @@
   programs.clitools.enable = true;
   programs.wm.enable = true;
   programs.wm.niri.enable = true;
-  programs.wm.river.enable = true;
   programs.wm.apps.enable = true;
   programs.browsers.enable = true;
 
@@ -85,11 +82,13 @@
     save-on-quit=true
   '';
 
-  dconf.settings = lib.mkMerge [ 
+  dconf.settings = lib.mkMerge [
     (import ../modules/dconf-themes/mine.nix)
-    ({"org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };})
+    {
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///session"];
+        uris = ["qemu:///session"];
+      };
+    }
   ];
 }

@@ -28,10 +28,16 @@ in {
       enable = true;
       enableNushellIntegration = true;
       settings = {
-        manager.prepend_keymap = {
-          on = ["<C-s>"];
-          exec = "shell \"$SHELL\" --block --confirm";
-          desc = "Open shell here";
+        manager = {
+          show_hidden = true;
+          show_symlink = true;
+          prepend_keymap = [
+            {
+              on = ["<C-s>"];
+              exec = "shell \"$SHELL\" --block --confirm";
+              desc = "Open shell here";
+            }
+          ];
         };
       };
     };
@@ -169,7 +175,11 @@ in {
         $env.config.show_banner = false
     '';
     programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
-      pkgs.lib.attrsets.mapAttrsToList (var: value: if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR") then "$env.${toString var} = ${toString value}" else "") config.home.sessionVariables
+      pkgs.lib.attrsets.mapAttrsToList (var: value:
+        if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR")
+        then "$env.${toString var} = ${toString value}"
+        else "")
+      config.home.sessionVariables
     );
     programs.zoxide = {
       enable = true;

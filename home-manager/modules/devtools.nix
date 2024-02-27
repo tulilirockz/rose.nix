@@ -47,7 +47,7 @@ in {
     ];
 
     programs.vscode = {
-      enable = true;
+      enable = false;
       package = pkgs.vscodium;
     };
 
@@ -62,23 +62,15 @@ in {
       lazygit
       darcs
       unzip
-      just
       git
-      #tmux
       ollama
       buildah
       gh
       glab
       fd
       ripgrep
-      nixos-generators
       podman-compose
-      docker-compose
       tldr
-      manix
-      podman-desktop
-      godot_4
-      gitg
       gource
       scc
       just
@@ -86,7 +78,6 @@ in {
       nix-prefetch-git
       kind
       pre-commit
-      atuin
       fh
       (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];

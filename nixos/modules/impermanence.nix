@@ -56,7 +56,7 @@ in {
         "/var/lib/incus"
         "/var/lib/systemd/coredump"
         "/var/lib/containers"
-        "/var/lib/libvirt/images"
+        "/var/lib/libvirt"
         "/var/cache/regreet"
         "/var/lib/iwd"
         "/etc/NetworkManager/system-connections"

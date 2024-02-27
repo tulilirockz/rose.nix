@@ -22,12 +22,9 @@
   networking.hostName = "studio";
 
   environment.systemPackages = with pkgs; [
-    alacritty
     gamescope
     mangohud
-    gamemode
     heroic
-    virtiofsd
     gnome.gnome-boxes
   ];
 
@@ -46,6 +43,6 @@
   };
 
   programs.virt-manager.enable = true;
-  programs.sunshine.enable = true;
-  programs.steam.enable = true;
+  programs.sunshine.enable = false;
+  programs.steam.enable = false;
 }

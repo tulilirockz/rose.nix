@@ -2,6 +2,7 @@
   preferences,
   inputs,
   pkgs,
+  lib,
   ...
 }:
 # Used for both my main systems
@@ -9,10 +10,10 @@
   imports = [
     ./impermanence.nix
   ];
-
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
+    kernelModules = ["v4l2loopback"];
   };
 
   time.timeZone = "America/Sao_Paulo";
@@ -35,6 +36,8 @@
     options = "--delete-older-than 2d";
   };
   nixpkgs.config.allowUnfree = true;
+
+  programs.droidcam.enable = true;
 
   system.nixos.impermanence.enable = true;
   system.nixos.impermanence.home.enable = true;

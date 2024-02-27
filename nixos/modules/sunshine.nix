@@ -24,6 +24,15 @@ in {
       };
     };
 
+    security.wrappers.sunshine = {
+      owner = "root";
+      group = "root";
+      capabilities = "cap_sys_admin+p";
+      source = "${pkgs.sunshine}/bin/sunshine";
+    };
+
+    boot.kernelModules = ["uinput"];
+
     networking.firewall = {
       allowedTCPPorts = [sunshinePort];
       allowedUDPPorts = [sunshinePort];

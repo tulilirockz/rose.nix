@@ -1,6 +1,7 @@
 {device ? throw "Set this to your disk device, e.g. /dev/sda", ...}: {
   disko.devices = {
     disk.main = {
+      imageSize = "32G";
       inherit device;
       type = "disk";
       content = {

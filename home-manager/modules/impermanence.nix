@@ -1,7 +1,4 @@
-{
-  preferences,
-  ...
-}: {
+{preferences, ...}: {
   home.persistence."/persist/home/${preferences.main_username}" = {
     allowOther = true;
     directories = [
@@ -22,8 +19,12 @@
       ".var"
       ".tldrc"
       ".cache/nvim"
+      ".cache/pre-commit"
       ".config/carapace"
       ".config/lazygit"
+      ".config/libvirt"
+      ".cache/chromium"
+      ".config/chromium"
       ".local/state/wireplumber"
       ".local/state/nvim"
       ".local/share/atuin"
@@ -32,7 +33,10 @@
       ".local/share/keyrings"
       ".local/share/zoxide"
       ".local/share/nvim"
-      ".local/share/gnome-boxes"
+      {
+        directory = ".local/share/gnome-boxes";
+        method = "symlink";
+      }
       {
         directory = ".local/share/containers";
         method = "symlink";
