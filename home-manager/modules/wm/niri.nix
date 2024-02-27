@@ -13,7 +13,7 @@
       ${lib.getExe pkgs.swaynotificationcenter} &
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
-      ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -f' &
+      ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
       ${lib.getExe pkgs.foot} --server &
       ${lib.getExe pkgs.waybar}
     '';
