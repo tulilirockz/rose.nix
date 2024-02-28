@@ -13,9 +13,9 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      lagrange
-    ];
+    #home.packages = with pkgs; [
+    #  lagrange
+    #];
 
     programs.chromium = {
       enable = true;

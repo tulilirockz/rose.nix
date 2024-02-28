@@ -22,8 +22,6 @@
   networking.hostName = "studio";
 
   environment.systemPackages = with pkgs; [
-    gamescope
-    mangohud
     heroic
     gnome.gnome-boxes
   ];
@@ -42,7 +40,7 @@
     incus.enable = true;
   };
 
-  programs.virt-manager.enable = true;
+  programs.virt-manager.enable = false;
   programs.sunshine.enable = false;
   programs.steam.enable = false;
 }

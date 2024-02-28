@@ -10,7 +10,7 @@ all-switch:
 
 image-build HOSTNAME:
 	nix build .#nixosConfigurations.{{HOSTNAME}}.config.system.build.diskoImagesScript
-	./result --build-memory 4072
+	./result --build-memory 5120
 
 sys-upgrade EXTRA_FLAGS:
 	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo switch --flake .#{{CURRENT_MACHINE}} --upgrade --update-input nixpkgs {{EXTRA_FLAGS}}

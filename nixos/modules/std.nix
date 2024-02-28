@@ -2,7 +2,7 @@
   preferences,
   inputs,
   pkgs,
-  lib,
+  config,
   ...
 }:
 # Used for both my main systems
@@ -112,7 +112,7 @@
   hardware.bluetooth.enable = true;
 
   security.sudo.enable = false;
-  security.doas.enable = true;
+  security.sudo-rs.enable = true;
 
   environment.systemPackages = with pkgs; [
     home-manager
@@ -144,5 +144,5 @@
     "kernel.sysrq" = 1;
   };
 
-  services.input-remapper.enable = true;
+  services.input-remapper.enable = false;
 }

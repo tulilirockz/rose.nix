@@ -21,6 +21,7 @@
       ".cache/nvim"
       ".cache/pre-commit"
       ".config/carapace"
+      ".config/gh"
       ".config/lazygit"
       ".config/libvirt"
       ".cache/chromium"

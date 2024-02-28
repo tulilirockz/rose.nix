@@ -20,12 +20,10 @@
       autoPrune.enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
-    waydroid.enable = true;
-    libvirtd.enable = true;
     incus.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [acpi batstat powertop];
+  environment.systemPackages = with pkgs; [acpi powertop];
 
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {

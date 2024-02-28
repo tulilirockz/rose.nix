@@ -36,15 +36,11 @@
   sharedApps = with pkgs; [
     inter
     adw-gtk3
-    audacity
     helvum
     pavucontrol
     cantarell-fonts
     fira-code-nerdfont
-    mumble
-    onlyoffice-bin
-    input-leap
-    input-remapper
+    libreoffice 
     catppuccin-gtk
     gnome.nautilus
   ];

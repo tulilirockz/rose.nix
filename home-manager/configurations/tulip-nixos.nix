@@ -26,20 +26,20 @@
   xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [
-    czkawka
-    mumble
-    audacity
-    inkscape
-    upscayl
-    stremio
-    halftone
+    #czkawka
+    #mumble
+    #audacity
+    #inkscape
+    #upscayl
+    #stremio
+    #halftone
+    #krita
     cantarell-fonts
     fira-code-nerdfont 
-    krita
   ];
 
   programs.obs-studio = {
-    enable = true;
+    enable = false;
     plugins = with pkgs.obs-studio-plugins; [
       obs-vaapi
       obs-vkcapture

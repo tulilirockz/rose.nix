@@ -71,7 +71,8 @@ in {
       ripgrep
       podman-compose
       tldr
-      gource
+      jq
+      yq
       scc
       just
       iotop
@@ -79,7 +80,9 @@ in {
       kind
       pre-commit
       fh
-      (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      xxd
+      #(config.programs.vscode.enable pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+
     ];
   };
 }

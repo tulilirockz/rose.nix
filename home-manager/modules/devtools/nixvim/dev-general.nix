@@ -25,11 +25,11 @@
     extraPlugins = with pkgs.vimPlugins; [
       nvim-remote-containers
       plenary-nvim
-      octo-nvim
       vim-rhubarb
+      octo-nvim
     ];
 
-    extraConfigLua = import ./octo-config.nix;
+    extraConfigLua = "${import ./octo-config.nix}\n${import ./hex-editor.nix {inherit pkgs;}}";
 
     keymaps = [
       {
@@ -131,6 +131,11 @@
         action = "<cmd>Git<CR>";
         options.silent = true;
       }
+      {
+        key = "<leader>gh";
+        action = "<cmd>Octo actions<CR>";
+        options.silent = true;
+      }
     ];
 
     editorconfig.enable = true;
@@ -219,15 +224,15 @@
           silent = true;
         };
         servers = {
-          bashls.enable = true;
+          #bashls.enable = true;
+          #tailwindcss.enable = true;
+          #yamlls.enable = true;
           clangd.enable = true;
           gopls.enable = true;
           rust-analyzer.enable = true;
           rust-analyzer.installCargo = true;
           rust-analyzer.installRustc = true;
           dockerls.enable = true;
-          tailwindcss.enable = true;
-          yamlls.enable = true;
           zls.enable = true;
           nil_ls.enable = true;
           pyright = {
