@@ -34,7 +34,7 @@
     halftone
     krita
     (pkgs.writeScriptBin "xwayland-run" ''
-      ${lib.getExe pkgs.xwayland} :0 &
+      ${lib.getExe pkgs.sway} &
       sleep 2
       DISPLAY=:0 $@ 
     '')

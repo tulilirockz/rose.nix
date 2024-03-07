@@ -79,7 +79,7 @@
       };
     };
     firewall = {
-      enable = true;
+      enable = false;
       allowedUDPPorts = [
         51413 # Transmission
         24800 # Input Leap

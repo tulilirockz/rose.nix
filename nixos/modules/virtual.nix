@@ -21,7 +21,9 @@ in {
         set -euo pipefail
         VMS_FOLDER=$HOME/opt/vms
         mkdir -p $VMS_FOLDER
-        PWD=$VMS_FOLDER ${lib.getExe pkgs.quickgui} 
+        pushd $VMS_FOLDER
+        ${lib.getExe pkgs.quickgui} &
+        popd
       '')
     ];
 
@@ -37,6 +39,12 @@ in {
       waydroid.enable = true;
       libvirtd.enable = true;
       incus.enable = true;
+      virtualbox.host = {
+        addNetworkInterface = false;
+        enableHardening = false;
+        enableKvm = true;
+        enable = true;
+      };
     };
 
     programs.virt-manager.enable = true;
