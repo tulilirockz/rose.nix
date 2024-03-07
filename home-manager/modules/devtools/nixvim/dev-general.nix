@@ -29,7 +29,7 @@
       octo-nvim
     ];
 
-    extraConfigLua = "${import ./octo-config.nix}\n${import ./hex-editor.nix {inherit pkgs;}}";
+    extraConfigLua = "${import ./octo-config.nix}";
 
     keymaps = [
       {
@@ -224,9 +224,11 @@
           silent = true;
         };
         servers = {
-          #bashls.enable = true;
-          #tailwindcss.enable = true;
-          #yamlls.enable = true;
+          bashls.enable = true;
+          tailwindcss.enable = true;
+          yamlls.enable = true;
+          nushell.enable = true;
+          nushell.autostart = true;
           clangd.enable = true;
           gopls.enable = true;
           rust-analyzer.enable = true;

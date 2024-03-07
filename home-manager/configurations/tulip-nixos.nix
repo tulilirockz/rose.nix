@@ -23,19 +23,21 @@
     XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
     MOZ_ENABLE_WAYLAND = "1";
   };
-  xdg.userDirs.createDirectories = true;
 
   home.packages = with pkgs; [
-    #czkawka
-    #mumble
-    #audacity
-    #inkscape
-    #upscayl
-    #stremio
-    #halftone
-    #krita
-    cantarell-fonts
-    fira-code-nerdfont 
+    czkawka
+    mumble
+    audacity
+    inkscape
+    upscayl
+    stremio
+    halftone
+    krita
+    (pkgs.writeScriptBin "xwayland-run" ''
+      ${lib.getExe pkgs.xwayland} :0 &
+      sleep 2
+      DISPLAY=:0 $@ 
+    '')
   ];
 
   programs.obs-studio = {

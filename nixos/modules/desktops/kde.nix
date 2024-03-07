@@ -1,10 +1,6 @@
 {pkgs, ...}: let
   apps = import ./apps.nix {inherit pkgs;};
 in {
-  imports = [
-    ./shared.nix
-  ];
-
   services.xserver = {
     displayManager.sddm = {
       enable = true;

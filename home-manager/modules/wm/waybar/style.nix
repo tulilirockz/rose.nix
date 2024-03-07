@@ -5,7 +5,7 @@ with preferences.colorScheme.palette; let
 in ''
   * {
     font-size: 16px;
-    font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
+    font-family: ${preferences.font_family}, Font Awesome, sans-serif;
     font-weight: bold;
   }
   window#waybar {

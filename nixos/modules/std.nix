@@ -2,7 +2,6 @@
   preferences,
   inputs,
   pkgs,
-  config,
   ...
 }:
 # Used for both my main systems
@@ -13,7 +12,7 @@
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
-    kernelModules = ["v4l2loopback"];
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   time.timeZone = "America/Sao_Paulo";
@@ -36,8 +35,6 @@
     options = "--delete-older-than 2d";
   };
   nixpkgs.config.allowUnfree = true;
-
-  programs.droidcam.enable = true;
 
   system.nixos.impermanence.enable = true;
   system.nixos.impermanence.home.enable = true;
@@ -68,7 +65,7 @@
     };
   };
 
-  networking.nftables.enable = false;
+  networking.nftables.enable = true;
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
@@ -94,9 +91,9 @@
       extraInputRules = ''
         ip saddr 192.168.0.0/24 accept
       '';
-      extraCommands = ''
-        iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
-      '';
+      #extraCommands = ''
+      #  iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
+      #'';
     };
   };
 

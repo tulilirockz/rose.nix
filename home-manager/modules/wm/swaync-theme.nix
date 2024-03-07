@@ -7,7 +7,7 @@ with preferences.colorScheme.palette; ''
   * {
     all: unset;
     font-size: 14px;
-    font-family: "#${preferences.font_family}";
+    font-family: "${preferences.font_family}";
     transition: 200ms;
   }
 

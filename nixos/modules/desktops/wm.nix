@@ -16,7 +16,7 @@ in {
       GTK = {
         application_prefer_dark_theme = preferences.theme_type == "dark";
         cursor_theme_name = "Bibata-Modern-Classic";
-        font_name = "Cantarell 12";
+        font_name = "${preferences.font_family} 12";
         icon_theme_name = "Adwaita";
         theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
       };

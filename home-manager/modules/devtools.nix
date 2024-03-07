@@ -47,7 +47,7 @@ in {
     ];
 
     programs.vscode = {
-      enable = false;
+      enable = true;
       package = pkgs.vscodium;
     };
 
@@ -81,7 +81,7 @@ in {
       pre-commit
       fh
       xxd
-      #(config.programs.vscode.enable pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
 
     ];
   };

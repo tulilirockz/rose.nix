@@ -15,14 +15,15 @@
       ${pkgs.udiskie}/bin/udiskie &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
       ${lib.getExe pkgs.foot} --server &
+      ${pkgs.kdeconnect}/bin/kdeconnect-indicator &
       ${lib.getExe pkgs.waybar}
     '';
   };
 
   programs.niri.config = ''
-     // This config is in the KDL format: https://kdl.dev
+    // This config is in the KDL format: https://kdl.dev
     // "/-" comments out the following node.
-
+    
     input {
         keyboard {
             xkb {
@@ -302,9 +303,9 @@
         XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
 
         Mod+Left  { focus-column-left; }
-        Mod+Down  { focus-window-down; }
-        Mod+Up    { focus-window-up; }
         Mod+Right { focus-column-right; }
+        Mod+Up    { focus-workspace-up; }
+        Mod+Down  { focus-workspace-down; }
         Mod+H     { focus-column-left; }
         Mod+J     { focus-window-down; }
         Mod+K     { focus-window-up; }

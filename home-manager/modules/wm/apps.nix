@@ -5,6 +5,7 @@
   preferences,
   ...
 }: {
+
   programs.wlogout = {
     enable = true;
     layout = import ./wlogout/layout.nix;

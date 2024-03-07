@@ -54,8 +54,8 @@
         if (portable.enable == true)
         then portable.user
         else "tulili";
-      font_family = "FiraCode Nerd Font Mono";
-      wallpaper = ./assets/wserver2025.png;
+      font_family = "IntoneMono Nerd Font";
+      wallpaper = ./assets/wserver2025.jpg;
       user_wallpaper = "${wallpaper}";
       theme_type = "dark";
       theme_wallpaper = true;

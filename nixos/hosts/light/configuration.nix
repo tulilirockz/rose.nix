@@ -1,8 +1,10 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktops/niri.nix
+    ../../modules/managed-desktops.nix
     ../../modules/std.nix
+    ../../modules/sunshine.nix
+    ../../modules/virtual.nix
     ../../modules/user.nix
   ];
 
@@ -12,16 +14,11 @@
 
   networking.hostName = "light";
 
-  virtualisation = {
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      dockerSocket.enable = true;
-      autoPrune.enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    incus.enable = true;
-  };
+  system.desktop.enable = true; 
+  system.desktop.wm.enable = true; 
+  system.desktop.niri.enable = true; 
+
+  virtualisation.managed.enable = true;
 
   environment.systemPackages = with pkgs; [acpi powertop];
 

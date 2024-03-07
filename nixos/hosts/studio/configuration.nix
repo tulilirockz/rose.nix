@@ -5,9 +5,10 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktops/niri.nix
+    ../../modules/managed-desktops.nix
     ../../modules/std.nix
     ../../modules/sunshine.nix
+    ../../modules/virtual.nix
     ../../modules/user.nix
   ];
 
@@ -15,32 +16,18 @@
 
   boot = {
     loader.systemd-boot.enable = true;
-    extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
-    #kernelPackages = pkgs.linuxPackages_latest;
   };
-
   networking.hostName = "studio";
 
-  environment.systemPackages = with pkgs; [
-    heroic
-    gnome.gnome-boxes
-  ];
+  programs.managed-desktops.enable = true; 
+  programs.managed-desktops.shared.enable = true; 
+  programs.managed-desktops.wm.enable = true; 
+  programs.managed-desktops.niri.enable = true; 
 
-  virtualisation = {
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      autoPrune.enable = true;
-      dockerSocket.enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-
-    waydroid.enable = true;
-    libvirtd.enable = true;
-    incus.enable = true;
-  };
-
-  programs.virt-manager.enable = false;
-  programs.sunshine.enable = false;
+  virtualisation.managed.enable = true;
+  
+  environment.systemPackages = with pkgs; [heroic];
   programs.steam.enable = false;
+  
+  programs.sunshine.enable = false;
 }

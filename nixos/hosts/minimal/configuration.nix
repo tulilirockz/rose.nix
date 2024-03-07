@@ -5,7 +5,6 @@
 }: {
   imports = [./hardware-configuration.nix];
   boot = {
-    extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
     loader.systemd-boot.enable = true;
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;

@@ -38,9 +38,7 @@
     adw-gtk3
     helvum
     pavucontrol
-    cantarell-fonts
-    fira-code-nerdfont
-    libreoffice 
+    libreoffice
     catppuccin-gtk
     gnome.nautilus
   ];
@@ -69,6 +67,7 @@
     wl-clipboard
     mediainfo
     exiftool
+    transmission-gtk
     swayimg
   ];
 }
