@@ -1,7 +1,6 @@
-{
-  config,
-  preferences,
-  ...
+{ config
+, preferences
+, ...
 }:
 with preferences.colorScheme.palette; ''
   * {

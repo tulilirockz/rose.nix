@@ -1,9 +1,11 @@
-{pkgs, ...}: let
-  apps = import ./apps.nix {inherit pkgs;};
-in {
+{ pkgs, ... }:
+let
+  apps = import ./apps.nix { inherit pkgs; };
+in
+{
   services.xserver = {
     enable = true;
-    excludePackages = [pkgs.xterm];
+    excludePackages = [ pkgs.xterm ];
     libinput.enable = true;
   };
 
@@ -30,6 +32,6 @@ in {
     (nerdfonts.override { fonts = [ "FiraCode" "IntelOneMono" ]; })
     cantarell-fonts
     inter
-    fira-code-nerdfont 
+    fira-code-nerdfont
   ];
 }

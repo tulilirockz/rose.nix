@@ -1,17 +1,17 @@
-
-{
-  config,
-  lib,
-  pkgs,
-  preferences,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, preferences
+, ...
+}:
+let
   cfg = config.programs.managed-desktops;
-  valid_desktops = ["gnome" "kde" "niri" "wm" "shared"];
-in {
+  valid_desktops = [ "gnome" "kde" "niri" "wm" "shared" ];
+in
+{
   options = {
     programs.managed-desktops = lib.mkOption {
-      default = {};
+      default = { };
       type = lib.types.submodule (_: {
         options = {
           enable = lib.mkEnableOption {
@@ -20,7 +20,7 @@ in {
             default = false;
           };
           shared = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -32,7 +32,7 @@ in {
             });
           };
           wm = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -44,7 +44,7 @@ in {
             });
           };
           niri = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -56,7 +56,7 @@ in {
             });
           };
           gnome = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -68,7 +68,7 @@ in {
             });
           };
           kde = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -84,15 +84,16 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (lib.mkMerge (
-    builtins.map (
-      module:
+    builtins.map
+      (
+        module:
         lib.mkIf (cfg.${module}.enable == true) (import ./desktops/${module}.nix {
           inherit pkgs;
           inherit config;
           inherit preferences;
           inherit lib;
         })
-    ) valid_desktops 
+      )
+      valid_desktops
   ));
 }
-

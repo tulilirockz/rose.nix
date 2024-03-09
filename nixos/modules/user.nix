@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  preferences,
-  ...
+{ config
+, pkgs
+, preferences
+, ...
 }: {
   system.autoUpgrade = {
     enable = true;
@@ -20,7 +19,7 @@
   users.users.${preferences.main_username} = {
     isNormalUser = true;
     hashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
-    extraGroups = ["wheel" "libvirtd" "incus-admin" "qemu" "vboxusers"];
+    extraGroups = [ "wheel" "libvirtd" "incus-admin" "qemu" "vboxusers" ];
     shell = pkgs.nushell;
   };
 

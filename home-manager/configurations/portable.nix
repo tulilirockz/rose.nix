@@ -1,4 +1,4 @@
-{preferences, ...}: {
+{ preferences, ... }: {
   imports = [
     ../modules.nix
   ];

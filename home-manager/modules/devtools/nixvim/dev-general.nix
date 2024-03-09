@@ -1,8 +1,14 @@
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }:
 # Made to be imported by programs.nixvim
+let
+  leaderBinding = key: command: {
+    key = "<leader>${key}";
+    action = "<cmd>${command}<CR>";
+    options.silent = true;
+  };
+in
 {
   config = {
     globals.mapleader = ",";
@@ -16,9 +22,7 @@
       shiftwidth = 2;
     };
 
-    colorschemes.poimandres= {
-      enable = true;
-    };
+    colorschemes.poimandres.enable = true;
 
     extraPlugins = with pkgs.vimPlugins; [
       nvim-remote-containers
@@ -29,117 +33,37 @@
 
     extraConfigLua = "${import ./octo-config.nix}";
 
-    keymaps = [
-      {
-        key = "<C-s>";
-        action = ":w<CR>";
-      }
-      {
-        key = "<leader>n";
-        action = "<cmd>Lspsaga outline<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>m";
-        action = "<cmd>CHADopen<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>sg";
-        action = "<cmd>Telescope live_grep<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>sf";
-        action = "<cmd>Telescope find_files<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>sb";
-        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gf";
-        action = "<cmd>Telescope git_files<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>t";
-        action = "<cmd>term<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>e";
-        action = "<cmd>Lspsaga show_buf_diagnostics<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>rn";
-        action = "<cmd>Lspsaga rename<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>ca";
-        action = "<cmd>Lspsaga code_action<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>k";
-        action = "<cmd>Lspsaga hover_doc<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gd";
-        action = "<cmd>Lspsaga goto_definition<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader><space>";
-        action = "<cmd>Startify<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>ga";
-        action = "<cmd>Git add -i<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gc";
-        action = "<cmd>Git commit<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gp";
-        action = "<cmd>Git push<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gP";
-        action = "<cmd>Git pull<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gb";
-        action = "<cmd>Git blame<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gg";
-        action = "<cmd>Git<CR>";
-        options.silent = true;
-      }
-      {
-        key = "<leader>gh";
-        action = "<cmd>Octo actions<CR>";
-        options.silent = true;
-      }
-    ];
+    keymaps = map ({ key, action }: leaderBinding "${key}" "${action}") [
+      { key = "s"; action = "<cmd>w<CR>"; }
+      { key = "n"; action = "<cmd>Lspsaga outline<CR>"; }
+      { key = "m"; action = "<cmd>Oil<CR>"; }
+      { key = "sg"; action = "<cmd>Telescope live_grep<CR>"; }
+      { key = "sf"; action = "<cmd>Telescope find_files<CR>"; }
+      { key = "sb"; action = "<cmd>Telescope current_buffer_fuzzy_find<CR>"; }
+      { key = "gf"; action = "<cmd>Telescope git_files<CR>"; }
+      { key = "t"; action = "<cmd>term<CR>"; }
+      { key = "<space>"; action = "<cmd>Startify<CR>"; }
+      { key = "gb"; action = "<cmd>Git blame<CR>"; }
+      { key = "g"; action = "<cmd>Neogit<CR>"; }
+      { key = "gc"; action = "<cmd>Neogit commit<CR>"; }
+      { key = "ol"; action = "<cmd>Octo actions<CR>"; }
+      { key = "oi"; action = "<cmd>Octo issue list<CR>"; }
+      { key = "op"; action = "<cmd>Octo pr list<CR>"; }
+      { key = "ha"; action = "<cmd>lua require(\"harpoon.mark\").add_file()<CR>"; }
+      { key = "hn"; action = "<cmd>lua require(\"harpoon.ui\").nav_next()<CR>"; }
+      { key = "hp"; action = "<cmd>lua require(\"harpoon.ui\").nav_prev()<CR>"; }
+      { key = "hm"; action = "<cmd>Telescope harpoon marks<CR>"; }
+      { key = "ik"; action = "<cmd>Telescope keymaps<CR>"; }
+      { key = "ic"; action = "<cmd>Telescope commands<CR>"; }
+      { key = "ih"; action = "<cmd>Telescope help_tags<CR>"; }
+    ] ++ 
+    (map (num: leaderBinding "h${toString num}" "lua require(\"harpoon.ui\").nav_file(${toString num})") 
+      [ 1 2 3 4 5 6 7 8 9 ]
+    );
 
     editorconfig.enable = true;
 
     plugins = {
-      chadtree.enable = true;
       telescope.enable = true;
       cursorline.enable = true;
       fidget.enable = true;
@@ -147,6 +71,7 @@
       bufferline.enable = true;
       which-key.enable = true;
       treesitter.enable = true;
+      treesitter-context.enable = true;
       indent-blankline.enable = true;
       lsp-format.enable = true;
       nix.enable = true;
@@ -156,13 +81,15 @@
       netman.enable = true;
       gitblame.enable = true;
       image.enable = true;
-      fugitive.enable = true;
+      neogit.enable = true;
       rustaceanvim.enable = true;
+      leap.enable = true;
+      oil.enable = true;
+      spider.enable = true;
 
-      nvim-bqf = {
+      harpoon = {
         enable = true;
-        autoEnable = true;
-        autoResizeHeight = true;
+        enableTelescope = true;
       };
 
       startify = {
@@ -170,21 +97,19 @@
         enableUnsafe = true;
         changeToVcsRoot = true;
         updateOldFiles = true;
+        customHeader = "${pkgs.lib.getExe pkgs.fortune} | ${pkgs.lib.getExe pkgs.lolcat}";
       };
 
       lspsaga = {
-        enable = true;
-        beacon.enable = true;
+        enable = false;
         callhierarchy.layout = "normal";
         codeAction.showServerName = true;
-        lightbulb.enable = true;
-        lightbulb.sign = false;
       };
 
       lualine = {
         enable = true;
         globalstatus = true;
-        extensions = ["fzf" "quickfix" "chadtree" "man" "symbols-outline"];
+        extensions = [ "fzf" "quickfix" "man" "symbols-outline" ];
       };
 
       coq-nvim = {
@@ -193,26 +118,6 @@
         autoStart = true;
         installArtifacts = true;
         recommendedKeymaps = true;
-      };
-
-      barbar = {
-        enable = true;
-        keymaps = {
-          goTo1 = "<A-1>";
-          goTo2 = "<A-2>";
-          goTo3 = "<A-3>";
-          goTo4 = "<A-4>";
-          goTo5 = "<A-5>";
-          goTo6 = "<A-6>";
-          goTo7 = "<A-7>";
-          goTo8 = "<A-8>";
-          goTo9 = "<A-9>";
-          last = "<A-0>";
-          pin = "<A-p>";
-          next = "<TAB>";
-          previous = "<S-TAB>";
-          close = "<A-c>";
-        };
       };
 
       lsp = {

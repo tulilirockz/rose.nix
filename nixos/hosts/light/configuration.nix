@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/managed-desktops.nix
@@ -14,13 +14,13 @@
 
   networking.hostName = "light";
 
-  system.desktop.enable = true; 
-  system.desktop.wm.enable = true; 
-  system.desktop.niri.enable = true; 
+  system.desktop.enable = true;
+  system.desktop.wm.enable = true;
+  system.desktop.niri.enable = true;
 
   virtualisation.managed.enable = true;
 
-  environment.systemPackages = with pkgs; [acpi powertop];
+  environment.systemPackages = with pkgs; [ acpi powertop ];
 
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
@@ -38,7 +38,7 @@
   services.udev.extraRules = ''SUBSYSTEM=="input", KERNEL=="event[0-9]*", ENV{ID_INPUT_TOUCHSCREEN}=="1", ENV{WL_OUTPUT}="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="2.0994971271086835 0.0 -0.009475882227217559 0.0 3.2251959199264215 -0.002555450541782298 0.0 0.0 1.0"'';
 
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 
   hardware.opengl = {

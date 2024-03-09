@@ -1,5 +1,8 @@
-{pkgs, preferences, ...}:
-with preferences.colorScheme.palette; let 
+{ pkgs
+, preferences
+, ...
+}:
+with preferences.colorScheme.palette; let
   defaultPadding = "5px 5px";
   highlightBorder = "border-right: 4px solid #${base01};";
   defaultModuleConfig = moduleName: ''
@@ -7,10 +10,11 @@ with preferences.colorScheme.palette; let
       color: #${base05};
       background: #${base00};
       padding: ${defaultPadding};
-      ${highlightBorder} 
+      ${highlightBorder}
     }
   '';
-in ''
+in
+''
   * {
     font-size: 18px;
     font-family: ${preferences.font_family}, Font Awesome, sans-serif;
@@ -32,8 +36,19 @@ in ''
     color: #${base05};
     background: #${base00};
     padding: ${defaultPadding};
-    ${highlightBorder} 
+    ${highlightBorder}
   }
-'' + pkgs.lib.concatMapStringsSep "\n" (string: defaultModuleConfig string) [
-  "#custom-logout" "#custom-notification" "#pulseaudio" "#tray" "#network" "#battery" "#disk" "#cpu" "#memory" "#wireless" "#bluetooth"
+''
+  + pkgs.lib.concatMapStringsSep "\n" (string: defaultModuleConfig string) [
+  "#custom-logout"
+  "#custom-notification"
+  "#pulseaudio"
+  "#tray"
+  "#network"
+  "#battery"
+  "#disk"
+  "#cpu"
+  "#memory"
+  "#wireless"
+  "#bluetooth"
 ]

@@ -1,12 +1,13 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, inputs
+, ...
+}:
+let
   cfg = config.programs.browsers;
-in {
+in
+{
   options = {
     programs.browsers.enable = lib.mkEnableOption "Manage browsers";
   };
@@ -21,8 +22,8 @@ in {
         "--js-flags=--jitless"
       ];
       extensions = [
-        {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-        {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
+        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+        { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
       ];
     };
 

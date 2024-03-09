@@ -1,10 +1,9 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   boot = {
-    extraModulePackages = [config.boot.kernelPackages.rtl8192eu];
+    extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
   };
   environment.systemPackages = with pkgs; [
     just
@@ -14,7 +13,7 @@
   ];
   services.openssh.enable = true;
   time.timeZone = "America/Sao_Paulo";
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking = {
     networkmanager.enable = true;

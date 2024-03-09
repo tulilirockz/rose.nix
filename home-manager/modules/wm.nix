@@ -1,15 +1,16 @@
-{
-  config,
-  lib,
-  pkgs,
-  preferences,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, preferences
+, ...
+}:
+let
   cfg = config.programs.wm;
-in {
+in
+{
   options = {
     programs.wm = lib.mkOption {
-      default = {};
+      default = { };
       type = lib.types.submodule (_: {
         options = {
           enable = lib.mkEnableOption {
@@ -18,7 +19,7 @@ in {
             default = false;
           };
           apps = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -30,7 +31,7 @@ in {
             });
           };
           niri = lib.mkOption {
-            default = {};
+            default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
@@ -46,14 +47,15 @@ in {
     };
   };
   config = lib.mkIf cfg.enable (lib.mkMerge (
-    builtins.map (
-      module:
+    builtins.map
+      (
+        module:
         lib.mkIf (cfg.${module}.enable == true) (import ./wm/${module}.nix {
           inherit pkgs;
           inherit config;
           inherit preferences;
           inherit lib;
         })
-    ) ["apps" "niri"]
+      ) [ "apps" "niri" ]
   ));
 }

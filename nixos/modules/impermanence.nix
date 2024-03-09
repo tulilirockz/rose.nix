@@ -1,16 +1,16 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with lib; let
   cfg = config.system.nixos.impermanence;
-in {
+in
+{
   options.system.nixos.impermanence = {
     enable = lib.mkEnableOption "impermanence";
     home = lib.mkOption {
-      default = {};
+      default = { };
       type = lib.types.submodule (_: {
         options = {
           enable = lib.mkEnableOption "impermanence";

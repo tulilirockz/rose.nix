@@ -19,7 +19,7 @@
   };
 
   "org/gnome/shell" = {
-    enabled-extensions = ["user-theme@gnome-shell-extensions.gcampax.github.com" "dash-to-dock@micxgx.gmail.com" "appindicatorsupport@rgcjonas.gmail.com"];
+    enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" "dash-to-dock@micxgx.gmail.com" "appindicatorsupport@rgcjonas.gmail.com" ];
   };
 
   "org/gnome/desktop/wm/preferences" = {

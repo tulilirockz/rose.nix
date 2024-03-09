@@ -1,12 +1,13 @@
-{
-  config,
-  pkgs,
-  lib,
-  preferences,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, preferences
+, ...
+}:
+let
   cfg = config.programs.devtools;
-in {
+in
+{
   options = {
     programs.devtools.enable = lib.mkEnableOption {
       description = "Enable my managed development configuration";
@@ -37,13 +38,12 @@ in {
     '';
 
     programs.nixvim = lib.mkMerge [
-      {enable = true;}
+      { enable = true; }
       (import ./devtools/nixvim/dev-general.nix {
         inherit pkgs;
         inherit config;
         inherit preferences;
-      })
-      .config
+      }).config
     ];
 
     programs.vscode = {

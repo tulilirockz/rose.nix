@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  preferences,
-  ...
+{ config
+, pkgs
+, lib
+, preferences
+, ...
 }: {
   xdg.configFile = {
     "niri/autostart".executable = true;
@@ -15,7 +14,6 @@
       ${pkgs.udiskie}/bin/udiskie &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
       ${lib.getExe pkgs.foot} --server &
-      ${pkgs.kdeconnect}/bin/kdeconnect-indicator &
       ${lib.getExe pkgs.waybar}
     '';
   };
@@ -23,7 +21,7 @@
   programs.niri.config = ''
     // This config is in the KDL format: https://kdl.dev
     // "/-" comments out the following node.
-    
+
     input {
         keyboard {
             xkb {
@@ -136,7 +134,7 @@
             width 2
 
             // Color of the ring on the active monitor: red, green, blue, alpha.
-            active-color 33 33 33 125 
+            active-color 33 33 33 125
 
             // Color of the ring on inactive monitors: red, green, blue, alpha.
             inactive-color 80 80 80 255
@@ -306,10 +304,10 @@
         Mod+Right { focus-column-right; }
         Mod+Up    { focus-workspace-up; }
         Mod+Down  { focus-workspace-down; }
-        Mod+H     { focus-column-left; }
-        Mod+J     { focus-window-down; }
-        Mod+K     { focus-window-up; }
-        Mod+L     { focus-column-right; }
+        Mod+H  { focus-column-left; }
+        Mod+J  { focus-workspace-down; }
+        Mod+K    { focus-workspace-up; }
+        Mod+L { focus-column-right; }
 
         Mod+Ctrl+Left  { move-column-left; }
         Mod+Ctrl+Down  { move-window-down; }

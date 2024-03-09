@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   gnomeApps =
     (with pkgs.gnome; [
       gnome-tweaks

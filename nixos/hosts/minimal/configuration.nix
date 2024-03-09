@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
-  imports = [./hardware-configuration.nix];
+  imports = [ ./hardware-configuration.nix ];
   boot = {
     loader.systemd-boot.enable = true;
     loader.systemd-boot.configurationLimit = 5;
@@ -18,7 +17,7 @@
   services.openssh.enable = true;
   services.openssh.openFirewall = true;
   time.timeZone = "America/Sao_Paulo";
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking = {
     hostName = "minimal";

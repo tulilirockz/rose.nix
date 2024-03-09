@@ -1,18 +1,19 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{ pkgs
+, lib
+, ...
+}:
+let
   consoleRun = "${pkgs.foot}/bin/footclient -e";
-in [
+in
+[
   {
     mainBar.layer = "top";
     layer = "top";
     position = "left";
 
-    modules-left = ["network" "pulseaudio" "cpu" "memory" ];
-    modules-center = [ "clock" ]; 
-    modules-right = ["disk" "bluetooth" "custom/notification" "tray" "custom/logout"];
+    modules-left = [ "network" "pulseaudio" "cpu" "memory" ];
+    modules-center = [ "clock" ];
+    modules-right = [ "disk" "custom/notification" "tray" "custom/logout" ];
 
     "clock" = {
       format = "{:%I\n%M}";
@@ -37,7 +38,7 @@ in [
       on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "network" = {
-      format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+      format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
       format-ethernet = ": {bandwidthDownOctets}\n: {bandwidthUpOctets}";
       format-wifi = "{icon} {signalStrength}%";
       format-disconnected = "󰤮";
@@ -61,7 +62,7 @@ in [
         phone = "";
         portable = "";
         car = "";
-        default = ["" "" ""];
+        default = [ "" "" "" ];
       };
       on-click = "${lib.getExe pkgs.pavucontrol}";
     };
@@ -96,7 +97,7 @@ in [
       format = "{icon} {capacity}%";
       format-charging = "󰂄 {capacity}%";
       format-plugged = "󱘖 {capacity}%";
-      format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+      format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
       on-click = "";
       tooltip = false;
     };

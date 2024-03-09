@@ -1,7 +1,6 @@
-{
-  preferences,
-  pkgs,
-  ...
+{ preferences
+, pkgs
+, ...
 }:
 with preferences.colorScheme.palette; ''
   window {

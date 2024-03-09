@@ -1,6 +1,8 @@
-{pkgs, ...}: let
-  apps = import ./apps.nix {inherit pkgs;};
-in {
+{ pkgs, ... }:
+let
+  apps = import ./apps.nix { inherit pkgs; };
+in
+{
   services.xserver = {
     displayManager.sddm = {
       enable = true;
@@ -10,5 +12,5 @@ in {
     displayManager.defaultSession = "plasmawayland";
   };
 
-  environment.systemPackages = [pkgs.plasma-pa] ++ apps.qtApps;
+  environment.systemPackages = [ pkgs.plasma-pa ] ++ apps.qtApps;
 }

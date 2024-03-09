@@ -1,6 +1,8 @@
-{pkgs, ...}: let
-  apps = import ./apps.nix {inherit pkgs;};
-in {
+{ pkgs, ... }:
+let
+  apps = import ./apps.nix { inherit pkgs; };
+in
+{
   services.xserver = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -15,7 +17,7 @@ in {
       appindicator
       tiling-assistant
     ])
-    ++ [pkgs.gnome-randr]
+    ++ [ pkgs.gnome-randr ]
     ++ apps.gnomeApps;
 
   environment.gnome.excludePackages =

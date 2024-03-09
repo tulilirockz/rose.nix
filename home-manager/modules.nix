@@ -1,6 +1,8 @@
-{...}: let
+{ ... }:
+let
   modulesPath = "modules";
-in {
+in
+{
   imports = builtins.map (path: ./${modulesPath}/${path}) [
     "clitools.nix"
     "devtools.nix"

@@ -1,22 +1,22 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 with lib; let
   cfg = config.programs.sunshine;
   sunshinePort = 47990;
-in {
+in
+{
   options.programs.sunshine = {
     enable = lib.mkEnableOption "sunshine";
 
-    package = lib.mkPackageOption pkgs "sunshine" {};
+    package = lib.mkPackageOption pkgs "sunshine" { };
   };
 
   config = mkIf cfg.enable {
     systemd.services.sunshine = {
-      wantedBy = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
       description = "Sunshine is a Game stream host for Moonlight.";
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/sunshine";
@@ -31,11 +31,11 @@ in {
       source = "${pkgs.sunshine}/bin/sunshine";
     };
 
-    boot.kernelModules = ["uinput"];
+    boot.kernelModules = [ "uinput" ];
 
     networking.firewall = {
-      allowedTCPPorts = [sunshinePort];
-      allowedUDPPorts = [sunshinePort];
+      allowedTCPPorts = [ sunshinePort ];
+      allowedUDPPorts = [ sunshinePort ];
     };
 
     services.udev.extraRules = ''

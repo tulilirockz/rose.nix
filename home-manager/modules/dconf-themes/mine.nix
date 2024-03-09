@@ -35,8 +35,8 @@
   };
 
   "org/gnome/shell" = {
-    enabled-extensions = ["appindicatorsupport@rgcjonas.gmail.com" "blur-my-shell@aunetx" "tiling-assistant@leleat-on-github"];
-    favorite-apps = ["org.gnome.Nautilus.desktop" "firefox.desktop" "Alacritty.desktop" "com.rafaelmardojai.Blanket.desktop" "org.gnome.Solanum.desktop" "Waydroid.desktop" "virt-manager.desktop"];
+    enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "blur-my-shell@aunetx" "tiling-assistant@leleat-on-github" ];
+    favorite-apps = [ "org.gnome.Nautilus.desktop" "firefox.desktop" "Alacritty.desktop" "com.rafaelmardojai.Blanket.desktop" "org.gnome.Solanum.desktop" "Waydroid.desktop" "virt-manager.desktop" ];
   };
 
   "org/gnome/desktop/peripherals/touchpad" = {
@@ -61,7 +61,7 @@
   };
 
   "org/gnome/settings-daemon/plugins/media-keys" = {
-    custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"];
+    custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
   };
 
   "org/gnome/shell/extensions/blur-my-shell/panel" = {

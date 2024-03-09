@@ -1,12 +1,13 @@
-{
-  config,
-  pkgs,
-  lib,
-  preferences,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, preferences
+, ...
+}:
+let
   cfg = config.programs.clitools;
-in {
+in
+{
   options = {
     programs.clitools.enable = lib.mkEnableOption {
       description = "Enable a CLI-based user experince";
@@ -152,11 +153,12 @@ in {
         $env.config.show_banner = false
     '';
     programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
-      pkgs.lib.attrsets.mapAttrsToList (var: value:
-        if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR")
-        then "$env.${toString var} = ${toString value}"
-        else "")
-      config.home.sessionVariables
+      pkgs.lib.attrsets.mapAttrsToList
+        (var: value:
+          if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR")
+          then "$env.${toString var} = ${toString value}"
+          else "")
+        config.home.sessionVariables
     );
     programs.zoxide = {
       enable = true;

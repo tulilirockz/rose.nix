@@ -1,11 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  preferences,
-  ...
+{ config
+, pkgs
+, lib
+, preferences
+, ...
 }: {
-
   programs.wlogout = {
     enable = true;
     layout = import ./wlogout/layout.nix;

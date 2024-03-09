@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   imports = [
     ./hardware-configuration.nix
@@ -19,15 +18,15 @@
   };
   networking.hostName = "studio";
 
-  programs.managed-desktops.enable = true; 
-  programs.managed-desktops.shared.enable = true; 
-  programs.managed-desktops.wm.enable = true; 
-  programs.managed-desktops.niri.enable = true; 
+  programs.managed-desktops.enable = true;
+  programs.managed-desktops.shared.enable = true;
+  programs.managed-desktops.wm.enable = true;
+  programs.managed-desktops.niri.enable = true;
 
   virtualisation.managed.enable = true;
-  
-  environment.systemPackages = with pkgs; [heroic];
+
+  environment.systemPackages = with pkgs; [ heroic ];
   programs.steam.enable = false;
-  
+
   programs.sunshine.enable = false;
 }

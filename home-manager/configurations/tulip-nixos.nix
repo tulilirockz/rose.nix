@@ -1,9 +1,8 @@
-{
-  lib,
-  preferences,
-  pkgs,
-  config,
-  ...
+{ lib
+, preferences
+, pkgs
+, config
+, ...
 }: {
   imports = [
     ../modules.nix
@@ -41,7 +40,7 @@
     (pkgs.writeScriptBin "xwayland-run" ''
       ${lib.getExe pkgs.sway} &
       sleep 2
-      DISPLAY=:0 $@ 
+      DISPLAY=:0 $@
     '')
   ];
 
@@ -95,8 +94,8 @@
     (import ../modules/dconf-themes/mine.nix)
     {
       "org/virt-manager/virt-manager/connections" = {
-        autoconnect = ["qemu:///session"];
-        uris = ["qemu:///session"];
+        autoconnect = [ "qemu:///session" ];
+        uris = [ "qemu:///session" ];
       };
     }
   ];

@@ -1,8 +1,7 @@
-{
-  preferences,
-  inputs,
-  pkgs,
-  ...
+{ preferences
+, inputs
+, pkgs
+, ...
 }:
 # Used for both my main systems
 {
@@ -25,7 +24,7 @@
   services.fwupd.enable = true;
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [ "nix-command" "flakes" ];
     use-xdg-base-directories = true;
   };
 
@@ -44,23 +43,23 @@
     };
     useGlobalPkgs = true;
     users = {
-      ${preferences.main_username} = {
-        config,
-        preferences,
-        ...
-      }: {
-        imports = [
-          inputs.nix-colors.homeManagerModules.default
-          inputs.nix-flatpak.homeManagerModules.nix-flatpak
-          inputs.nixvim.homeManagerModules.nixvim
-          inputs.impermanence.nixosModules.home-manager.impermanence
-          (import ../../home-manager/modules/impermanence.nix {
-            inherit config;
-            inherit preferences;
-          })
-          ../../home-manager/configurations/tulip-nixos.nix
-        ];
-      };
+      ${preferences.main_username} =
+        { config
+        , preferences
+        , ...
+        }: {
+          imports = [
+            inputs.nix-colors.homeManagerModules.default
+            inputs.nix-flatpak.homeManagerModules.nix-flatpak
+            inputs.nixvim.homeManagerModules.nixvim
+            inputs.impermanence.nixosModules.home-manager.impermanence
+            (import ../../home-manager/modules/impermanence.nix {
+              inherit config;
+              inherit preferences;
+            })
+            ../../home-manager/configurations/tulip-nixos.nix
+          ];
+        };
     };
   };
 

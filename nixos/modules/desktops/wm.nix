@@ -1,10 +1,11 @@
+{ pkgs
+, preferences
+, ...
+}:
+let
+  apps = import ./apps.nix { inherit pkgs; };
+in
 {
-  pkgs,
-  preferences,
-  ...
-}: let
-  apps = import ./apps.nix {inherit pkgs;};
-in {
   services.greetd.enable = true;
   programs.regreet = {
     enable = true;

@@ -1,4 +1,4 @@
-{preferences, ...}: {
+{ preferences, ... }: {
   home.persistence."/persist/home/${preferences.main_username}" = {
     allowOther = true;
     directories = [
