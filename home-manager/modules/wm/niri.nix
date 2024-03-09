@@ -133,10 +133,10 @@
             // off
 
             // How many logical pixels the ring extends out from the windows.
-            width 4
+            width 2
 
             // Color of the ring on the active monitor: red, green, blue, alpha.
-            active-color 127 200 255 255
+            active-color 33 33 33 125 
 
             // Color of the ring on inactive monitors: red, green, blue, alpha.
             inactive-color 80 80 80 255
@@ -151,7 +151,7 @@
             // defaulting to 180 (top-to-bottom gradient).
             // You can use any CSS linear-gradient tool on the web to set these up.
             //
-            // active-gradient from="#80c8ff" to="#bbddff" angle=45
+            // active-gradient from="#505050" to="#808080" angle=45
 
             // You can also color the gradient relative to the entire view
             // of the workspace, rather than relative to just the window itself.

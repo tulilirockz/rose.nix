@@ -8,15 +8,9 @@
   cfg = config.programs.browsers;
 in {
   options = {
-    programs.browsers.enable = lib.mkEnableOption {
-      description = "Manage browsers";
-    };
+    programs.browsers.enable = lib.mkEnableOption "Manage browsers";
   };
   config = lib.mkIf cfg.enable {
-    #home.packages = with pkgs; [
-    #  lagrange
-    #];
-
     programs.chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
@@ -28,7 +22,6 @@ in {
       ];
       extensions = [
         {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-        {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # dark-reader
         {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
       ];
     };

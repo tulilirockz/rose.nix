@@ -49,7 +49,7 @@
     };
 
     preferences = rec {
-      theme = "catppucin";
+      theme = "windows-10";
       main_username =
         if (portable.enable == true)
         then portable.user
@@ -58,7 +58,7 @@
       wallpaper = ./assets/wserver2025.jpg;
       user_wallpaper = "${wallpaper}";
       theme_type = "dark";
-      theme_wallpaper = true;
+      theme_wallpaper = false;
       colorScheme =
         if (theme_wallpaper == true)
         then

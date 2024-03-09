@@ -24,30 +24,7 @@ in {
       enableBashIntegration = true;
     };
 
-    programs.yazi = {
-      enable = true;
-      enableNushellIntegration = true;
-      settings = {
-        manager = {
-          show_hidden = true;
-          show_symlink = true;
-          prepend_keymap = [
-            {
-              on = ["<C-s>"];
-              exec = "shell \"$SHELL\" --block --confirm";
-              desc = "Open shell here";
-            }
-          ];
-        };
-      };
-    };
-
     programs.carapace = {
-      enable = true;
-      enableNushellIntegration = true;
-    };
-
-    programs.broot = {
       enable = true;
       enableNushellIntegration = true;
     };

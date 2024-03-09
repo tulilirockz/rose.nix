@@ -85,6 +85,7 @@
   programs.waybar = {
     enable = true;
     style = import ./waybar/style.nix {
+      inherit pkgs;
       inherit preferences;
     };
     settings = import ./waybar/settings.nix {

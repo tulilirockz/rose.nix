@@ -8,19 +8,20 @@ in [
   {
     mainBar.layer = "top";
     layer = "top";
-    position = "top";
+    position = "left";
 
-    modules-left = ["network" "pulseaudio" "cpu" "memory" "disk" "clock"];
-    modules-right = ["custom/notification" "custom/logout" "tray"];
+    modules-left = ["network" "pulseaudio" "cpu" "memory" ];
+    modules-center = [ "clock" ]; 
+    modules-right = ["disk" "bluetooth" "custom/notification" "tray" "custom/logout"];
 
     "clock" = {
-      format = "{: %I:%M %p}";
-      tooltip = false;
+      format = "{:%I\n%M}";
+      tooltip = true;
       on-click = "${consoleRun} \"${pkgs.peaclock}/bin/peaclock\"";
     };
     "memory" = {
       interval = 5;
-      format = "🐏{}%";
+      format = "󰍛 {}%";
       tooltip = true;
       on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
@@ -31,13 +32,13 @@ in [
       on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "disk" = {
-      format = "  {free}";
+      format = " {percentage_free}%";
       tooltip = true;
       on-click = "${consoleRun} \"${lib.getExe pkgs.btop}\"";
     };
     "network" = {
       format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-      format-ethernet = ": {bandwidthDownOctets} : {bandwidthUpOctets}";
+      format-ethernet = ": {bandwidthDownOctets}\n: {bandwidthUpOctets}";
       format-wifi = "{icon} {signalStrength}%";
       format-disconnected = "󰤮";
       tooltip = false;
@@ -47,10 +48,10 @@ in [
       spacing = 12;
     };
     "pulseaudio" = {
-      format = "{icon} {volume}% {format_source}";
-      format-bluetooth = "{volume}% {icon} {format_source}";
-      format-bluetooth-muted = " {icon} {format_source}";
-      format-muted = " {format_source}";
+      format = "{icon} {volume}%\n{format_source}";
+      format-bluetooth = "{volume}% {icon}\n{format_source}";
+      format-bluetooth-muted = " {icon}\n{format_source}";
+      format-muted = "\n{format_source}";
       format-source = " {volume}%";
       format-source-muted = "";
       format-icons = {
@@ -84,7 +85,7 @@ in [
     };
     "custom/logout" = {
       tooltip = false;
-      format = "🔒";
+      format = "⏻";
       on-click = "${lib.getExe pkgs.wlogout}";
     };
     "battery" = {

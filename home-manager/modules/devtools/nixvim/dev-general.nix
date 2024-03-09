@@ -1,6 +1,5 @@
 {
   pkgs,
-  preferences,
   ...
 }:
 # Made to be imported by programs.nixvim
@@ -17,9 +16,8 @@
       shiftwidth = 2;
     };
 
-    colorschemes.base16 = {
+    colorschemes.poimandres= {
       enable = true;
-      customColorScheme = builtins.mapAttrs (attr: value: "#${value}") preferences.colorScheme.palette;
     };
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -157,10 +155,9 @@
       molten.enable = true;
       netman.enable = true;
       gitblame.enable = true;
-
       image.enable = true;
-
       fugitive.enable = true;
+      rustaceanvim.enable = true;
 
       nvim-bqf = {
         enable = true;
@@ -229,11 +226,17 @@
           yamlls.enable = true;
           nushell.enable = true;
           nushell.autostart = true;
+          rust-analyzer = {
+            enable = false;
+            installCargo = true;
+            installRustc = true;
+            settings.files.excludeDirs = [
+              ".direnv/**"
+              "target/**"
+            ];
+          };
           clangd.enable = true;
           gopls.enable = true;
-          rust-analyzer.enable = true;
-          rust-analyzer.installCargo = true;
-          rust-analyzer.installRustc = true;
           dockerls.enable = true;
           zls.enable = true;
           nil_ls.enable = true;

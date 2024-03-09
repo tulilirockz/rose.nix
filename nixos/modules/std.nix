@@ -12,7 +12,7 @@
   boot = {
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
   };
 
   time.timeZone = "America/Sao_Paulo";
@@ -34,7 +34,6 @@
     dates = "daily";
     options = "--delete-older-than 2d";
   };
-  nixpkgs.config.allowUnfree = true;
 
   system.nixos.impermanence.enable = true;
   system.nixos.impermanence.home.enable = true;
