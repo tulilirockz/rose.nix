@@ -1,5 +1,5 @@
-{ pkgs
-, ...
+{ pkgs,
+  ...
 }:
 # Made to be imported by programs.nixvim
 let
@@ -22,6 +22,10 @@ in
       shiftwidth = 2;
     };
 
+    filetype.pattern = {
+    	".*\.nu" = "nu";
+    };
+
     colorschemes.poimandres.enable = true;
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -34,103 +38,76 @@ in
     extraConfigLua = "${import ./octo-config.nix}";
 
     keymaps = map ({ key, action }: leaderBinding "${key}" "${action}") [
-      { key = "s"; action = "<cmd>w<CR>"; }
-      { key = "n"; action = "<cmd>Lspsaga outline<CR>"; }
-      { key = "m"; action = "<cmd>Oil<CR>"; }
-      { key = "sg"; action = "<cmd>Telescope live_grep<CR>"; }
-      { key = "sf"; action = "<cmd>Telescope find_files<CR>"; }
-      { key = "sb"; action = "<cmd>Telescope current_buffer_fuzzy_find<CR>"; }
-      { key = "gf"; action = "<cmd>Telescope git_files<CR>"; }
-      { key = "t"; action = "<cmd>term<CR>"; }
-      { key = "<space>"; action = "<cmd>Startify<CR>"; }
-      { key = "gb"; action = "<cmd>Git blame<CR>"; }
-      { key = "g"; action = "<cmd>Neogit<CR>"; }
-      { key = "gc"; action = "<cmd>Neogit commit<CR>"; }
-      { key = "ol"; action = "<cmd>Octo actions<CR>"; }
-      { key = "oi"; action = "<cmd>Octo issue list<CR>"; }
-      { key = "op"; action = "<cmd>Octo pr list<CR>"; }
-      { key = "ha"; action = "<cmd>lua require(\"harpoon.mark\").add_file()<CR>"; }
-      { key = "hn"; action = "<cmd>lua require(\"harpoon.ui\").nav_next()<CR>"; }
-      { key = "hp"; action = "<cmd>lua require(\"harpoon.ui\").nav_prev()<CR>"; }
-      { key = "hm"; action = "<cmd>Telescope harpoon marks<CR>"; }
-      { key = "ik"; action = "<cmd>Telescope keymaps<CR>"; }
-      { key = "ic"; action = "<cmd>Telescope commands<CR>"; }
-      { key = "ih"; action = "<cmd>Telescope help_tags<CR>"; }
-    ] ++ 
-    (map (num: leaderBinding "h${toString num}" "lua require(\"harpoon.ui\").nav_file(${toString num})") 
+      { key = "m"; action = "Oil"; }
+      { key = "sg"; action = "Telescope live_grep"; }
+      { key = "sf"; action = "Telescope find_files"; }
+      { key = "sb"; action = "Telescope current_buffer_fuzzy_find"; }
+      { key = "gf"; action = "Telescope git_files"; }
+      { key = "t"; action = "ToggleTerm"; }
+      { key = "ty"; action = "ToggleTermSendCurrentLine"; }
+      { key = "T"; action = "term"; }
+      { key = "g"; action = "Neogit"; }
+      { key = "gc"; action = "Neogit commit"; }
+      { key = "ol"; action = "Octo actions"; }
+      { key = "oi"; action = "Octo issue list"; }
+      { key = "op"; action = "Octo pr list"; }
+      { key = "ha"; action = "lua require(\"harpoon.mark\").add_file()"; }
+      { key = "hn"; action = "lua require(\"harpoon.ui\").nav_next()"; }
+      { key = "hp"; action = "lua require(\"harpoon.ui\").nav_prev()"; }
+      { key = "hm"; action = "Telescope harpoon marks"; }
+      { key = "ik"; action = "Telescope keymaps"; }
+      { key = "ic"; action = "Telescope commands"; }
+      { key = "ih"; action = "Telescope help_tags"; }
+      { key = "it"; action = "Tutor"; }
+      { key = "e"; action = "TroubleToggle"; }
+      { key = "ld"; action = "Telescope lsp_definitions"; }
+      { key = "lr"; action = "Telescope lsp_references"; }
+      { key = "li"; action = "Telescope lsp_implementations"; }
+      { key = "lD"; action = "Telescope lsp_type_definitions"; }
+      { key = "lds"; action = "Telescope lsp_document_symbols"; }
+      { key = "lws"; action = "Telescope lsp_workspace_symbols"; }
+    ] ++
+    (map (num: leaderBinding "${toString num}" "lua require(\"harpoon.ui\").nav_file(${toString num})")
       [ 1 2 3 4 5 6 7 8 9 ]
     );
 
     editorconfig.enable = true;
 
     plugins = {
-      telescope.enable = true;
-      cursorline.enable = true;
-      fidget.enable = true;
       nix-develop.enable = true;
-      bufferline.enable = true;
-      which-key.enable = true;
-      treesitter.enable = true;
-      treesitter-context.enable = true;
-      indent-blankline.enable = true;
-      lsp-format.enable = true;
-      nix.enable = true;
-      nvim-colorizer.enable = true;
+      toggleterm.enable = true;
+      rustaceanvim = {
+        enable = true;
+        tools.executor = "toggleterm";
+      };
+
+      trouble.enable = true;
+      friendly-snippets.enable = true;
       lint.enable = true;
-      molten.enable = true;
-      netman.enable = true;
-      gitblame.enable = true;
-      image.enable = true;
-      neogit.enable = true;
-      rustaceanvim.enable = true;
-      leap.enable = true;
-      oil.enable = true;
-      spider.enable = true;
-
-      harpoon = {
-        enable = true;
-        enableTelescope = true;
-      };
-
-      startify = {
-        enable = true;
-        enableUnsafe = true;
-        changeToVcsRoot = true;
-        updateOldFiles = true;
-        customHeader = "${pkgs.lib.getExe pkgs.fortune} | ${pkgs.lib.getExe pkgs.lolcat}";
-      };
-
-      lspsaga = {
-        enable = false;
-        callhierarchy.layout = "normal";
-        codeAction.showServerName = true;
-      };
-
-      lualine = {
-        enable = true;
-        globalstatus = true;
-        extensions = [ "fzf" "quickfix" "man" "symbols-outline" ];
-      };
-
-      coq-nvim = {
-        enable = true;
-        alwaysComplete = true;
-        autoStart = true;
-        installArtifacts = true;
-        recommendedKeymaps = true;
-      };
-
+      dap.enable = true;
+      lsp-format.enable = true;
       lsp = {
         enable = true;
         keymaps = {
-          silent = true;
+          diagnostic = {
+            "<leader>j" = "goto_next";
+            "<leader>k" = "goto_prev";
+          };
+          lspBuf = {
+            "K" = "hover";
+            "<leader>lrn" = "rename";
+          };
         };
         servers = {
           bashls.enable = true;
           tailwindcss.enable = true;
           yamlls.enable = true;
-          nushell.enable = true;
-          nushell.autostart = true;
+          clojure-lsp.enable = true;
+          nushell = {
+            enable = true;
+            autostart = true;
+            filetypes = ["*.nu" "nu"];
+          };
           rust-analyzer = {
             enable = false;
             installCargo = true;
@@ -150,6 +127,40 @@ in
             autostart = true;
           };
         };
+      };
+
+      # Static after this line, should not edit! 
+      telescope.enable = true;
+      treesitter.enable = true;
+      treesitter-context.enable = true;
+      fidget.enable = true;
+      which-key.enable = true;
+      indent-blankline.enable = true;
+      spider.enable = true;
+      nvim-colorizer.enable = true;
+      neogit.enable = true;
+      harpoon = {
+        enable = true;
+        enableTelescope = true;
+      };
+      oil = {
+        enable = true;
+        skipConfirmForSimpleEdits = true;
+        deleteToTrash = true;
+        trashCommand = "${pkgs.lib.getExe pkgs.trashy}";
+      };
+      leap.enable = true;
+      lualine = { enable = true; globalstatus = true; };
+      coq-nvim = {
+        enable = true;
+        alwaysComplete = true;
+        autoStart = true;
+        installArtifacts = true;
+        recommendedKeymaps = true;
+      };
+      gitblame = {
+        enable = true;
+        messageTemplate = "<summary> by <author> @ <date>";
       };
     };
   };

@@ -42,7 +42,6 @@ in
       (import ./devtools/nixvim/dev-general.nix {
         inherit pkgs;
         inherit config;
-        inherit preferences;
       }).config
     ];
 
