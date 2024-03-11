@@ -1,13 +1,25 @@
-{ config
-, pkgs
-, lib
-, preferences
+{
+ preferences
 , ...
 }:
 # Generated with nix run github:pjones/plasma-manager
 {
   programs.plasma = {
     enable = true;
+    workspace = {
+      theme = "breeze-dark";
+      colorScheme = "BreezeDark";
+      wallpaper = "${preferences.wallpaper}";
+    };
+    panels = [
+      {
+	location = "left";
+	floating = true;
+      } 
+    ];
+    spectacle.shortcuts = {
+      captureRectangularRegion = "Print";
+    };
     shortcuts = {
       "ActivityManager"."switch-to-activity-79141c2b-7712-493a-8c41-1e2a4583fefe" = [ ];
       "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
@@ -95,7 +107,7 @@
       "kwin"."Window Grow Horizontal" = [ ];
       "kwin"."Window Grow Vertical" = [ ];
       "kwin"."Window Lower" = [ ];
-      "kwin"."Window Maximize" = "Meta+PgUp";
+      "kwin"."Window Maximize" = "Meta+V";
       "kwin"."Window Maximize Horizontal" = [ ];
       "kwin"."Window Maximize Vertical" = [ ];
       "kwin"."Window Minimize" = "Meta+PgDown";
@@ -224,9 +236,8 @@
       "kcminputrc"."Libinput.1133.16468.Logitech Wireless Mouse"."PointerAccelerationProfile" = 1;
       "kded5rc"."Module-device_automounter"."autoload" = false;
       "kdeglobals"."General"."XftHintStyle" = "hintslight";
-      "kdeglobals"."KDE"."LookAndFeelPackage" = "org.kde.breezedark.desktop";
       "kdeglobals"."General"."XftSubPixel" = "none";
-      "kdeglobals"."General"."fixed" = "IntoneMono Nerd Font Mono,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
+      "kdeglobals"."General"."fixed" = "IntoneMono Nerd Font Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
       "kdeglobals"."WM"."activeBackground" = "49,54,59";
       "kdeglobals"."WM"."activeBlend" = "252,252,252";
       "kdeglobals"."WM"."activeForeground" = "252,252,252";
