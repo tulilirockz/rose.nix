@@ -39,11 +39,13 @@ in
       waydroid.enable = true;
       libvirtd.enable = true;
       incus.enable = true;
+      
+      # Disabled until stable
       virtualbox.host = {
         addNetworkInterface = false;
         enableHardening = false;
-        enableKvm = true;
-        enable = true;
+        enableKvm = false;
+        enable = false;
       };
     };
 

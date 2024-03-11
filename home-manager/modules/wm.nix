@@ -42,6 +42,19 @@ in
               };
             });
           };
+	  plasma = lib.mkOption {
+            default = { };
+            type = lib.types.submodule (_: {
+              options = {
+                enable = lib.mkEnableOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Enable plasma managed configuration";
+                };
+              };
+            });
+          };
+
         };
       });
     };
@@ -56,6 +69,6 @@ in
           inherit preferences;
           inherit lib;
         })
-      ) [ "apps" "niri" ]
+      ) [ "apps" "niri" "plasma" ]
   ));
 }

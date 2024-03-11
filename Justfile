@@ -27,6 +27,9 @@ home-switch:
 home-switch-tulili:
 	nix run nixpkgs#home-manager -- switch --substitute -b backup --flake .#{{USER}}
 
+sys-boot:
+	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo boot --flake .#{{CURRENT_MACHINE}}
+
 sys-switch:
 	nix run nixpkgs#nixos-rebuild -- --use-remote-sudo switch --flake .#{{CURRENT_MACHINE}}
 

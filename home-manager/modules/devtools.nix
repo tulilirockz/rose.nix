@@ -79,6 +79,7 @@ in
       kind
       pre-commit
       fh
+      trashy
       (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };

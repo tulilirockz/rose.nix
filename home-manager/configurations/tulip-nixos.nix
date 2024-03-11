@@ -37,6 +37,8 @@
     stremio
     halftone
     krita
+    libresprite
+    gimp
     (pkgs.writeScriptBin "xwayland-run" ''
       ${lib.getExe pkgs.sway} &
       sleep 2
@@ -77,9 +79,10 @@
 
   programs.devtools.enable = true;
   programs.clitools.enable = true;
-  programs.wm.enable = true;
-  programs.wm.niri.enable = true;
-  programs.wm.apps.enable = true;
+  programs.wm.enable = true; 
+  programs.wm.plasma.enable = true; 
+  programs.wm.niri.enable = false;
+  programs.wm.apps.enable = false;
   programs.browsers.enable = true;
 
   xdg.configFile."gnome-boxes/sources/QEMU System".text = ''

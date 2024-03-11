@@ -13,8 +13,14 @@ in
 
     modules-left = [ "network" "pulseaudio" "cpu" "memory" ];
     modules-center = [ "clock" ];
-    modules-right = [ "disk" "custom/notification" "tray" "custom/logout" ];
+    modules-right = [ "disk" "custom/notification" "bluetooth" "tray" "custom/logout" ];
 
+    "bluetooth" = {
+      format = "";
+      format-disabled = "";
+      format-coennected = "";
+      on-click = "${pkgs.blueberry}/bin/blueberry";
+    };
     "clock" = {
       format = "{:%I\n%M}";
       tooltip = true;

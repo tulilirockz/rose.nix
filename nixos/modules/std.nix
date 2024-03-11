@@ -49,8 +49,8 @@
         , ...
         }: {
           imports = [
+            inputs.plasma-manager.homeManagerModules.plasma-manager
             inputs.nix-colors.homeManagerModules.default
-            inputs.nix-flatpak.homeManagerModules.nix-flatpak
             inputs.nixvim.homeManagerModules.nixvim
             inputs.impermanence.nixosModules.home-manager.impermanence
             (import ../../home-manager/modules/impermanence.nix {

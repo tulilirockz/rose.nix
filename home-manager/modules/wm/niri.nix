@@ -18,7 +18,7 @@
     '';
   };
 
-  programs.niri.config = ''
+  programs.niri.config = with preferences.colorScheme.palette ; ''
     // This config is in the KDL format: https://kdl.dev
     // "/-" comments out the following node.
 
@@ -149,13 +149,13 @@
             // defaulting to 180 (top-to-bottom gradient).
             // You can use any CSS linear-gradient tool on the web to set these up.
             //
-            // active-gradient from="#505050" to="#808080" angle=45
+            active-gradient from="#${base00}" to="#${base01}" angle=45 relative-to="workspace-view"
 
             // You can also color the gradient relative to the entire view
             // of the workspace, rather than relative to just the window itself.
             // To do that, set relative-to="workspace-view".
             //
-            // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+            inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
         }
 
 
@@ -173,7 +173,7 @@
         }
 
         // You can change the default width of the new windows.
-        default-column-width { proportion 0.5; }
+        default-column-width { proportion 1.0; }
         // If you leave the brackets empty, the windows themselves will decide their initial width.
         // default-column-width {}
 
@@ -330,23 +330,22 @@
         Mod+Ctrl+Home { move-column-to-first; }
         Mod+Ctrl+End  { move-column-to-last; }
 
-        Mod+Shift+Left  { focus-monitor-left; }
-        Mod+Shift+Down  { focus-monitor-down; }
-        Mod+Shift+Up    { focus-monitor-up; }
-        Mod+Shift+Right { focus-monitor-right; }
-        Mod+Shift+H     { focus-monitor-left; }
-        Mod+Shift+J     { focus-monitor-down; }
-        Mod+Shift+K     { focus-monitor-up; }
-        Mod+Shift+L     { focus-monitor-right; }
-
-        Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-        Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-        Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-        Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-        Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-        Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-        Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-        Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+        //Mod+Shift+Left  { focus-monitor-left; }
+        //Mod+Shift+Down  { focus-monitor-down; }
+        //Mod+Shift+Up    { focus-monitor-up; }
+        //Mod+Shift+Right { focus-monitor-right; }
+        //Mod+Shift+H     { focus-monitor-left; }
+        //Mod+Shift+J     { focus-monitor-down; }
+        //Mod+Shift+K     { focus-monitor-up; }
+        //Mod+Shift+L     { focus-monitor-right; }
+        //Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+        //Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+        //Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+        //Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+        //Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+        //Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+        //Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+        //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
         // Alternatively, there are commands to move just a single window:
         // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }

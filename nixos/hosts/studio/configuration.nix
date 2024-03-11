@@ -20,8 +20,9 @@
 
   programs.managed-desktops.enable = true;
   programs.managed-desktops.shared.enable = true;
-  programs.managed-desktops.wm.enable = true;
-  programs.managed-desktops.niri.enable = true;
+  programs.managed-desktops.wm.enable = false;
+  programs.managed-desktops.niri.enable = false;
+  programs.managed-desktops.kde.enable = true;
 
   virtualisation.managed.enable = true;
 

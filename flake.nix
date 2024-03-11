@@ -2,8 +2,8 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
+    plasma-manager.url = "github:pjones/plasma-manager";
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,10 +22,6 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     niri.url = "github:sodiboo/niri-flake";
   };
 
@@ -33,10 +29,8 @@
     { self
     , nixpkgs
     , home-manager
-    , nix-flatpak
     , nixvim
-    , nix-colors
-    , nixos-generators
+    , nix-colors, plasma-manager
     , ...
     } @ inputs:
     let
@@ -110,7 +104,6 @@
           };
           modules = [
             inputs.niri.nixosModules.niri
-            inputs.home-manager.nixosModules.home-manager
             inputs.disko.nixosModules.disko
             inputs.impermanence.nixosModules.impermanence
             (import ./nixos/generic/disko.nix { device = "/dev/sda"; })
@@ -147,7 +140,6 @@
 
           modules = [
             nix-colors.homeManagerModules.default
-            nix-flatpak.homeManagerModules.nix-flatpak
             nixvim.homeManagerModules.nixvim
             ./home-manager/configurations/tulip-nixos.nix
             ({ ... }: {
@@ -166,7 +158,6 @@
 
           modules = [
             nix-colors.homeManagerModules.default
-            nix-flatpak.homeManagerModules.nix-flatpak
             nixvim.homeManagerModules.nixvim
             ./home-manager/configurations/portable.nix
           ];
@@ -182,7 +173,6 @@
 
           modules = [
             nix-colors.homeManagerModules.default
-            nix-flatpak.homeManagerModules.nix-flatpak
             nixvim.homeManagerModules.nixvim
             ./home-manager/configurations/tulip-nixos.nix
           ];

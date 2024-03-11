@@ -13,6 +13,28 @@
     };
   };
 
+  programs.foot = {
+      enable = true;
+      server.enable = false;
+      settings = {
+        main = {
+          font = "${preferences.font_family}:size=12";
+          shell = pkgs.lib.getExe pkgs.nushell;
+          title = "amogus";
+          locked-title = true;
+          bold-text-in-bright = true;
+        };
+        environment = {
+          "EDITOR" = lib.getExe pkgs.neovim;
+        };
+        colors = with preferences.colorScheme.palette; {
+          alpha = 0.7;
+          background = base00;
+          foreground = base05;
+        };
+      };
+    };
+
   programs.fuzzel = {
     enable = true;
     settings = {

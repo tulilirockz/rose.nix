@@ -147,7 +147,7 @@ in
         enable = true;
         skipConfirmForSimpleEdits = true;
         deleteToTrash = true;
-        trashCommand = "${pkgs.lib.getExe pkgs.trashy}";
+	viewOptions.showHidden = true;
       };
       leap.enable = true;
       lualine = { enable = true; globalstatus = true; };
