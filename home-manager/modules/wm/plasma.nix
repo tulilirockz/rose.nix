@@ -13,6 +13,7 @@
     };
     panels = [
       {
+	height = 36;
 	location = "left";
 	floating = true;
       } 
@@ -223,6 +224,7 @@
       "plasmashell"."switch to previous activity" = [ ];
       "plasmashell"."toggle do not disturb" = [ ];
       "services.org.kde.konsole.desktop"."_launch" = "Meta+T";
+      "chromium-browser.desktop"."_launch" = "Meta+F";
     };
     configFile = {
       "baloofilerc"."Basic Settings"."Indexing-Enabled" = false;

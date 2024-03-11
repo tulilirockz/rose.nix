@@ -4,6 +4,14 @@
 , preferences
 , ...
 }: {
+  home.packages = [
+    (pkgs.writeScriptBin "xwayland-run" ''
+      ${lib.getExe pkgs.sway} &
+      sleep 2
+      DISPLAY=:0 $@
+    '')
+  ];
+
   programs.wlogout = {
     enable = true;
     layout = import ./wlogout/layout.nix;

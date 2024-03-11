@@ -38,12 +38,7 @@
     halftone
     krita
     libresprite
-    gimp
-    (pkgs.writeScriptBin "xwayland-run" ''
-      ${lib.getExe pkgs.sway} &
-      sleep 2
-      DISPLAY=:0 $@
-    '')
+    gimp 
   ];
 
   programs.obs-studio = {
