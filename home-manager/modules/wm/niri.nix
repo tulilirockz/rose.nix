@@ -12,6 +12,7 @@
       ${lib.getExe pkgs.swaynotificationcenter} &
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
+      ${pkgs.kdeconnect}/bin/kdeconnect-applet &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
       ${lib.getExe pkgs.foot} --server &
       ${lib.getExe pkgs.waybar}
@@ -173,7 +174,7 @@
         }
 
         // You can change the default width of the new windows.
-        default-column-width { proportion 1.0; }
+        default-column-width { proportion 0.5; }
         // If you leave the brackets empty, the windows themselves will decide their initial width.
         // default-column-width {}
 

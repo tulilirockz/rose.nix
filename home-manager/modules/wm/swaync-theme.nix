@@ -8,6 +8,7 @@ with preferences.colorScheme.palette; ''
     font-size: 14px;
     font-family: "${preferences.font_family}";
     transition: 200ms;
+    position: left;
   }
 
   .floating-notifications.background .notification-row .notification-background {

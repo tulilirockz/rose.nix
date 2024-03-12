@@ -80,6 +80,7 @@ in
       pre-commit
       fh
       trashy
+      android-tools
       (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };

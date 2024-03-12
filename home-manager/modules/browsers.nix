@@ -12,6 +12,13 @@ in
     programs.browsers.enable = lib.mkEnableOption "Manage browsers";
   };
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      epiphany
+      lagrange
+      bitwarden
+      discord
+    ];
+
     programs.chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
