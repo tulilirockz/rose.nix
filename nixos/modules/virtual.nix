@@ -15,7 +15,7 @@ in
       gnome.gnome-boxes
       quickemu
       quickgui
-      (pkgs.writeScriptBin "vm-manager" ''
+      (writeScriptBin "vm-manager" ''
         set -euo pipefail
         VMS_FOLDER=$HOME/opt/vms
         mkdir -p $VMS_FOLDER

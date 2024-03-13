@@ -10,6 +10,7 @@
     ../modules/clitools.nix
     ../modules/devtools.nix
     ../modules/impermanence.nix
+    ../modules/creation.nix
     ../modules/wm.nix
   ];
 
@@ -23,64 +24,60 @@
         }
     else inputs.nix-colors.colorSchemes.${preferences.theme.name};
 
-  programs.home-manager.enable = true;
-  home.username = preferences.username;
-  home.homeDirectory = "/home/${preferences.username}";
-  home.stateVersion = "24.05";
-
-  home.sessionVariables = rec {
-    #GTK2_RC_FILES = lib.mkForce "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
-    GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
-    NUGET_PACKAGES = "${XDG_CACHE_HOME}/NuGetPackages";
-    TLDR_CACHE_DIR = "${XDG_CACHE_HOME}/tldr";
-    CARGO_HOME = "${XDG_CACHE_HOME}/cargo";
-    DOTNET_CLI_HOME = "${XDG_DATA_HOME}/dotnet";
-    HISTFILE = "${XDG_STATE_HOME}/bash/history";
-    XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
-    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-    XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
-    XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
-    MOZ_ENABLE_WAYLAND = "1";
+  programs = {
+    home-manager.enable = true;
+    devtools.enable = true;
+    clitools.enable = true;
+    browsers.enable = true;
+    wm = {
+      enable = true;
+      ${preferences.desktop}.enable = true;
+      apps.enable = true;
+    };
   };
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-    package = pkgs.fuchsia-cursor;
-    name = "Fuchsia";
-    size = 16;
+  home = {
+    username = preferences.username;
+    homeDirectory = "/home/${preferences.username}";
+    stateVersion = "24.05";                           
+    
+    pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.fuchsia-cursor;
+      name = preferences.theme.cursor.name;
+      size = 16;
+    };
+
+    sessionVariables = rec {
+      #GTK2_RC_FILES = lib.mkForce "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
+      GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
+      NUGET_PACKAGES = "${XDG_CACHE_HOME}/NuGetPackages";
+      TLDR_CACHE_DIR = "${XDG_CACHE_HOME}/tldr";
+      CARGO_HOME = "${XDG_CACHE_HOME}/cargo";
+      DOTNET_CLI_HOME = "${XDG_DATA_HOME}/dotnet";
+      HISTFILE = "${XDG_STATE_HOME}/bash/history";
+      XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
+      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+      XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
+      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
+      MOZ_ENABLE_WAYLAND = "1";
+    };
   };
 
   gtk = {
     enable = true;
     theme = {
       package = pkgs.adw-gtk3;
-      name = "adw-gtk3-dark";
+     name = preferences.theme.gtk.name;
     };
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita";
+      name = preferences.theme.icon.name;
     };
   };
 
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs.obs-studio-plugins; [
-      obs-vaapi
-      obs-vkcapture
-      obs-gstreamer
-      input-overlay
-      obs-pipewire-audio-capture
-    ];
-  };
-
-  programs.devtools.enable = true;
-  programs.clitools.enable = true;
-  programs.wm.enable = true;
-  programs.wm.plasma.enable = false;
-  programs.wm.niri.enable = true;
-  programs.wm.apps.enable = true;
-  programs.browsers.enable = true;
+  programs.creation.enable = true;
 
   xdg.configFile."gnome-boxes/sources/QEMU System".text = ''
     [source]

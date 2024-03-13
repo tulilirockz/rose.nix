@@ -4,11 +4,11 @@
 , ...
 }:
 with lib; let
-  cfg = config.programs.sunshine;
+  cfg = config.services.sunshine;
   sunshinePort = 47990;
 in
 {
-  options.programs.sunshine = {
+  options.services.sunshine = {
     enable = lib.mkEnableOption "sunshine";
     package = lib.mkPackageOption pkgs "sunshine" { };
     openFirewall = lib.mkEnableOption "openFirewall";

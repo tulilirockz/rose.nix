@@ -85,7 +85,12 @@ in
       lldb
       gdb
       okteta
-      (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      bubblewrap
+      just
+      waypipe
+      cage
+      distrobox
+      (writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };
 }

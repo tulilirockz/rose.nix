@@ -41,16 +41,8 @@
     libreoffice
     catppuccin-gtk
     gnome.nautilus
-    czkawka
-    mumble
-    audacity
-    inkscape
-    upscayl
     stremio
-    halftone
-    krita
-    libresprite
-    gimp
+    mumble
   ];
 
   qtApps = with pkgs; [

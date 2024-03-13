@@ -2,8 +2,8 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
-    plasma-manager.url = "github:pjones/plasma-manager";
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    plasma-manager.url = "github:pjones/plasma-manager";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,8 +42,13 @@
           wallpaperPath = ./assets/wserver2025.jpg;
           colorSchemeFromWallpaper = false;
           fontFamily = "IntoneMono Nerd Font";
+	  cursor.name = "Fuchsia";
+	  icon.name = "Adwaita";
+	  gtk.name = "adw-gtk3-dark";
         };
 
+	locale = "en_US.UTF-8";
+	timeZone = "America/Sao_Paulo";
         browser = "chromium";
         desktop = "niri";
         username = "tulili";

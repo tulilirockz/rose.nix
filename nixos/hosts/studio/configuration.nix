@@ -1,93 +1,114 @@
 { inputs
+, config
 , pkgs
 , preferences
 , ...
-}: {
+}: rec {
   imports = [
     ./hardware-configuration.nix
     ../../modules/managed-desktops.nix
-    ../../modules/std.nix
     ../../modules/sunshine.nix
     ../../modules/virtual.nix
     ../../modules/user.nix
     ../../modules/impermanence.nix
   ];
 
-  system.stateVersion = "24.05";
+  system = {
+    stateVersion = "24.05";
+    nixos.impermanence.enable = true;
+  };
 
   boot = {
     loader.systemd-boot.enable = true;
     loader.systemd-boot.configurationLimit = 5;
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_zen;
+    kernel.sysctl."kernel.sysrq" = 1;
   };
+
   networking.hostName = "studio";
 
-  programs.managed-desktops.enable = true;
-  programs.managed-desktops.shared.enable = true;
-  programs.managed-desktops.wm.enable = true;
-  programs.managed-desktops.${preferences.desktop}.enable = true;
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 75;
+
+  time.timeZone = preferences.timeZone;
+  i18n.defaultLocale = preferences.locale;
+
+  hardware = {
+    bluetooth.enable = true;
+    opentabletdriver = {
+      enable = true;
+      daemon.enable = true;
+    };
+  };
+
+  services = {
+    printing.enable = true;
+    system76-scheduler.enable = true;
+    fwupd.enable = true;
+    sunshine.enable = false;
+    sunshine.openFirewall = false;
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "12:00";
+    flake = "${config.users.users.${preferences.username}.home}/opt/tulili.nix";
+  };
 
   nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-  programs.niri.package = pkgs.niri-unstable;
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 2d";
+    };
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      use-xdg-base-directories = true;
+      substituters = [ "https://niri.cachix.org" ];
+      trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+    };
+  };
+  
+  environment.systemPackages = with pkgs; [
+    heroic
+  ];
+
+  programs = {
+    managed-desktops = {
+      enable = true;
+      shared.enable = true;
+      wm.enable = true;
+      ${preferences.desktop}.enable = true;
+    };
+    niri.package = pkgs.niri-unstable;
+    steam.enable = false;
+  };
 
   virtualisation.managed.enable = true;
-
-  programs.steam.enable = false;
-
-  programs.sunshine.enable = false;
-
-  time.timeZone = "America/Sao_Paulo";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  services.printing.enable = true;
-
-  zramSwap.enable = true;
-  services.fwupd.enable = true;
-
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    use-xdg-base-directories = true;
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 2d";
-  };
-
-  system.nixos.impermanence.enable = true;
-  system.nixos.impermanence.home.enable = true;
+  security.sudo.enable = false;
+  security.sudo-rs.enable = !(security.sudo.enable);
+  
   home-manager = {
     extraSpecialArgs = {
-
       inherit preferences;
       inherit inputs;
     };
     useGlobalPkgs = true;
     users = {
-      ${preferences.username} =
-        { config
-        , preferences
-        , ...
-        }: {
-          imports = [
-            inputs.plasma-manager.homeManagerModules.plasma-manager
-            inputs.nix-colors.homeManagerModules.default
-            inputs.nixvim.homeManagerModules.nixvim
-            inputs.impermanence.nixosModules.home-manager.impermanence
-            (import ../../../home-manager/modules/impermanence.nix {
-              inherit config;
-              inherit preferences;
-            })
-            ../../../home-manager/configurations/tulip-nixos.nix
-          ];
-        };
+      ${preferences.username} = _: {
+        imports = [
+          inputs.plasma-manager.homeManagerModules.plasma-manager
+          inputs.nix-colors.homeManagerModules.default
+          inputs.nixvim.homeManagerModules.nixvim
+          inputs.impermanence.nixosModules.home-manager.impermanence
+          ../../../home-manager/configurations/tulip-nixos.nix
+        ];
+      };
     };
   };
 
-  networking.nftables.enable = true;
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
@@ -100,6 +121,7 @@
         AutoConnect = true;
       };
     };
+    nftables.enable = true;
     firewall = {
       enable = false;
       allowedUDPPorts = [
@@ -113,56 +135,6 @@
       extraInputRules = ''
         ip saddr 192.168.0.0/24 accept
       '';
-      #extraCommands = ''
-      #  iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT
-      #'';
     };
   };
-
-  hardware.opentabletdriver = {
-    enable = true;
-    daemon.enable = true;
-  };
-
-  zramSwap.memoryPercent = 75;
-
-  services.system76-scheduler.enable = true;
-
-  hardware.bluetooth.enable = true;
-
-  security.sudo.enable = false;
-  security.sudo-rs.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    home-manager
-    git
-    bubblewrap
-    just
-    waypipe
-    cage
-    distrobox
-    fuse
-    heroic
-  ];
-
-  programs.rust-motd.enable = true;
-  programs.rust-motd.settings = {
-    banner = {
-      command = "${pkgs.busybox}/bin/busybox hostname | ${pkgs.figlet}/bin/figlet | ${pkgs.lolcat}/bin/lolcat -p 2 -S 35";
-    };
-    memory = {
-      swap_pos = "below";
-    };
-    uptime = {
-      prefix = "Up";
-    };
-  };
-
-  users.motdFile = "/var/lib/rust-motd/motd";
-
-  boot.kernel.sysctl = {
-    "kernel.sysrq" = 1;
-  };
-
-  services.input-remapper.enable = false;
 }

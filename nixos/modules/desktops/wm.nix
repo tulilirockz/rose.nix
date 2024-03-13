@@ -16,9 +16,9 @@ in
       };
       GTK = {
         application_prefer_dark_theme = preferences.theme.type == "dark";
-        cursor_theme_name = "Fuchsia";
+        cursor_theme_name = preferences.theme.cursor.name;
         font_name = "${preferences.theme.fontFamily} 12";
-        icon_theme_name = "Adwaita";
+        icon_theme_name = preferences.theme.icon.name;
         theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
       };
     };

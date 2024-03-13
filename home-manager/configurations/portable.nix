@@ -5,11 +5,17 @@
     ../modules/devtools.nix
   ];
   targets.genericLinux.enable = true;
-  programs.home-manager.enable = true;
-  home.username = preferences.username;
-  home.homeDirectory = "/home/${preferences.username}";
-  home.stateVersion = "24.05";
-  programs.devtools.enable = true;
-  programs.clitools.enable = true;
-  programs.browsers.enable = true;
+  
+  home = {
+    username = preferences.username;
+    homeDirectory = "/home/${preferences.username}";
+    stateVersion = "24.05";
+  };
+  
+  programs = {
+    home-manager.enable = true;
+    devtools.enable = true;
+    clitools.enable = true;
+    browsers.enable = true;
+  };
 }
