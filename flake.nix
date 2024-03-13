@@ -30,44 +30,70 @@
     , nixpkgs
     , home-manager
     , nixvim
-    , nix-colors, plasma-manager
+    , nix-colors
+    , plasma-manager
     , ...
     } @ inputs:
     let
-      system = "x86_64-linux";
+      preferences = {
+        theme = {
+          name = "windows-10";
+          type = "dark";
+          wallpaperPath = ./assets/wserver2025.jpg;
+          colorSchemeFromWallpaper = false;
+          fontFamily = "IntoneMono Nerd Font";
+        };
 
-      pkgs = import nixpkgs { inherit system; };
-
-      portable = {
-        enable = false;
-        user = "tulili";
+        browser = "chromium";
+        desktop = "niri";
+        username = "tulili";
       };
 
-      preferences = rec {
-        theme = "windows-10";
-        main_username =
-          if (portable.enable == true)
-          then portable.user
-          else "tulili";
-        font_family = "IntoneMono Nerd Font";
-        wallpaper = ./assets/wserver2025.jpg;
-        user_wallpaper = "${wallpaper}";
-        theme_type = "dark";
-        theme_wallpaper = false;
-        colorScheme =
-          if (theme_wallpaper == true)
-          then
-            (nix-colors.lib.contrib { inherit pkgs; }).colorSchemeFromPicture
-              {
-                path = preferences.wallpaper;
-                variant = preferences.theme_type;
-              }
-          else nix-colors.colorSchemes.${theme};
+      generateSystemConfiguration = hostName: system: device: nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        specialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [
+          inputs.niri.nixosModules.niri
+          inputs.home-manager.nixosModules.home-manager
+          inputs.disko.nixosModules.disko
+          inputs.impermanence.nixosModules.impermanence
+          (import ./nixos/generic/disko.nix { inherit device; })
+          ./nixos/hosts/${hostName}/configuration.nix
+        ];
       };
+
+      generateHomeManagerConfiguration = system: configuration: home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { inherit system; };
+
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit preferences;
+        };
+
+        modules = [
+          nix-colors.homeManagerModules.default
+          nixvim.homeManagerModules.nixvim
+          ./home-manager/configurations/${configuration}.nix
+          ({ ... }: {
+            targets.genericLinux.enable = true;
+          })
+        ];
+      };
+
+      supportedSystems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" "aarch64-linux" ];
+      forEachSupportedSystem = f:
+        nixpkgs.lib.genAttrs supportedSystems (system: f {
+          pkgs = import nixpkgs { inherit system; };
+        });
     in
     {
-      packages.${system} = rec {
-        neovim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+      packages = forEachSupportedSystem ({ pkgs }: rec {
+        neovim = nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
           inherit pkgs;
           module = import ./home-manager/modules/nixvim/default.nix {
             inherit pkgs;
@@ -76,113 +102,29 @@
         };
         default = neovim;
         nvim = neovim;
-      };
+      });
 
       nixosConfigurations = {
-        studio = nixpkgs.lib.nixosSystem {
-          inherit system;
+        studio = generateSystemConfiguration "studio" "x86_64-linux" "/dev/sda";
+        light = generateSystemConfiguration "light" "x86_64-linux" "/dev/sda";
+        minimal = generateSystemConfiguration "minimal" "x86_64-linux" "/dev/sda";
 
-          specialArgs = {
-            inherit inputs;
-            inherit preferences;
-          };
-
-          modules = [
-            inputs.niri.nixosModules.niri
-            inputs.home-manager.nixosModules.home-manager
-            inputs.disko.nixosModules.disko
-            inputs.impermanence.nixosModules.impermanence
-            (import ./nixos/generic/disko.nix { device = "/dev/sda"; })
-            ./nixos/hosts/studio/configuration.nix
-          ];
-        };
-        light = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit preferences;
-          };
-          modules = [
-            inputs.niri.nixosModules.niri
-            inputs.disko.nixosModules.disko
-            inputs.impermanence.nixosModules.impermanence
-            (import ./nixos/generic/disko.nix { device = "/dev/sda"; })
-            ./nixos/hosts/light/configuration.nix
-          ];
-        };
         live-system = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-            ./nixos/hosts/live-system/configuration.nix
-          ];
-        };
-        minimal = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            inputs.disko.nixosModules.disko
-            (import ./nixos/generic/disko.nix { device = "/dev/sda"; })
-            ./nixos/hosts/minimal/configuration.nix
-          ];
+          system = "x86_64-linux";
+          modules = [ (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix") ./nixos/hosts/live-system/configuration.nix ];
         };
       };
 
       homeConfigurations = rec {
         default = portable-strict;
-
-        portable-full = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            inherit inputs;
-            inherit preferences;
-          };
-
-          modules = [
-            nix-colors.homeManagerModules.default
-            nixvim.homeManagerModules.nixvim
-            ./home-manager/configurations/tulip-nixos.nix
-            ({ ... }: {
-              targets.genericLinux.enable = true;
-            })
-          ];
-        };
-
-        portable-strict = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            inherit inputs;
-            inherit preferences;
-          };
-
-          modules = [
-            nix-colors.homeManagerModules.default
-            nixvim.homeManagerModules.nixvim
-            ./home-manager/configurations/portable.nix
-          ];
-        };
-
-        ${preferences.main_username} = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            inherit inputs;
-            inherit preferences;
-          };
-
-          modules = [
-            nix-colors.homeManagerModules.default
-            nixvim.homeManagerModules.nixvim
-            ./home-manager/configurations/tulip-nixos.nix
-          ];
-        };
+        portable-full = generateHomeManagerConfiguration "x86_64-linux" "tulip-nixos";
+        portable-strict = generateHomeManagerConfiguration "x86_64-linux" "portable";
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [ nil just ];
-      };
+      devShells = forEachSupportedSystem ({ pkgs }: {
+        default = pkgs.mkShell { packages = with pkgs; [ nil just nixpkgs-fmt ]; };
+      });
 
-      formatter.${system} = pkgs.nixpkgs-fmt;
+      formatter = forEachSupportedSystem ({ pkgs }: pkgs.nixpkgs-fmt);
     };
 }

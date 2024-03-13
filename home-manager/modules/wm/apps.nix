@@ -17,36 +17,37 @@
     layout = import ./wlogout/layout.nix;
     style = import ./wlogout/style.nix {
       inherit preferences;
+      inherit config;
       inherit pkgs;
     };
   };
 
   programs.foot = {
-      enable = true;
-      server.enable = false;
-      settings = {
-        main = {
-          font = "${preferences.font_family}:size=12";
-          shell = pkgs.lib.getExe pkgs.nushell;
-          title = "amogus";
-          locked-title = true;
-          bold-text-in-bright = true;
-        };
-        environment = {
-          "EDITOR" = lib.getExe pkgs.neovim;
-        };
-        colors = with preferences.colorScheme.palette; {
-          alpha = 0.7;
-          background = base00;
-          foreground = base05;
-        };
+    enable = true;
+    server.enable = false;
+    settings = {
+      main = {
+        font = "${preferences.theme.fontFamily}:size=12";
+        shell = pkgs.lib.getExe pkgs.nushell;
+        title = "amogus";
+        locked-title = true;
+        bold-text-in-bright = true;
+      };
+      environment = {
+        "EDITOR" = lib.getExe pkgs.neovim;
+      };
+      colors = with config.colorScheme.palette; {
+        alpha = 0.7;
+        background = base00;
+        foreground = base05;
       };
     };
+  };
 
   programs.fuzzel = {
     enable = true;
     settings = {
-      colors = with preferences.colorScheme.palette; {
+      colors = with config.colorScheme.palette; {
         background = "${base00}FF";
         text = "${base05}FF";
         match = "${base08}FF";
@@ -66,10 +67,10 @@
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
-    settings = with preferences.colorScheme.palette; {
-      image = preferences.user_wallpaper;
+    settings = with config.colorScheme.palette; {
+      image = "${preferences.theme.wallpaperPath}";
       clock = true;
-      font = preferences.font_family;
+      font = preferences.theme.fontFamily;
       ignore-empty-password = true;
       indicator = true;
       indicator-capslock = true;
@@ -114,6 +115,7 @@
     enable = true;
     style = import ./waybar/style.nix {
       inherit pkgs;
+      inherit config;
       inherit preferences;
     };
     settings = import ./waybar/settings.nix {

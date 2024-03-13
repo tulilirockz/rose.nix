@@ -7,9 +7,7 @@ with lib; let
   cfg = config.virtualisation.managed;
 in
 {
-  options.virtualisation.managed = {
-    enable = lib.mkEnableOption "virtual";
-  };
+  options.virtualisation.managed.enable = lib.mkEnableOption "virtual";
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
@@ -39,14 +37,6 @@ in
       waydroid.enable = true;
       libvirtd.enable = true;
       incus.enable = true;
-      
-      # Disabled until stable
-      virtualbox.host = {
-        addNetworkInterface = false;
-        enableHardening = false;
-        enableKvm = false;
-        enable = false;
-      };
     };
 
     programs.virt-manager.enable = true;

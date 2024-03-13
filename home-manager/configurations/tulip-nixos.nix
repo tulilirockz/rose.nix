@@ -2,15 +2,30 @@
 , preferences
 , pkgs
 , config
+, inputs
 , ...
 }: {
   imports = [
-    ../modules.nix
+    ../modules/browsers.nix
+    ../modules/clitools.nix
+    ../modules/devtools.nix
+    ../modules/impermanence.nix
+    ../modules/wm.nix
   ];
 
+  colorScheme =
+    if (preferences.theme.colorSchemeFromWallpaper)
+    then
+      (inputs.nix-colors.lib.contrib { inherit pkgs; }).colorSchemeFromPicture
+        {
+          path = preferences.theme.wallpaperPath;
+          variant = preferences.theme.type;
+        }
+    else inputs.nix-colors.colorSchemes.${preferences.theme.name};
+
   programs.home-manager.enable = true;
-  home.username = preferences.main_username;
-  home.homeDirectory = "/home/${preferences.main_username}";
+  home.username = preferences.username;
+  home.homeDirectory = "/home/${preferences.username}";
   home.stateVersion = "24.05";
 
   home.sessionVariables = rec {
@@ -28,35 +43,11 @@
     MOZ_ENABLE_WAYLAND = "1";
   };
 
-  home.packages = with pkgs; [
-    czkawka
-    mumble
-    audacity
-    inkscape
-    upscayl
-    stremio
-    halftone
-    krita
-    libresprite
-    gimp 
-  ];
-
-  programs.obs-studio = {
-    enable = false;
-    plugins = with pkgs.obs-studio-plugins; [
-      obs-vaapi
-      obs-vkcapture
-      obs-gstreamer
-      input-overlay
-      obs-pipewire-audio-capture
-    ];
-  };
-
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
+    package = pkgs.fuchsia-cursor;
+    name = "Fuchsia";
     size = 16;
   };
 
@@ -72,10 +63,21 @@
     };
   };
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-vaapi
+      obs-vkcapture
+      obs-gstreamer
+      input-overlay
+      obs-pipewire-audio-capture
+    ];
+  };
+
   programs.devtools.enable = true;
   programs.clitools.enable = true;
-  programs.wm.enable = true; 
-  programs.wm.plasma.enable = false; 
+  programs.wm.enable = true;
+  programs.wm.plasma.enable = false;
   programs.wm.niri.enable = true;
   programs.wm.apps.enable = true;
   programs.browsers.enable = true;

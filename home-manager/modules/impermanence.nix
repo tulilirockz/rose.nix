@@ -1,5 +1,5 @@
 { preferences, ... }: {
-  home.persistence."/persist/home/${preferences.main_username}" = {
+  home.persistence."/persist/home/${preferences.username}" = {
     allowOther = true;
     directories = [
       "Downloads"
@@ -24,10 +24,14 @@
       ".cache/chromium"
       ".cache/pre-commit"
       ".cache/direnv"
+      ".config/obs-studio"
+      ".config/GIMP"
       ".config/carapace"
       ".config/nix"
+      ".config/libresprite"
       ".config/heroic"
       ".config/gh"
+      ".config/WebCord"
       ".config/lazygit"
       ".config/direnv"
       ".config/libvirt"
@@ -35,8 +39,11 @@
       ".config/kdeconnect"
       ".config/chromium"
       ".config/epiphany"
+      ".config/Bitwarden"
       ".local/share/flakehub"
       ".local/share/epiphany"
+      ".local/share/in.cinny.app"
+      ".local/share/cinny"
       ".local/state/wireplumber"
       ".local/state/nvim"
       ".local/share/atuin"
@@ -47,6 +54,8 @@
       ".local/share/dotnet"
       ".local/share/direnv"
       ".local/share/nvim"
+      ".local/share/krita"
+      ".local/share/waydroid"
       {
         directory = ".local/share/gnome-boxes";
         method = "symlink";

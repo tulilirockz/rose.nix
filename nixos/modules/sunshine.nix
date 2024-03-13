@@ -10,8 +10,8 @@ in
 {
   options.programs.sunshine = {
     enable = lib.mkEnableOption "sunshine";
-
     package = lib.mkPackageOption pkgs "sunshine" { };
+    openFirewall = lib.mkEnableOption "openFirewall";
   };
 
   config = mkIf cfg.enable {
@@ -33,7 +33,7 @@ in
 
     boot.kernelModules = [ "uinput" ];
 
-    networking.firewall = {
+    networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [ sunshinePort ];
       allowedUDPPorts = [ sunshinePort ];
     };

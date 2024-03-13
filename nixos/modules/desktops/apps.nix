@@ -34,13 +34,23 @@
     ]);
 
   sharedApps = with pkgs; [
-    inter
+    cinny-desktop
     adw-gtk3
     helvum
     pavucontrol
     libreoffice
     catppuccin-gtk
     gnome.nautilus
+    czkawka
+    mumble
+    audacity
+    inkscape
+    upscayl
+    stremio
+    halftone
+    krita
+    libresprite
+    gimp
   ];
 
   qtApps = with pkgs; [

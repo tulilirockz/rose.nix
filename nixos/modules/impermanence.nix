@@ -56,6 +56,8 @@ in
         "/var/lib/incus"
         "/var/lib/systemd/coredump"
         "/var/lib/containers"
+        "/var/lib/machines"
+        "/var/lib/waydroid"
         "/var/lib/libvirt"
         "/var/cache/regreet"
         "/var/lib/iwd"

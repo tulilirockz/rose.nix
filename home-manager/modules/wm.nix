@@ -42,7 +42,7 @@ in
               };
             });
           };
-	  plasma = lib.mkOption {
+          plasma = lib.mkOption {
             default = { };
             type = lib.types.submodule (_: {
               options = {

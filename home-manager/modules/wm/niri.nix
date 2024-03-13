@@ -8,7 +8,7 @@
     "niri/autostart".executable = true;
     "niri/autostart".text = ''
       ${lib.getExe pkgs.networkmanagerapplet} --indicator &
-      ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.wallpaper} &
+      ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
       ${lib.getExe pkgs.swaynotificationcenter} &
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
@@ -19,7 +19,7 @@
     '';
   };
 
-  programs.niri.config = with preferences.colorScheme.palette ; ''
+  programs.niri.config = with config.colorScheme.palette ; ''
     // This config is in the KDL format: https://kdl.dev
     // "/-" comments out the following node.
 

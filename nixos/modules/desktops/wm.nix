@@ -11,13 +11,13 @@ in
     enable = true;
     settings = {
       background = {
-        path = preferences.wallpaper;
+        path = preferences.theme.wallpaperPath;
         fit = "Fill";
       };
       GTK = {
-        application_prefer_dark_theme = preferences.theme_type == "dark";
-        cursor_theme_name = "Bibata-Modern-Classic";
-        font_name = "${preferences.font_family} 12";
+        application_prefer_dark_theme = preferences.theme.type == "dark";
+        cursor_theme_name = "Fuchsia";
+        font_name = "${preferences.theme.fontFamily} 12";
         icon_theme_name = "Adwaita";
         theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
       };

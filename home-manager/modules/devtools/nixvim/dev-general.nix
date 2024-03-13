@@ -1,5 +1,5 @@
-{ pkgs,
-  ...
+{ pkgs
+, ...
 }:
 # Made to be imported by programs.nixvim
 let
@@ -23,7 +23,7 @@ in
     };
 
     filetype.pattern = {
-    	".*\.nu" = "nu";
+      ".*\.nu" = "nu";
     };
 
     colorschemes.poimandres.enable = true;
@@ -106,7 +106,7 @@ in
           nushell = {
             enable = true;
             autostart = true;
-            filetypes = ["*.nu" "nu"];
+            filetypes = [ "*.nu" "nu" ];
           };
           rust-analyzer = {
             enable = false;
@@ -147,7 +147,7 @@ in
         enable = true;
         skipConfirmForSimpleEdits = true;
         deleteToTrash = true;
-	viewOptions.showHidden = true;
+        viewOptions.showHidden = true;
       };
       leap.enable = true;
       lualine = { enable = true; globalstatus = true; };

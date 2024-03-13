@@ -13,5 +13,5 @@ in
   };
 
   programs.kdeconnect.enable = true;
-  environment.systemPackages = [ pkgs.plasma-pa ] ++ apps.qtApps;
+  environment.systemPackages = apps.qtApps;
 }

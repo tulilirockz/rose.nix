@@ -1,8 +1,9 @@
 { pkgs
+, config
 , preferences
 , ...
 }:
-with preferences.colorScheme.palette; let
+with config.colorScheme.palette; let
   defaultPadding = "5px 5px";
   highlightBorder = "border-right: 4px solid #${base01};";
   defaultModuleConfig = moduleName: ''
@@ -17,7 +18,7 @@ in
 ''
   * {
     font-size: 18px;
-    font-family: ${preferences.font_family}, Font Awesome, sans-serif;
+    font-family: ${preferences.theme.fontFamily}, Font Awesome, sans-serif;
     font-weight: bold;
     background: #${base00};
   }

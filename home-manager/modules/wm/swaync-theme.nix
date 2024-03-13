@@ -2,11 +2,11 @@
 , preferences
 , ...
 }:
-with preferences.colorScheme.palette; ''
+with config.colorScheme.palette; ''
   * {
     all: unset;
     font-size: 14px;
-    font-family: "${preferences.font_family}";
+    font-family: "${preferences.theme.fontFamily}";
     transition: 200ms;
     position: left;
   }

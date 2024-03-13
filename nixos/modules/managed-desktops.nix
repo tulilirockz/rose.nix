@@ -84,7 +84,7 @@ in
     };
   };
   config = lib.mkIf cfg.enable (lib.mkMerge (
-    builtins.map
+    map
       (
         module:
         lib.mkIf (cfg.${module}.enable == true) (import ./desktops/${module}.nix {

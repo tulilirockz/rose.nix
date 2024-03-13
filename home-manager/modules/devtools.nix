@@ -1,7 +1,6 @@
 { config
 , pkgs
 , lib
-, preferences
 , ...
 }:
 let
@@ -81,6 +80,11 @@ in
       fh
       trashy
       android-tools
+      wireshark
+      wormhole-rs
+      lldb
+      gdb
+      okteta
       (pkgs.writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };

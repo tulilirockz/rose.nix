@@ -1,8 +1,8 @@
-{ preferences
+{ config
 , pkgs
 , ...
 }:
-with preferences.colorScheme.palette; ''
+with config.colorScheme.palette; ''
   window {
       font-size: 16px;
       color: #${base05};

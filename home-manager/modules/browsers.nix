@@ -2,6 +2,7 @@
 , pkgs
 , lib
 , inputs
+, preferences
 , ...
 }:
 let
@@ -10,17 +11,18 @@ in
 {
   options = {
     programs.browsers.enable = lib.mkEnableOption "Manage browsers";
+    programs.browsers.extras = lib.mkEnableOption "Extra browsers";
   };
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = lib.mkIf cfg.extras (with pkgs; [
       epiphany
       lagrange
       bitwarden
-      discord
-    ];
+      webcord
+    ]);
 
     programs.chromium = {
-      enable = true;
+      enable = preferences.browser == "chromium";
       package = pkgs.ungoogled-chromium;
       commandLineArgs = [
         "--enable-features=VaapiVideoDecodeLinuxGL"
@@ -35,7 +37,7 @@ in
     };
 
     programs.firefox = {
-      enable = false;
+      enable = preferences.browser == "firefox";
       package = pkgs.firefox;
       policies = {
         "CaptivePortal" = false;
