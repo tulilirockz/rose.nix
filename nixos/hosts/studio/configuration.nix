@@ -24,6 +24,14 @@
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_zen;
     kernel.sysctl."kernel.sysrq" = 1;
+    binfmt = {
+      emulatedSystems = [
+        "aarch64-linux"
+        "wasm32-wasi"
+        "wasm64-wasi"
+        "x86_64-windows"
+      ];
+    };
   };
 
   networking.hostName = "studio";
@@ -70,26 +78,28 @@
       trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
     };
   };
-  
+
   environment.systemPackages = with pkgs; [
     heroic
+    fuse
   ];
 
   programs = {
     managed-desktops = {
       enable = true;
       shared.enable = true;
-      wm.enable = true;
+      wm.enable = preferences.desktop_is_wm;
       ${preferences.desktop}.enable = true;
     };
     niri.package = pkgs.niri-unstable;
-    steam.enable = false;
+    steam.enable = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
   virtualisation.managed.enable = true;
   security.sudo.enable = false;
   security.sudo-rs.enable = !(security.sudo.enable);
-  
+
   home-manager = {
     extraSpecialArgs = {
       inherit preferences;

@@ -9,7 +9,7 @@
     "niri/autostart".text = ''
       ${lib.getExe pkgs.networkmanagerapplet} --indicator &
       ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-      ${lib.getExe pkgs.swaynotificationcenter} &
+      ${lib.getExe pkgs.mako} &
       ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
       ${pkgs.kdeconnect}/bin/kdeconnect-applet &

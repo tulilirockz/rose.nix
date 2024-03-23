@@ -13,7 +13,7 @@ in
 
     modules-left = [ "network" "pulseaudio" "cpu" "memory" ];
     modules-center = [ "clock" ];
-    modules-right = [ "disk" "custom/notification" "bluetooth" "tray" "custom/logout" ];
+    modules-right = [ "disk" "custom/notification" "bluetooth" "custom/kdeconnect" "tray" "custom/logout" ];
 
     "bluetooth" = {
       format = "";
@@ -72,23 +72,10 @@ in
       };
       on-click = "${lib.getExe pkgs.pavucontrol}";
     };
-    "custom/notification" = {
+    "custom/kdeconnect" = {
       tooltip = false;
-      format = "{icon} {}";
-      format-icons = {
-        notification = "<span foreground='red'><sup></sup></span>";
-        none = "";
-        dnd-notification = "<span foreground='red'><sup></sup></span>";
-        dnd-none = "";
-        inhibited-notification = "<span foreground='red'><sup></sup></span>";
-        inhibited-none = "";
-        dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
-        dnd-inhibited-none = "";
-      };
-      return-type = "json";
-      exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
-      on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -op";
-      escape = true;
+      format = "";
+      on-click = "${pkgs.kdeconnect}/bin/kdeconnect-app";
     };
     "custom/logout" = {
       tooltip = false;

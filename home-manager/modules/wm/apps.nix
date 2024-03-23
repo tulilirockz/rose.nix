@@ -4,11 +4,19 @@
 , preferences
 , ...
 }: {
-  home.packages = [
-    (pkgs.writeScriptBin "xwayland-run" ''
-      ${lib.getExe pkgs.sway} &
-      sleep 2
+  home.packages = with pkgs; [
+    (writeScriptBin "xwayland-run-sway" ''
+      ${lib.getExe pkgs.sway} -V &
+      sleep 1
       DISPLAY=:0 $@
+    '')
+
+    (writeScriptBin "xwayland-run" ''
+      ${lib.getExe pkgs.gamescope} --force-windows-fullscreen -f -W 1920 -H 1080 -w 1920 -h 1080 $@
+    '')
+
+    (writeScriptBin "gamescope-run" ''
+      ${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -e $@
     '')
   ];
 
@@ -123,6 +131,16 @@
       inherit lib;
     };
   };
+
+  xdg.configFile."mako/config".text = with config.colorScheme.palette ; ''
+    background-color=#${base00}
+    text-color=#${base05}
+    border-color=#${base08}
+    progress-color=over #${base04}
+    
+    [urgency=high]
+    border-color=#${base0A}
+  '';
 
   xdg.configFile."swaync/style.css".text = import ./swaync-theme.nix {
     inherit config;

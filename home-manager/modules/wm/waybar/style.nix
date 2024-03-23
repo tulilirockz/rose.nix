@@ -43,6 +43,7 @@ in
   + pkgs.lib.concatMapStringsSep "\n" (string: defaultModuleConfig string) [
   "#custom-logout"
   "#custom-notification"
+  "#custom-kdeconnect"
   "#pulseaudio"
   "#tray"
   "#network"

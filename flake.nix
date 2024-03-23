@@ -42,15 +42,16 @@
           wallpaperPath = ./assets/wserver2025.jpg;
           colorSchemeFromWallpaper = false;
           fontFamily = "IntoneMono Nerd Font";
-	  cursor.name = "Fuchsia";
-	  icon.name = "Adwaita";
-	  gtk.name = "adw-gtk3-dark";
+          cursor.name = "Fuchsia";
+          icon.name = "Adwaita";
+          gtk.name = "adw-gtk3-dark";
         };
 
-	locale = "en_US.UTF-8";
-	timeZone = "America/Sao_Paulo";
+        locale = "en_US.UTF-8";
+        timeZone = "America/Sao_Paulo";
         browser = "chromium";
         desktop = "niri";
+        desktop_is_wm = true;
         username = "tulili";
       };
 
@@ -67,6 +68,7 @@
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
+          inputs.impermanence.nixosModules.home-manager.impermanence
           (import ./nixos/generic/disko.nix { inherit device; })
           ./nixos/hosts/${hostName}/configuration.nix
         ];

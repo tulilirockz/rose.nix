@@ -17,7 +17,7 @@ in
   config = lib.mkIf cfg.enable {
     home.sessionVariables = {
       EDITOR = "nvim";
-      DOCKER_HOST = "unix:///run/podman/podman.sock";
+      DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
       GOPATH = "${config.home.homeDirectory}/.local/share/go";
     };
     programs.git = {
@@ -67,6 +67,7 @@ in
       glab
       fd
       ripgrep
+      sbctl
       podman-compose
       tldr
       jq
@@ -75,7 +76,6 @@ in
       just
       iotop
       nix-prefetch-git
-      kind
       pre-commit
       fh
       trashy
@@ -90,6 +90,28 @@ in
       waypipe
       cage
       distrobox
+      cosign
+      jsonnet
+      kubernetes-helm
+      kind
+      melange
+      earthly
+      poetry
+      maturin
+      hatch
+      bun
+      act
+      cargo-wasi
+      wasmer
+      gnome.gnome-disk-utility
+      (writeScriptBin "mount-qcow" ''
+        	QCOW_PATH=$1
+        	shift
+        	set -euox pipefail
+        	sudo modprobe nbd
+        	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
+        	sudo pkill qemu-nbd
+      '')
       (writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };

@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.programs.managed-desktops;
-  valid_desktops = [ "gnome" "kde" "niri" "wm" "shared" ];
+  valid_desktops = [ "gnome" "plasma" "niri" "wm" "shared" ];
 in
 {
   options = {
@@ -67,14 +67,14 @@ in
               };
             });
           };
-          kde = lib.mkOption {
+          plasma = lib.mkOption {
             default = { };
             type = lib.types.submodule (_: {
               options = {
                 enable = lib.mkEnableOption {
                   type = lib.types.bool;
                   default = false;
-                  description = "Enable kde";
+                  description = "Enable plasma";
                 };
               };
             });

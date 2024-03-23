@@ -13,7 +13,9 @@
       ".gnupg"
       ".ssh"
       ".nixops"
+      ".wasmer"
       ".mozilla"
+      ".thunderbird"
       ".vscode"
       ".vscodium"
       ".var"
@@ -55,17 +57,17 @@
       ".local/share/direnv"
       ".local/share/nvim"
       ".local/share/krita"
-      ".local/share/waydroid"
+      ".local/share/Steam"
+      {
+        directory = ".local/share/waydroid";
+        method = "symlink";
+      }
       {
         directory = ".local/share/gnome-boxes";
         method = "symlink";
       }
       {
         directory = ".local/share/containers";
-        method = "symlink";
-      }
-      {
-        directory = ".local/share/Steam";
         method = "symlink";
       }
     ];

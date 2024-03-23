@@ -54,7 +54,7 @@ in
       { key = "ha"; action = "lua require(\"harpoon.mark\").add_file()"; }
       { key = "hn"; action = "lua require(\"harpoon.ui\").nav_next()"; }
       { key = "hp"; action = "lua require(\"harpoon.ui\").nav_prev()"; }
-      { key = "hm"; action = "Telescope harpoon marks"; }
+      { key = "hm"; action = "lua require(\"harpoon.ui\").toggle_quick_menu()"; }
       { key = "ik"; action = "Telescope keymaps"; }
       { key = "ic"; action = "Telescope commands"; }
       { key = "ih"; action = "Telescope help_tags"; }
@@ -139,10 +139,7 @@ in
       spider.enable = true;
       nvim-colorizer.enable = true;
       neogit.enable = true;
-      harpoon = {
-        enable = true;
-        enableTelescope = true;
-      };
+      harpoon.enable = true;
       oil = {
         enable = true;
         skipConfirmForSimpleEdits = true;

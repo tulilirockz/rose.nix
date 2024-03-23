@@ -39,8 +39,8 @@
   home = {
     username = preferences.username;
     homeDirectory = "/home/${preferences.username}";
-    stateVersion = "24.05";                           
-    
+    stateVersion = "24.05";
+
     pointerCursor = {
       gtk.enable = true;
       x11.enable = true;
@@ -69,7 +69,7 @@
     enable = true;
     theme = {
       package = pkgs.adw-gtk3;
-     name = preferences.theme.gtk.name;
+      name = preferences.theme.gtk.name;
     };
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;

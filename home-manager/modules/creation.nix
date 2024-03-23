@@ -20,7 +20,7 @@ in
       libresprite
       gimp
       czkawka
-      lmms 
+      lmms
     ];
 
     programs.obs-studio = {

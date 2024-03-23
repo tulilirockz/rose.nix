@@ -8,15 +8,8 @@
     workspace = {
       theme = "breeze-dark";
       colorScheme = "BreezeDark";
-      wallpaper = "${preferences.wallpaper}";
+      wallpaper = "${preferences.theme.wallpaperPath}";
     };
-    panels = [
-      {
-        height = 36;
-        location = "left";
-        floating = true;
-      }
-    ];
     spectacle.shortcuts = {
       captureRectangularRegion = "Print";
     };

@@ -35,6 +35,7 @@
 
   sharedApps = with pkgs; [
     cinny-desktop
+    thunderbird
     adw-gtk3
     helvum
     pavucontrol
