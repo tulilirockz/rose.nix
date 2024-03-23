@@ -102,7 +102,7 @@
       packages = forEachSupportedSystem ({ pkgs }: rec {
         neovim = nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
           inherit pkgs;
-          module = import ./home-manager/modules/devtools/nixvim/default.nix {
+          module = import ./home-manager/modules/devtools/nixvim/dev-general.nix {
             inherit pkgs;
             config = { colorScheme.palette = nix-colors.colorScheme.catppucin; };
           };
