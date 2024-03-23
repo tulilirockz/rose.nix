@@ -83,8 +83,10 @@
         };
 
         modules = [
-          nix-colors.homeManagerModules.default
-          nixvim.homeManagerModules.nixvim
+          inputs.plasma-manager.homeManagerModules.plasma-manager
+          inputs.nix-colors.homeManagerModules.default
+          inputs.nixvim.homeManagerModules.nixvim
+          inputs.impermanence.nixosModules.home-manager.impermanence
           ./home-manager/configurations/${configuration}.nix
           ({ ... }: {
             targets.genericLinux.enable = true;
