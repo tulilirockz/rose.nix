@@ -64,7 +64,7 @@
         };
 
         modules = [
-          inputs.niri.nixosModules.niri
+          inputs.niri.nixosModules.homeManager.niri
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
@@ -102,7 +102,7 @@
       packages = forEachSupportedSystem ({ pkgs }: rec {
         neovim = nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
           inherit pkgs;
-          module = import ./home-manager/modules/nixvim/default.nix {
+          module = import ./home-manager/modules/devtools/nixvim/default.nix {
             inherit pkgs;
             config = { colorScheme.palette = nix-colors.colorScheme.catppucin; };
           };
