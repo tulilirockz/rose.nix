@@ -32,6 +32,7 @@
     , nixvim
     , nix-colors
     , plasma-manager
+    , impermanence
     , ...
     } @ inputs:
     let
@@ -64,11 +65,10 @@
         };
 
         modules = [
-          inputs.niri.nixosModules.homeManager.niri
+          inputs.niri.nixosModules.niri
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
-          inputs.impermanence.nixosModules.home-manager.impermanence
           (import ./nixos/generic/disko.nix { inherit device; })
           ./nixos/hosts/${hostName}/configuration.nix
         ];
@@ -83,10 +83,10 @@
         };
 
         modules = [
-          inputs.plasma-manager.homeManagerModules.plasma-manager
-          inputs.nix-colors.homeManagerModules.default
-          inputs.nixvim.homeManagerModules.nixvim
-          inputs.impermanence.nixosModules.home-manager.impermanence
+          plasma-manager.homeManagerModules.plasma-manager
+          nix-colors.homeManagerModules.default
+          nixvim.homeManagerModules.nixvim
+          impermanence.nixosModules.home-manager.impermanence
           ./home-manager/configurations/${configuration}.nix
           ({ ... }: {
             targets.genericLinux.enable = true;

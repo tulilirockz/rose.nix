@@ -150,10 +150,12 @@ in
       lualine = { enable = true; globalstatus = true; };
       coq-nvim = {
         enable = true;
-        alwaysComplete = true;
-        autoStart = true;
         installArtifacts = true;
-        recommendedKeymaps = true;
+        settings = {
+	  keymap.recommended = true;
+	  completion.always = true;
+          auto_start = true;
+	};
       };
       gitblame = {
         enable = true;

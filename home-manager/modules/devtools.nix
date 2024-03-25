@@ -17,9 +17,22 @@ in
   config = lib.mkIf cfg.enable {
     home.sessionVariables = {
       EDITOR = "nvim";
-      DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
       GOPATH = "${config.home.homeDirectory}/.local/share/go";
     };
+
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = config.programs.git.userName;
+          email = config.programs.git.userEmail;
+        };
+	ui = {
+	  default-command = "log";
+	};
+      };
+    };
+
     programs.git = {
       enable = true;
       userEmail = "tulilirockz@outlook.com";
@@ -57,6 +70,16 @@ in
     };
 
     home.packages = with pkgs; [
+      lazydocker
+      undocker
+      udocker
+      docker-ls
+      docker-gc
+      docker-sync
+      docker-slim
+      docker-buildx
+      docker-compose
+
       lazygit
       darcs
       unzip
@@ -94,7 +117,10 @@ in
       jsonnet
       kubernetes-helm
       kind
+      jujutsu
+      darcs
       melange
+      dive
       earthly
       poetry
       maturin

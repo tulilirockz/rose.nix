@@ -28,12 +28,12 @@ in
     virtualisation = {
       podman = {
         enable = true;
-        dockerCompat = true;
         autoPrune.enable = true;
-        dockerSocket.enable = true;
+        dockerSocket.enable = !(config.virtualisation.docker.enable);
+        dockerCompat = !(config.virtualisation.docker.enable);
         defaultNetwork.settings.dns_enabled = true;
       };
-
+      docker.enable = false;
       waydroid.enable = true;
       libvirtd.enable = true;
       incus.enable = true;

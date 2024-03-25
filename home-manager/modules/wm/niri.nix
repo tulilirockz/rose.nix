@@ -10,12 +10,12 @@
       ${lib.getExe pkgs.networkmanagerapplet} --indicator &
       ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
       ${lib.getExe pkgs.mako} &
-      ${pkgs.openssh}/bin/ssh-agent &
       ${pkgs.udiskie}/bin/udiskie &
       ${pkgs.kdeconnect}/bin/kdeconnect-applet &
       ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
       ${lib.getExe pkgs.foot} --server &
-      ${lib.getExe pkgs.waybar}
+      ${lib.getExe pkgs.waybar} &
+      eval `${lib.getExe pkgs.openssh}/bin/ssh-agent`
     '';
   };
 
