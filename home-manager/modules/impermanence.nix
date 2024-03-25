@@ -7,7 +7,6 @@
       "Pictures"
       "Documents"
       "Videos"
-      "OneDrive"
       "Games"
       "opt"
       ".gnupg"
@@ -27,6 +26,10 @@
       ".cache/pre-commit"
       ".cache/direnv"
       ".config/obs-studio"
+      ".config/news-flash"
+      ".config/monophony"
+      ".config/FreeTube"
+      ".config/lagrange"
       ".config/GIMP"
       ".config/carapace"
       ".config/nix"
@@ -37,9 +40,11 @@
       ".config/lazygit"
       ".config/direnv"
       ".config/libvirt"
-      ".config/onedrive"
       ".config/kdeconnect"
       ".config/chromium"
+      ".config/packer"
+      ".config/vesktop"
+      ".config/rclone"
       ".config/epiphany"
       ".config/Bitwarden"
       ".local/share/flakehub"
@@ -54,6 +59,9 @@
       ".local/share/keyrings"
       ".local/share/zoxide"
       ".local/share/dotnet"
+      ".local/share/gnome-podcasts"
+      ".local/share/news-flash"
+      ".local/share/news_flash"
       ".local/share/direnv"
       ".local/share/nvim"
       ".local/share/krita"
@@ -64,6 +72,10 @@
       }
       {
         directory = ".local/share/gnome-boxes";
+        method = "symlink";
+      }
+      {
+        directory = ".local/share/images";
         method = "symlink";
       }
       {

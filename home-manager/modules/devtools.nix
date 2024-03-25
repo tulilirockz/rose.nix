@@ -16,7 +16,6 @@ in
   };
   config = lib.mkIf cfg.enable {
     home.sessionVariables = {
-      EDITOR = "nvim";
       GOPATH = "${config.home.homeDirectory}/.local/share/go";
     };
 
@@ -29,6 +28,12 @@ in
         };
         ui = {
           default-command = "log";
+          diff-editor = "meld";
+        };
+        signing = {
+          sign-all = true;
+          backend = "ssh";
+          key = config.programs.git.signing.key;
         };
       };
     };
@@ -42,6 +47,16 @@ in
       extraConfig = {
         gpg.format = "ssh";
         init.defaultBranch = "main";
+        core.excludesfile = "${pkgs.writers.writeText "gitignore" ''
+        .jj
+        .jj/*
+        /.jj
+        /.git
+        .git/*
+        .direnv
+        /.direnv
+        .direnv/*
+        ''}";
       };
     };
 
@@ -49,17 +64,8 @@ in
       nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
     '';
 
-    programs.nixvim = lib.mkMerge [
-      { enable = true; }
-      (import ./devtools/nixvim/dev-general.nix {
-        inherit pkgs;
-        inherit config;
-      }).config
-    ];
-
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium;
     };
 
     programs.direnv = {
@@ -69,19 +75,64 @@ in
       nix-direnv.enable = true;
     };
 
-    home.packages = with pkgs; [
-      lazydocker
-      undocker
-      udocker
-      docker-ls
-      docker-gc
-      docker-sync
-      docker-slim
-      docker-buildx
-      docker-compose
+    programs.helix = {
+      enable = true;
+      defaultEditor = true;
+      extraPackages = with pkgs; [
+        (python3.withPackages
+          (p: with p; [
+            python-lsp-server
+            pylsp-mypy
+            pylsp-rope
+            python-lsp-ruff
+          ])
+        )
+        yaml-language-server
+        tailwindcss-language-server
+        clang-tools
+        nil
+        zls
+        marksman
+        rust-analyzer
+        gopls
+        ruff
+        docker-ls
+        vscode-langservers-extracted
+        clojure-lsp
+        dockerfile-language-server-nodejs
+      ];
+      settings = {
+        theme = "boo_berry";
+        editor = {
+          line-number = "relative";
+          mouse = false;
+          middle-click-paste = false;
+          auto-save = true;
+          auto-pairs = false;
+          lsp = {
+            display-messages = true;
+            display-inlay-hints = true;
+          };
+          whitespace.render = {
+            tab = "all";
+            nbsp = "none";
+            nnbsp = "none";
+            newline = "none";
+          };
+          file-picker = {
+            hidden = false;
+          };
+        };
+      };
+    };
 
-      lazygit
-      darcs
+    programs.yazi.enable = true;
+
+    programs.zellij = {
+      enable = true;
+    };
+
+    home.packages = with pkgs; [
       unzip
       git
       ollama
@@ -117,17 +168,25 @@ in
       jsonnet
       kubernetes-helm
       kind
+      devpod
+      devpod-desktop
+      devenv
+      lazydocker
+      kubectl
+      talosctl
+      gitg
+      gource
+      meld
       jujutsu
-      darcs
       melange
       dive
       earthly
       poetry
+      gdu
+      asciinema
       maturin
-      hatch
       bun
       act
-      cargo-wasi
       wasmer
       gnome.gnome-disk-utility
       (writeScriptBin "mount-qcow" ''
@@ -138,7 +197,7 @@ in
         	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
         	sudo pkill qemu-nbd
       '')
-      (writeScriptBin "code" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      (writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };
 }

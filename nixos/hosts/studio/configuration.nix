@@ -64,6 +64,9 @@
     flake = "${config.users.users.${preferences.username}.home}/opt/tulili.nix";
   };
 
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "client";
+
   nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   nix = {
     gc = {

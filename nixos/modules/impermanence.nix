@@ -60,6 +60,8 @@ in
         "/var/lib/waydroid"
         "/var/lib/libvirt"
         "/var/cache/regreet"
+        "/var/lib/tailscale"
+        "/var/cache/tailscale"
         "/var/lib/iwd"
         "/etc/NetworkManager/system-connections"
       ];

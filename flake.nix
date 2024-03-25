@@ -50,7 +50,7 @@
 
         locale = "en_US.UTF-8";
         timeZone = "America/Sao_Paulo";
-        browser = "chromium";
+        browser = "firefox";
         desktop = "niri";
         desktop_is_wm = true;
         username = "tulili";

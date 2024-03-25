@@ -15,14 +15,14 @@ in
   };
   config = lib.mkIf cfg.enable {
     home.packages = lib.mkIf cfg.extras (with pkgs; [
-      epiphany
       lagrange
       bitwarden
-      webcord
+      vesktop
+      freetube
     ]);
 
     programs.chromium = {
-      enable = preferences.browser == "chromium";
+      enable = true;
       package = pkgs.ungoogled-chromium;
       commandLineArgs = [
         "--enable-features=VaapiVideoDecodeLinuxGL"
@@ -37,7 +37,7 @@ in
     };
 
     programs.firefox = {
-      enable = preferences.browser == "firefox";
+      enable = true;
       package = pkgs.firefox;
       policies = {
         "CaptivePortal" = false;

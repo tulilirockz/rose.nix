@@ -7,14 +7,13 @@
       totem
       sushi
       gnome-weather
-      gnome-clocks
       gnome-calendar
+      gnome-clocks
       gnome-calculator
       gnome-system-monitor
       gnome-tweaks
     ])
     ++ (with pkgs; [
-      newsflash
       shortwave
       gitg
       dconf-editor
@@ -31,6 +30,7 @@
       loupe
       gnome-firmware
       gnome-podcasts
+      newsflash
     ]);
 
   sharedApps = with pkgs; [
@@ -41,9 +41,14 @@
     pavucontrol
     libreoffice
     catppuccin-gtk
-    gnome.nautilus
     stremio
     mumble
+    gnome-podcasts
+    newsflash
+    thunderbird
+    monophony
+    shortwave
+    gnome.gnome-clocks
   ];
 
   qtApps = with pkgs; [
@@ -71,6 +76,7 @@
     mediainfo
     exiftool
     transmission-gtk
+    gnome.nautilus
     swayimg
   ];
 }

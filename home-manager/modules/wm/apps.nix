@@ -5,6 +5,8 @@
 , ...
 }: {
   home.packages = with pkgs; [
+    xwayland-run
+
     (writeScriptBin "gh-jj" ''
       GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
     '')
@@ -13,10 +15,6 @@
       ${lib.getExe pkgs.sway} -V &
       sleep 1
       DISPLAY=:0 $@
-    '')
-
-    (writeScriptBin "xwayland-run" ''
-      ${lib.getExe pkgs.gamescope} --force-windows-fullscreen -f -W 1920 -H 1080 -w 1920 -h 1080 $@
     '')
 
     (writeScriptBin "gamescope-run" ''
@@ -46,7 +44,7 @@
         bold-text-in-bright = true;
       };
       environment = {
-        "EDITOR" = lib.getExe pkgs.neovim;
+        "EDITOR" = lib.getExe pkgs.helix;
       };
       colors = with config.colorScheme.palette; {
         alpha = 0.7;

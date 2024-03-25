@@ -16,13 +16,6 @@
 
   services.flatpak.enable = true;
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
   environment.localBinInPath = true;
-  services.onedrive.enable = true;
   security.pam.services.${preferences.username}.showMotd = true;
 }

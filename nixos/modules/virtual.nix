@@ -13,6 +13,7 @@ in
     environment.systemPackages = with pkgs; [
       heroic
       gnome.gnome-boxes
+      virt-viewer
       quickemu
       quickgui
       (writeScriptBin "vm-manager" ''
@@ -33,7 +34,7 @@ in
         dockerCompat = !(config.virtualisation.docker.enable);
         defaultNetwork.settings.dns_enabled = true;
       };
-      docker.enable = false;
+      docker.enable = true;
       waydroid.enable = true;
       libvirtd.enable = true;
       incus.enable = true;

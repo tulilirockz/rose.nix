@@ -69,7 +69,18 @@ in
     ] ++
     (map (num: leaderBinding "${toString num}" "lua require(\"harpoon.ui\").nav_file(${toString num})")
       [ 1 2 3 4 5 6 7 8 9 ]
-    );
+    ) ++ [
+      {
+        key = "<TAB>";
+        action = "<cmd>:bnext<CR>";
+        options.silent = true;
+      }
+      {
+        key = "<S-TAB>";
+        action = "<cmd>:bprev<CR>";
+        options.silent = true;
+      }
+    ];
 
     editorconfig.enable = true;
 
@@ -80,25 +91,43 @@ in
         enable = true;
         tools.executor = "toggleterm";
       };
-
-
       mini = {
         enable = true;
         modules = {
-          animate = { };
           completion = { };
           statusline = { };
           tabline = { };
           clue = { };
           cursorword = { };
+          trailspace = { };
         };
       };
       codeium-nvim.enable = true;
       trouble.enable = true;
       friendly-snippets.enable = true;
-      lint.enable = true;
+      lint = {
+        enable = true;
+        lintersByFt = {
+          text = [ "vale" ];
+          json = [ "jsonlint" ];
+          markdown = [ "vale" ];
+          rst = [ "vale" ];
+          ruby = [ "ruby" ];
+          janet = [ "janet" ];
+          inko = [ "inko" ];
+          clojure = [ "clj-kondo" ];
+          dockerfile = [ "hadolint" ];
+          terraform = [ "tflint" ];
+          go = [ "gofmt" ];
+          ts = [ "eslint" ];
+          js = [ "eslint" ];
+          jsx = [ "eslint" ];
+          tsx = [ "eslint" ];
+        };
+      };
       dap.enable = true;
       lsp-format.enable = true;
+      lspkind.enable = true;
       lsp = {
         enable = true;
         keymaps = {
