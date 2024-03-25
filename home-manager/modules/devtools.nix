@@ -27,9 +27,9 @@ in
           name = config.programs.git.userName;
           email = config.programs.git.userEmail;
         };
-	ui = {
-	  default-command = "log";
-	};
+        ui = {
+          default-command = "log";
+        };
       };
     };
 

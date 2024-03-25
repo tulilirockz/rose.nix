@@ -81,6 +81,19 @@ in
         tools.executor = "toggleterm";
       };
 
+
+      mini = {
+        enable = true;
+        modules = {
+          animate = { };
+          completion = { };
+          statusline = { };
+          tabline = { };
+          clue = { };
+          cursorword = { };
+        };
+      };
+      codeium-nvim.enable = true;
       trouble.enable = true;
       friendly-snippets.enable = true;
       lint.enable = true;
@@ -134,7 +147,6 @@ in
       treesitter.enable = true;
       treesitter-context.enable = true;
       fidget.enable = true;
-      which-key.enable = true;
       indent-blankline.enable = true;
       spider.enable = true;
       nvim-colorizer.enable = true;
@@ -147,15 +159,14 @@ in
         viewOptions.showHidden = true;
       };
       leap.enable = true;
-      lualine = { enable = true; globalstatus = true; };
       coq-nvim = {
-        enable = true;
+        enable = false;
         installArtifacts = true;
         settings = {
-	  keymap.recommended = true;
-	  completion.always = true;
+          keymap.recommended = true;
+          completion.always = true;
           auto_start = true;
-	};
+        };
       };
       gitblame = {
         enable = true;
