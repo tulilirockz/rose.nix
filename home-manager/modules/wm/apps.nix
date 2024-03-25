@@ -5,6 +5,10 @@
 , ...
 }: {
   home.packages = with pkgs; [
+    (writeScriptBin "gh-jj" ''
+      GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
+    '')
+
     (writeScriptBin "xwayland-run-sway" ''
       ${lib.getExe pkgs.sway} -V &
       sleep 1
