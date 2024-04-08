@@ -2,14 +2,10 @@
   description = "Tulilirockz' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz";
     plasma-manager.url = "github:pjones/plasma-manager";
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
@@ -29,7 +25,6 @@
     { self
     , nixpkgs
     , home-manager
-    , nixvim
     , nix-colors
     , plasma-manager
     , impermanence
@@ -50,13 +45,12 @@
 
         locale = "en_US.UTF-8";
         timeZone = "America/Sao_Paulo";
-        browser = "firefox";
         desktop = "niri";
         desktop_is_wm = true;
         username = "tulili";
       };
 
-      generateSystemConfiguration = hostName: system: device: nixpkgs.lib.nixosSystem {
+      mkSystem = hostName: system: device: nixpkgs.lib.nixosSystem {
         inherit system;
 
         specialArgs = {
@@ -74,7 +68,7 @@
         ];
       };
 
-      generateHomeManagerConfiguration = system: configuration: home-manager.lib.homeManagerConfiguration {
+      mkHome = system: configuration: home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { inherit system; };
 
         extraSpecialArgs = {
@@ -85,7 +79,6 @@
         modules = [
           plasma-manager.homeManagerModules.plasma-manager
           nix-colors.homeManagerModules.default
-          nixvim.homeManagerModules.nixvim
           impermanence.nixosModules.home-manager.impermanence
           ./home-manager/configurations/${configuration}.nix
           ({ ... }: {
@@ -101,22 +94,10 @@
         });
     in
     {
-      packages = forEachSupportedSystem ({ pkgs }: rec {
-        neovim = nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
-          inherit pkgs;
-          module = import ./home-manager/modules/devtools/nixvim/dev-general.nix {
-            inherit pkgs;
-            config = { colorScheme.palette = nix-colors.colorScheme.catppucin; };
-          };
-        };
-        default = neovim;
-        nvim = neovim;
-      });
-
       nixosConfigurations = {
-        studio = generateSystemConfiguration "studio" "x86_64-linux" "/dev/sda";
-        light = generateSystemConfiguration "light" "x86_64-linux" "/dev/sda";
-        minimal = generateSystemConfiguration "minimal" "x86_64-linux" "/dev/sda";
+        studio = mkSystem "studio" "x86_64-linux" "/dev/sda";
+        light = mkSystem "light" "x86_64-linux" "/dev/sda";
+        minimal = mkSystem "minimal" "x86_64-linux" "/dev/sda";
 
         live-system = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -126,12 +107,12 @@
 
       homeConfigurations = rec {
         default = portable-strict;
-        portable-full = generateHomeManagerConfiguration "x86_64-linux" "tulip-nixos";
-        portable-strict = generateHomeManagerConfiguration "x86_64-linux" "portable";
+        portable-full = mkHome "x86_64-linux" "tulip-nixos";
+        portable-strict = mkHome "x86_64-linux" "portable";
       };
 
       devShells = forEachSupportedSystem ({ pkgs }: {
-        default = pkgs.mkShell { packages = with pkgs; [ nil just nixpkgs-fmt ]; };
+        default = pkgs.mkShell { packages = with pkgs; [ nil go-task nixpkgs-fmt ]; };
       });
 
       formatter = forEachSupportedSystem ({ pkgs }: pkgs.nixpkgs-fmt);

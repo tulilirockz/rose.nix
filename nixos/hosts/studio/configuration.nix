@@ -114,7 +114,6 @@
         imports = [
           inputs.plasma-manager.homeManagerModules.plasma-manager
           inputs.nix-colors.homeManagerModules.default
-          inputs.nixvim.homeManagerModules.nixvim
           inputs.impermanence.nixosModules.home-manager.impermanence
           ../../../home-manager/configurations/tulip-nixos.nix
         ];
