@@ -16,9 +16,9 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = lib.mkIf cfg.extras (with pkgs; [
       lagrange
-      bitwarden
-      vesktop
-      freetube
+      # bitwarden
+      # vesktop
+      # freetube
     ]);
 
     programs.chromium = {

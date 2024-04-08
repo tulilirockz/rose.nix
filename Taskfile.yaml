@@ -1,0 +1,106 @@
+version: '3'
+
+vars:
+  DEFAULT_CONFIGURATION: studio
+
+tasks:
+  default:
+    cmds: 
+      - task: repo:update
+      - task: rebuild:local
+      - task: store:gc
+  repo:update:
+    cmds:
+      - nix flake lock
+      - nix flake update
+  repo:hardware:
+    cmds:
+      - nixos-generate-config --root /tmp/whatever
+      - cp -f /tmp/whatever/etc/nixos/hardware-configuration.nix ./nixos/hosts/{{.CONFIGURATION}}/hardware-configuration.nix
+  home:
+    cmds:
+      - nix run nixpkgs#home-manager -- {{.OPERATION}} --substitute -b backup --flake {{.FLAKE_CONFIG}}#{{.CONFIGURATION}} {{.CLI_ARGS}}
+    vars:
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+  build:image:
+    cmds:
+      - nix build .#nixosConfigurations.{{.CONFIGURATION}}.config.system.build.diskoImagesScripti -o {{.OUT_LINK}} {{.CLI_ARGS}}
+      - "{{.OUT_LINK}} --build-memory {{.VM_MEMORY}}"
+    vars:
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+      OUT_LINK: ./result
+      VM_MEMORY: 6144
+  build:live-iso:
+    cmds:
+      - nix build .#nixosConfigurations.{{.CONFIGURATION}}.config.system.build.isoImage
+    vars:
+      CONFIGURATION: live-system
+  rebuild:local:
+    cmds:
+      - nix run nixpkgs#nixos-rebuild -- --use-remote-sudo --flake {{.FLAKE_LOCATION}}#{{.CONFIGURATION}} {{.OPERATION}} {{.CLI_ARGS}}
+    vars:
+      FLAKE_LOCATION: .
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+      OPERATION: switch
+  rebuild:remote:
+    desc: Refresh already installed system with a specified flake over SSH
+    summary: Rebases the SSH'd current system configuration over to the new one on runtime (switch!)
+    cmds:
+      - nixos-rebuild --use-remote-sudo --target-host {{.TARGET_HOST}} --build-host {{.BUILD_HOST}} --flake {{.FLAKE_PATH}}#{{.CONFIGURATION}} {{.REBUILD_COMMAND}} {{.CLI_ARGS}}
+    vars:
+      FLAKE_PATH: .
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+      REBUILD_COMMAND: switch
+      TARGET_HOST: undefined
+      BUILD_HOST: undefined
+  deploy:test:
+    desc: Deploy NixOS configuration over SSH to a test vm, should not break anything on the host
+    summary: Deploys NixOS configuration through nixos-anywhere/infect on a testing vm
+    cmds:
+      - nix run github:nix-community/nixos-anywhere -- --flake {{.FLAKE_PATH}}#{{.CONFIGURATION}} --vm-test {{.CLI_ARGS}}
+    vars:
+      FLAKE_PATH: .
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+  deploy:remote:
+    desc: Deploy a NixOS configuration over to a remote host through SSH, antarctica requires manual intervention after reboot as per README
+    summary: Deploy a NixOS configuration to TARGET_HOST
+    cmds:
+      - nix run github:nix-community/nixos-anywhere -- --flake {{.FLAKE_PATH}}#{{.CONFIGURATION}} root@{{.TARGET_HOST}} {{.CLI_ARGS}}
+    vars:
+      FLAKE_PATH: .
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+      TARGET_HOST: undefined
+  manual:disk:
+    desc: Format a disk with Disko, /dev/sda by default.
+    summary: Formats a disk using disko with parted as a backend, make sure to select the right disk as it will forcefully wipe it 
+    cmds:
+      - sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko {{.DISKO_PATH}} --arg device '"{{.DEVICE}}"' {{.CLI_ARGS}}
+    vars:
+      DEVICE: /dev/sda
+      DISKO_PATH: ./nixos/generic/disko.nix
+  manual:install:
+    desc: Install a NixOS configuration and copy it over to the install disk
+    summary: Installs NixOS on a specified disk through flakes and clones the repo over to it
+    cmds:
+      - sudo mkdir -p /mnt/persist/system /mnt/persist/home
+      - sudo mkdir -p {{.CONFIG_FOLDER}}
+      - sudo git clone {{.INSTALL_FLAKE}} {{.CONFIG_FOLDER}}
+      - sudo nixos-install --root {{.MOUNT}} --flake {{.FLAKE_PATH}}#{{.CONFIGURATION}} {{.CLI_ARGS}}
+    vars:
+      CONFIG_FOLDER: /mnt/persist/etc/nixos
+      INSTALL_FLAKE: https://github.com/tulilirockz/rose
+      FLAKE_PATH: .
+      MOUNT: /mnt
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+  store:gc:
+    cmds:
+      - nix store gc --verbose {{.CLI_ARGS}}
+  store:repair:path:
+    cmds:
+      - nix-store --repair-path {{.CLI_ARGS}}
+  store:repair:all:
+    cmds:
+      - nix-store repair --all {{.CLI_ARGS}}
+  store:repair:please:
+    cmds:
+      - nix-store --verify --check-contents --repair {{.CLI_ARGS}}

@@ -1,16 +1,23 @@
-{ pkgs, ... }:
+{ lib, config, ... }:
 let
-  apps = import ./apps.nix { inherit pkgs; };
+  cfg = config.rose.programs.desktops.plasma;
 in
 {
-  services.xserver = {
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
-    desktopManager.plasma6.enable = true;
-    displayManager.defaultSession = "plasma";
+  options.rose.programs.desktops.plasma = with lib; {
+    enable = mkEnableOption "KDE Plasma Desktop";
   };
-  programs.kdeconnect.enable = true;
-  environment.systemPackages = apps.qtApps;
+  config = lib.mkIf cfg.enable {
+    rose.programs.collections.qt.enable = true;
+    rose.programs.desktops.shared.enable = true;
+
+    services = {
+      displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+      desktopManager.plasma6.enable = true;
+      displayManager.defaultSession = "plasma";
+    };
+    programs.kdeconnect.enable = true;
+  };
 }

@@ -65,7 +65,14 @@
       ".local/share/direnv"
       ".local/share/nvim"
       ".local/share/krita"
-      ".local/share/Steam"
+      {
+        directory = ".local/share/bottles";
+        method = "symlink";
+      }
+      {
+        directory = ".local/share/Steam";
+        method = "symlink";
+      }
       {
         directory = ".local/share/waydroid";
         method = "symlink";

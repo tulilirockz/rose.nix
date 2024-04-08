@@ -4,17 +4,14 @@
 , ...
 }:
 with lib; let
-  cfg = config.system.nixos.impermanence;
+  cfg = config.rose.system.impermanence;
 in
 {
-  options.system.nixos.impermanence = {
+  options.rose.system.impermanence = {
     enable = lib.mkEnableOption "impermanence";
     home = lib.mkOption {
-      default = { };
       type = lib.types.submodule (_: {
-        options = {
-          enable = lib.mkEnableOption "impermanence";
-        };
+        options.enable = lib.mkEnableOption "impermanence";
       });
     };
   };

@@ -1,9 +1,15 @@
 {
-  description = "Tulilirockz' NixOS configuration";
+  description = "Tulip's NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     plasma-manager.url = "github:pjones/plasma-manager";
+    agenix.url = "github:ryantm/agenix";
+    persist-retro.url = "github:Geometer1729/persist-retro";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,16 +24,12 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs =
     { self
     , nixpkgs
     , home-manager
-    , nix-colors
-    , plasma-manager
-    , impermanence
     , ...
     } @ inputs:
     let
@@ -58,13 +60,16 @@
           inherit preferences;
         };
 
-        modules = [
-          inputs.niri.nixosModules.niri
-          inputs.home-manager.nixosModules.home-manager
-          inputs.disko.nixosModules.disko
-          inputs.impermanence.nixosModules.impermanence
+        modules = with inputs; [
+          niri.nixosModules.niri
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          agenix.nixosModules.default
+          persist-retro.nixosModules.persist-retro
+          impermanence.nixosModules.impermanence
+        ] ++ [
           (import ./nixos/generic/disko.nix { inherit device; })
-          ./nixos/hosts/${hostName}/configuration.nix
+          ./nixos/hosts/${hostName}
         ];
       };
 
@@ -76,11 +81,12 @@
           inherit preferences;
         };
 
-        modules = [
-          plasma-manager.homeManagerModules.plasma-manager
-          nix-colors.homeManagerModules.default
-          impermanence.nixosModules.home-manager.impermanence
-          ./home-manager/configurations/${configuration}.nix
+        modules = with inputs; [
+            plasma-manager.homeManagerModules.plasma-manager
+            nix-colors.homeManagerModules.default
+            impermanence.nixosModules.home-manager.impermanence
+            persist-retro.nixosModules.home-manager.persist-retro
+          ] ++ [./home-manager/configurations/${configuration}.nix
           ({ ... }: {
             targets.genericLinux.enable = true;
           })

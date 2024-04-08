@@ -1,4 +1,4 @@
-# tulili.nix
+# Rose
 
 My all-in-one configuration for all my nix-y needs!
 This contains my NixOS configuration, home-manager, neovim, and anything else I may seem fit!

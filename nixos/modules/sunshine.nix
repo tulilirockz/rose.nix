@@ -4,11 +4,11 @@
 , ...
 }:
 with lib; let
-  cfg = config.services.sunshine;
+  cfg = config.rose.services.sunshine;
   sunshinePort = 47990;
 in
 {
-  options.services.sunshine = {
+  options.rose.services.sunshine = {
     enable = lib.mkEnableOption "sunshine";
     package = lib.mkPackageOption pkgs "sunshine" { };
     openFirewall = lib.mkEnableOption "openFirewall";

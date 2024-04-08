@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, inputs
 , ...
 }:
 let
@@ -64,10 +65,6 @@ in
       nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
     '';
 
-    programs.vscode = {
-      enable = true;
-    };
-
     programs.direnv = {
       enable = true;
       enableNushellIntegration = true;
@@ -75,6 +72,8 @@ in
       nix-direnv.enable = true;
     };
 
+    programs.yazi.enable = true;
+    programs.zellij.enable = true;
     programs.helix = {
       enable = true;
       defaultEditor = true;
@@ -126,12 +125,6 @@ in
       };
     };
 
-    programs.yazi.enable = true;
-
-    programs.zellij = {
-      enable = true;
-    };
-
     home.packages = with pkgs; [
       unzip
       git
@@ -167,9 +160,9 @@ in
       cosign
       jsonnet
       kubernetes-helm
+      inputs.agenix.packages.${pkgs.system}.default
       kind
       devpod
-      devpod-desktop
       devenv
       lazydocker
       kubectl
@@ -188,16 +181,18 @@ in
       bun
       act
       wasmer
+      go-task
       gnome.gnome-disk-utility
       (writeScriptBin "mount-qcow" ''
-        	QCOW_PATH=$1
+        	set -ex
+          QCOW_PATH=$1
         	shift
         	set -euox pipefail
         	sudo modprobe nbd
         	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
         	sudo pkill qemu-nbd
       '')
-      (writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      #(writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
     ];
   };
 }

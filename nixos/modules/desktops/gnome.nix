@@ -1,41 +1,50 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 let
-  apps = import ./apps.nix { inherit pkgs; };
+  cfg = config.rose.programs.desktops.gnome;
 in
 {
-  services.xserver = {
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+  options.rose.programs.desktops.gnome = with lib; {
+    enable = mkEnableOption "GNOME Desktop";
   };
 
-  programs.seahorse.enable = true;
+  config = lib.mkIf cfg.enable {
+    rose.programs.collections.gnome.enable = true;
+    rose.programs.desktops.shared.enable = true;
+    
+    services.xserver = {
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
 
-  environment.systemPackages =
-    (with pkgs.gnomeExtensions; [
-      dash-to-dock
-      blur-my-shell
-      appindicator
-      tiling-assistant
-    ])
-    ++ [ pkgs.gnome-randr ]
-    ++ apps.gnomeApps;
+    programs.seahorse.enable = true;
 
-  environment.gnome.excludePackages =
-    (with pkgs; [
-      gnome-photos
-      gnome-tour
-      gedit
-    ])
-    ++ (with pkgs.gnome; [
-      cheese
-      gnome-music
-      gnome-terminal
-      epiphany
-      geary
-      gnome-characters
-      tali
-      iagno
-      hitori
-      atomix
-    ]);
+
+    environment.systemPackages =
+      (with pkgs.gnomeExtensions; [
+        dash-to-dock
+        blur-my-shell
+        appindicator
+        tiling-assistant
+      ])
+      ++ [ pkgs.gnome-randr ];
+
+    environment.gnome.excludePackages =
+      (with pkgs; [
+        gnome-photos
+        gnome-tour
+        gedit
+      ])
+      ++ (with pkgs.gnome; [
+        cheese
+        gnome-music
+        gnome-terminal
+        epiphany
+        geary
+        gnome-characters
+        tali
+        iagno
+        hitori
+        atomix
+      ]);
+  };
 }
