@@ -4,16 +4,11 @@
 , ...
 }:
 let
-  cfg = config.programs.clitools;
+  cfg = config.rose.programs.tools.cli;
 in
 {
-  options = {
-    programs.clitools.enable = lib.mkEnableOption {
-      description = "Enable a CLI-based user experince";
-      example = true;
-      default = false;
-    };
-  };
+  options.rose.programs.tools.cli.enable = lib.mkEnableOption "CLI-only tools";
+
   config = lib.mkIf cfg.enable {
     programs.fzf.enable = true;
 

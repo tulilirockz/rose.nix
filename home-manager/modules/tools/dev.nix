@@ -5,16 +5,18 @@
 , ...
 }:
 let
-  cfg = config.programs.devtools;
+  cfg = config.rose.programs.tools.dev;
 in
 {
-  options = {
-    programs.devtools.enable = lib.mkEnableOption {
-      description = "Enable my managed development configuration";
-      example = true;
-      default = false;
+  options.rose.programs.tools.dev = with lib; {
+    enable = mkEnableOption "Development Tools";
+    gui = mkOption {
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "GUI Development Tools";
+      });
     };
   };
+
   config = lib.mkIf cfg.enable {
     home.sessionVariables = {
       GOPATH = "${config.home.homeDirectory}/.local/share/go";

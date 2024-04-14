@@ -18,7 +18,7 @@ in
   };
 
   config = with lib; mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) ["steam" "steam-original" "steam-run" "steam-tui" "steamcmd"];
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "steam" "steam-original" "steam-run" "steam-tui" "steamcmd" ];
     environment.systemPackages = with pkgs; [ steam-tui bottles heroic ];
     programs.steam = mkIf cfg.steam.enable {
       enable = true;

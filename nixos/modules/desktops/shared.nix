@@ -1,7 +1,8 @@
 { pkgs, lib, config, ... }:
 let
   cfg = config.rose.programs.desktops.shared;
-in {
+in
+{
   options.rose.programs.desktops.shared = {
     enable = lib.mkEnableOption "Shared configuration for all desktops";
   };

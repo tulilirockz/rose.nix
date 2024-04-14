@@ -2,23 +2,22 @@
 , pkgs
 , lib
 , inputs
-, preferences
 , ...
 }:
 let
-  cfg = config.programs.browsers;
+  cfg = config.rose.programs.browsers;
 in
 {
-  options = {
-    programs.browsers.enable = lib.mkEnableOption "Manage browsers";
-    programs.browsers.extras = lib.mkEnableOption "Extra browsers";
+  options.rose.programs.browsers = with lib; {
+    enable = mkEnableOption "Multiple Browsers";
+    extras = mkEnableOption "Electron-based apps n browsers";
   };
   config = lib.mkIf cfg.enable {
     home.packages = lib.mkIf cfg.extras (with pkgs; [
       lagrange
-      # bitwarden
-      # vesktop
-      # freetube
+      bitwarden
+      vesktop
+      freetube
     ]);
 
     programs.chromium = {
@@ -45,8 +44,8 @@ in
         "DisableTelemetry" = true;
         "DisablePocket" = true;
       };
-      profiles.${config.home.username} = {
-        extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+      profiles.personal = {
+        extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
           bitwarden
           ublock-origin
           sponsorblock

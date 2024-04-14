@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) ["vmware-workstation" "vmware-player"];
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "vmware-workstation" "vmware-player" ];
 
     environment.systemPackages = with lib.lists; with pkgs; (
       (optionals cfg.gui.enable [
@@ -27,7 +27,7 @@ in
         virglrenderer
         quickemu
       ]
-    );  
+    );
 
     virtualisation = {
       podman = {

@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   imports = [
     ./collections.nix
     ./desktops

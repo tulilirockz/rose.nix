@@ -1,10 +1,7 @@
 { preferences, ... }: {
   imports = [
-    ../modules/browsers.nix
-    ../modules/clitools.nix
-    ../modules/devtools.nix
+    ../modules
   ];
-  targets.genericLinux.enable = true;
 
   home = {
     username = preferences.username;

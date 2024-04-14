@@ -1,8 +1,16 @@
 { preferences
+, config
+, lib
 , ...
 }:
 # Generated with nix run github:pjones/plasma-manager
+let
+  cfg = config.rose.programs.desktops.plasma;
+in
 {
+  options.rose.programs.desktops.plasma.enable = lib.mkEnableOption "Plasma DE settings";
+
+  config = lib.mkIf cfg.enable {
   programs.plasma = {
     enable = true;
     workspace = {
@@ -264,5 +272,5 @@
       "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
     };
   };
+  };
 }
-

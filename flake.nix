@@ -82,11 +82,12 @@
         };
 
         modules = with inputs; [
-            plasma-manager.homeManagerModules.plasma-manager
-            nix-colors.homeManagerModules.default
-            impermanence.nixosModules.home-manager.impermanence
-            persist-retro.nixosModules.home-manager.persist-retro
-          ] ++ [./home-manager/configurations/${configuration}.nix
+          plasma-manager.homeManagerModules.plasma-manager
+          nix-colors.homeManagerModules.default
+          impermanence.nixosModules.home-manager.impermanence
+          persist-retro.nixosModules.home-manager.persist-retro
+        ] ++ [
+          ./home-manager/configurations/${configuration}.nix
           ({ ... }: {
             targets.genericLinux.enable = true;
           })
@@ -113,7 +114,7 @@
 
       homeConfigurations = rec {
         default = portable-strict;
-        portable-full = mkHome "x86_64-linux" "tulip-nixos";
+        portable-full = mkHome "x86_64-linux" "main-nixos";
         portable-strict = mkHome "x86_64-linux" "portable";
       };
 

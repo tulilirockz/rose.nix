@@ -1,7 +1,8 @@
-{lib, config, pkgs, ...}: 
+{ lib, config, pkgs, ... }:
 let
   cfg = config.rose.programs.collections;
-in {
+in
+{
   options.rose.programs.collections = with lib; {
     enable = mkEnableOption "App Collections";
     gnome = mkOption {
@@ -28,20 +29,21 @@ in {
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with lib.lists; with pkgs; (
-      (optionals cfg.qt.enable (with libsForQt5; [
-        kclock
-        alligator
-        kamoso
-        kasts
-        kolourpaint
-        kweather
-      ]) ++ [
+      (optionals cfg.qt.enable
+        (with libsForQt5; [
+          kclock
+          alligator
+          kamoso
+          kasts
+          kolourpaint
+          kweather
+        ]) ++ [
         qpwgraph
         vlc
         keepassxc
         qbittorrent
       ]) ++
-      (optionals cfg.gnome.enable 
+      (optionals cfg.gnome.enable
         (with gnome; [
           gnome-tweaks
           dconf-editor
@@ -54,27 +56,27 @@ in {
           gnome-calculator
           gnome-system-monitor
           gnome-tweaks
-          dconf-editor 
+          dconf-editor
           polari
         ])
-        ++ [
-          shortwave
-          gitg
-          transmission-gtk
-          gnome-solanum
-          gitg
-          gradience
-          impression
-          amberol
-          baobab
-          blanket
-          snapshot
-          loupe
-          gnome-firmware
-          gnome-podcasts
-          newsflash
-        ]
-      ) ++ 
+      ++ [
+        shortwave
+        gitg
+        transmission-gtk
+        gnome-solanum
+        gitg
+        gradience
+        impression
+        amberol
+        baobab
+        blanket
+        snapshot
+        loupe
+        gnome-firmware
+        gnome-podcasts
+        newsflash
+      ]
+      ) ++
       (optionals cfg.wm.enable [
         wlay
         blueman
@@ -89,7 +91,7 @@ in {
         transmission-gtk
         gnome.nautilus
         swayimg
-      ]) ++ 
+      ]) ++
       (optionals cfg.shared.enable [
         cinny-desktop
         thunderbird

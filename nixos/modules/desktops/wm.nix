@@ -1,13 +1,13 @@
 { preferences, pkgs, lib, config, ... }:
 let
   cfg = config.rose.programs.desktops.wm;
-in {
+in
+{
   options.rose.programs.desktops.wm = {
     enable = lib.mkEnableOption "Shared configuration for all WMs";
   };
 
   config = lib.mkIf cfg.enable {
-  
     rose.programs.collections.wm.enable = true;
     services.greetd.enable = true;
     programs.regreet = {

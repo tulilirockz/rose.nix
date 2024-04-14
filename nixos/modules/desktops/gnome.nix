@@ -10,7 +10,7 @@ in
   config = lib.mkIf cfg.enable {
     rose.programs.collections.gnome.enable = true;
     rose.programs.desktops.shared.enable = true;
-    
+
     services.xserver = {
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;

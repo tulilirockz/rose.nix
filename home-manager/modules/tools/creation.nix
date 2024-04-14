@@ -4,12 +4,11 @@
 , ...
 }:
 let
-  cfg = config.programs.creation;
+  cfg = config.rose.programs.tools.creation;
 in
 {
-  options = {
-    programs.creation.enable = lib.mkEnableOption "Content creation tweaks";
-  };
+  options.rose.programs.tools.creation.enable = lib.mkEnableOption "Tools for Content Creation";
+
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       audacity

@@ -27,7 +27,6 @@
   time.timeZone = preferences.timeZone;
   i18n.defaultLocale = preferences.locale;
 
-
   users = {
     defaultUserShell = pkgs.nushell;
     mutableUsers = false;
@@ -43,7 +42,6 @@
 
   environment.localBinInPath = true;
   security.pam.services.${preferences.username}.showMotd = true;
-
 
   rose = {
     system.impermanence.enable = true;
@@ -135,7 +133,7 @@
           persist-retro.nixosModules.home-manager.persist-retro
           nix-colors.homeManagerModules.default
           impermanence.nixosModules.home-manager.impermanence
-        ] ++ [../../../home-manager/configurations/tulip-nixos.nix];
+        ] ++ [ ../../../home-manager/configurations/main-nixos.nix ];
       };
     };
   };

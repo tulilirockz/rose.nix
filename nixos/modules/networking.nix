@@ -1,7 +1,8 @@
-{config, lib, ...}:
+{ config, lib, ... }:
 let
   cfg = config.rose.networking;
-in {
+in
+{
   options.rose.networking = with lib; {
     enable = mkEnableOption "Optionated networking defaults";
     firewall = mkOption {
@@ -11,8 +12,8 @@ in {
           extraPorts = mkOption {
             type = types.listOf types.port;
             description = "Extra ports open in firewall";
-            default = [];
-            example = [22 2222];
+            default = [ ];
+            example = [ 22 2222 ];
           };
         };
       });
@@ -23,13 +24,13 @@ in {
         options.enable = mkEnableOption "Enable Tailscale";
       });
     };
-    
+
     ipfs = mkOption {
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable recommended IPFS program";
       });
     };
-    
+
     wireless = mkOption {
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable stuff if using Wifi";
@@ -47,7 +48,7 @@ in {
       enable = true;
       enableGC = true;
     };
-  
+
     networking = {
       networkmanager.enable = true;
       networkmanager.wifi.backend = "iwd";
