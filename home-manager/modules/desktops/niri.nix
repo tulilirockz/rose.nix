@@ -12,18 +12,13 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
+    rose.programs.desktops.ags.enable = true;
 
     xdg.configFile = {
       "niri/autostart".executable = true;
       "niri/autostart".text = ''
-        ${lib.getExe pkgs.networkmanagerapplet} --indicator &
         ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-        ${lib.getExe pkgs.mako} &
-        ${pkgs.udiskie}/bin/udiskie &
-        ${pkgs.kdeconnect}/bin/kdeconnect-applet &
-        ${lib.getExe pkgs.swayidle} -w timeout 150 '${lib.getExe pkgs.swaylock-effects} -w timeout 300 '${config.programs.niri.package} msg' -w timeout 1000 'systemctl suspend' -f' &
-        ${lib.getExe pkgs.foot} --server &
-        ${lib.getExe pkgs.waybar} &
+        ${lib.getExe config.rose.programs.desktops.ags.package} &
         eval `${lib.getExe pkgs.openssh}/bin/ssh-agent`
       '';
     };
@@ -31,7 +26,10 @@ in
     programs.niri.config = with config.colorScheme.palette ; ''
       // This config is in the KDL format: https://kdl.dev
       // "/-" comments out the following node.
-
+      window-rule {
+          match app-id=r#"^org\.wezfurlong\.wezterm$"#
+          default-column-width {}
+      }
       input {
           keyboard {
               xkb {
@@ -299,12 +297,11 @@ in
           Mod+Shift+H { show-hotkey-overlay; }
           Mod+C { close-window; }
 
-          Mod+Q { spawn "${pkgs.foot}/bin/footclient"; }
+          Mod+Q { spawn "${lib.getExe pkgs.rio}"; }
           Mod+F { spawn "${lib.getExe config.programs.chromium.package}"; }
-          Mod+R { spawn "${lib.getExe pkgs.fuzzel}"; }
+          Mod+R { spawn "${lib.getExe config.rose.programs.desktops.ags.package}" "-t" "applauncher"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }
           Mod+M { spawn "${lib.getExe pkgs.wlogout}"; }
-          Mod+Shift+L { spawn "${lib.getExe pkgs.swaylock-effects}"; }
 
           // Example volume keys mappings for PipeWire & WirePlumber.
           XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }

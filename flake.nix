@@ -37,7 +37,7 @@
         theme = {
           name = "windows-10";
           type = "dark";
-          wallpaperPath = ./assets/wserver2025.jpg;
+          wallpaperPath = ./assets/purble.jpg;
           colorSchemeFromWallpaper = false;
           fontFamily = "IntoneMono Nerd Font";
           cursor.name = "Fuchsia";

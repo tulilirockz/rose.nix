@@ -51,8 +51,7 @@
       others.enable = true;
     };
     programs.desktops = {
-      niri.enable = true;
-      shared.enable = true;
+      ${preferences.desktop}.enable = true;
     };
     programs.collections = with pkgs.lib; {
       enable = true;

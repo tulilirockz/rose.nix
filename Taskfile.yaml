@@ -6,7 +6,6 @@ vars:
 tasks:
   default:
     cmds: 
-      - task: repo:update
       - task: rebuild:local
       - task: store:gc
   repo:update:

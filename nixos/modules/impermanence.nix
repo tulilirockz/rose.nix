@@ -9,10 +9,11 @@ in
 {
   options.rose.system.impermanence = {
     enable = lib.mkEnableOption "impermanence";
-    home = lib.mkOption {
-      type = lib.types.submodule (_: {
-        options.enable = lib.mkEnableOption "impermanence";
-      });
+    extraDirectories = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      example = [ "/var/log" ];
+      description = "Extra Paths to be added to impermanence";
     };
   };
 
@@ -61,7 +62,7 @@ in
         "/var/cache/tailscale"
         "/var/lib/iwd"
         "/etc/NetworkManager/system-connections"
-      ];
+      ] ++ cfg.extraDirectories;
       files = [
         "/etc/machine-id"
       ];

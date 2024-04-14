@@ -61,9 +61,9 @@ in
           AutoConnect = true;
         };
       };
-      nftables.enable = true;
+      nftables.enable = false;
       firewall = {
-        enable = cfg.firewall.enable;
+        enable = false;
         allowedUDPPorts = [
           51413 # Transmission
           24800 # Input Leap

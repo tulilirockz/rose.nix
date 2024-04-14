@@ -10,10 +10,28 @@ in
 {
   options.rose.programs.browsers = with lib; {
     enable = mkEnableOption "Multiple Browsers";
-    extras = mkEnableOption "Electron-based apps n browsers";
+    extras = mkOption {
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Enable Impermanence support";
+      });
+    };
+    impermanence = mkOption {
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Enable Impermanence support";
+      });
+    };
   };
   config = lib.mkIf cfg.enable {
-    home.packages = lib.mkIf cfg.extras (with pkgs; [
+    rose.home.impermanence.extraDirectories = lib.mkIf cfg.impermanence.enable [
+        ".cache/chromium"
+        ".config/FreeTube"
+        ".config/lagrange"
+        ".config/chromium"
+        ".config/Bitwarden"
+        ".config/vesktop"
+    ];
+  
+    home.packages = lib.mkIf cfg.extras.enable (with pkgs; [
       lagrange
       bitwarden
       vesktop

@@ -23,13 +23,16 @@
     programs = {
       tools = {
         dev.enable = true;
+        dev.impermanence.enable = true;
         dev.gui.enable = true;
         cli.enable = true;
         creation.enable = true;
+        creation.impermanence.enable = true;
       };
       browsers = {
         enable = true;
-        extras = true;
+        extras.enable = true;
+        impermanence.enable = true;
       };
       desktops = {
         ${preferences.desktop}.enable = true;
@@ -59,7 +62,6 @@
     };
 
     sessionVariables = rec {
-      #GTK2_RC_FILES = lib.mkForce "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
       GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
       NUGET_PACKAGES = "${XDG_CACHE_HOME}/NuGetPackages";
       TLDR_CACHE_DIR = "${XDG_CACHE_HOME}/tldr";
@@ -71,7 +73,6 @@
       XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
       XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
       MOZ_ENABLE_WAYLAND = "1";
-      DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
     };
   };
 

@@ -1,8 +1,11 @@
-{...}: {
+{ ... }: {
   imports = [
     ./plasma.nix
     ./gnome.nix
     ./niri.nix
-    ./wm
+    ./wayfire.nix
+    ./sway.nix
+    ./components
+    ./wm.nix
   ];
 }

@@ -9,6 +9,7 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
+    rose.programs.collections.gnome.enable = true;
     rose.programs.desktops.shared.enable = true;
     niri-flake.cache.enable = true;
     nixpkgs.overlays = [ inputs.niri.overlays.niri ];

@@ -75,6 +75,7 @@ in
         gnome-firmware
         gnome-podcasts
         newsflash
+        fractal
       ]
       ) ++
       (optionals cfg.wm.enable [
@@ -82,12 +83,7 @@ in
         blueman
         mpv
         zathura
-        newsboat
-        imv
-        kanshi
         wl-clipboard
-        mediainfo
-        exiftool
         transmission-gtk
         gnome.nautilus
         swayimg

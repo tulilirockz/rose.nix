@@ -15,13 +15,41 @@ in
         options.enable = mkEnableOption "GUI Development Tools";
       });
     };
+    impermanence = mkOption {
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Enable Impermanence support";
+      });
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    home.sessionVariables = {
-      GOPATH = "${config.home.homeDirectory}/.local/share/go";
-    };
-
+    rose.home.impermanence.extraDirectories = lib.mkIf cfg.impermanence.enable [
+      ".nixops"
+      ".wasmer"
+      ".vscode"
+      ".vscodium"
+      ".cache/tldr"
+      ".cache/NuGetPackages"
+      ".cache/nvim"
+      ".cache/cargo"
+      ".cache/mise"
+      ".cache/pre-commit"
+      ".cache/direnv"
+      ".config/carapace"
+      ".config/gh"
+      ".config/lazygit"
+      ".config/watson"
+      ".config/direnv"
+      ".config/packer"
+      ".local/share/flakehub"
+      ".local/share/atuin"
+      ".local/share/go"
+      ".local/share/zoxide"
+      ".local/share/dotnet"
+      ".local/share/direnv"
+      ".local/share/nvim"
+    ];
+    
     programs.jujutsu = {
       enable = true;
       settings = {
@@ -74,8 +102,25 @@ in
       nix-direnv.enable = true;
     };
 
-    programs.yazi.enable = true;
-    programs.zellij.enable = true;
+    programs.yazi = {
+      enable = true;
+      enableNushellIntegration = true;
+      settings = {
+        manager = {
+          show_hidden = true;
+        };
+      };
+    };
+    
+    programs.zellij = {
+      enable = true;
+      settings = {
+        default_shell = "nu";
+        default_layout = "compact";
+        pane_frames = false;
+      };
+    };
+    
     programs.helix = {
       enable = true;
       defaultEditor = true;
@@ -101,6 +146,8 @@ in
         vscode-langservers-extracted
         clojure-lsp
         dockerfile-language-server-nodejs
+        nodePackages.typescript-language-server
+        terraform-lsp
       ];
       settings = {
         theme = "boo_berry";
@@ -127,32 +174,96 @@ in
       };
     };
 
+    programs = {
+      bun = {
+        enable = true;
+      };
+      fd = {
+        enable = true;
+      };
+      bacon = {
+        enable = true;
+      };
+      bat = {
+        enable = true;
+      };
+      carapace = {
+        enable = true;
+        enableNushellIntegration = true;
+      };
+      go = {
+        enable = true;
+        goPath = ".local/share/go";
+      };
+      gh = {
+        enable = true;
+      };
+      gh-dash = {
+        enable = true;
+      };
+      thefuck = {
+        enable = true;
+      };
+      hyfetch = {
+        enable = true;
+        settings = {
+            preset = "gendernonconforming1";
+            mode = "rgb";
+            light_dark = "dark";
+            lightness = 0.53;
+            color_align = {
+                mode = "custom";
+                custom_colors = {
+                    "1" = 1;
+                    "2" = 3;
+                };
+                fore_back = [];
+            };
+            backend = "neofetch";
+            args = null;
+            distro = null;
+            pride_month_shown = [];
+            pride_month_disable = false;
+        };
+      };
+      mise = {
+        enable = true;
+      };
+      navi = {
+        enable = true;
+      };
+      nix-index = {
+        enable = true;
+      };
+      pyenv = {
+        enable = true;
+      };
+      watson = {
+        enable = true;
+      };
+    };
+
     home.packages = with pkgs; [
       unzip
-      git
-      ollama
       buildah
-      gh
       glab
       fd
       ripgrep
-      sbctl
       podman-compose
       tldr
       jq
       yq
       scc
+      nix-tree
       just
       iotop
       nix-prefetch-git
       pre-commit
       fh
-      trashy
       android-tools
       wireshark
       wormhole-rs
       lldb
-      gdb
       okteta
       bubblewrap
       just
@@ -161,30 +272,24 @@ in
       distrobox
       cosign
       jsonnet
-      kubernetes-helm
       inputs.agenix.packages.${pkgs.system}.default
-      kind
-      devpod
-      devenv
-      lazydocker
-      kubectl
-      talosctl
       gitg
       gource
       meld
       jujutsu
       melange
       dive
-      earthly
       poetry
+      earthly
       gdu
       asciinema
-      maturin
-      bun
       act
       wasmer
       go-task
       gnome.gnome-disk-utility
+      (writeScriptBin "gh-jj" ''
+        GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
+      '')
       (writeScriptBin "mount-qcow" ''
         	set -ex
           QCOW_PATH=$1
