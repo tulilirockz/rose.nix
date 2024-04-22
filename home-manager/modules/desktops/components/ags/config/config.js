@@ -9,7 +9,6 @@ App.addIcons(`${App.configDir}/assets`)
 App.config({
   style: "./style.css",
   windows: [
-        NotificationPopups(),
     Bar(),
     applauncher,
     Calendar(),

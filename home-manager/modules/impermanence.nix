@@ -7,7 +7,7 @@ in
     enable = mkEnableOption "Impermanence setup for Home";
     extraDirectories = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       example = [ ".local/share/amogus" ];
       description = "Extra Paths to be added to impermanence";
     };
@@ -37,6 +37,8 @@ in
         ".config/kdeconnect"
         ".config/rclone"
         ".config/epiphany"
+        ".config/Joplin"
+        ".config/joplin-desktop"
         ".local/share/epiphany"
         ".local/share/in.cinny.app"
         ".local/share/cinny"

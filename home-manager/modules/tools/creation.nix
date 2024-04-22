@@ -22,6 +22,7 @@ in
       ".config/GIMP"
       ".config/libresprite"
       ".config/obs-studio"
+      ".config/easyeffects"
     ];
 
     home.packages = with pkgs; [
@@ -35,6 +36,8 @@ in
       czkawka
       lmms
     ];
+
+    services.easyeffects.enable = true;
 
     programs.obs-studio = {
       enable = true;

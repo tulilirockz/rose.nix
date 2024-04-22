@@ -23,14 +23,14 @@ in
   };
   config = lib.mkIf cfg.enable {
     rose.home.impermanence.extraDirectories = lib.mkIf cfg.impermanence.enable [
-        ".cache/chromium"
-        ".config/FreeTube"
-        ".config/lagrange"
-        ".config/chromium"
-        ".config/Bitwarden"
-        ".config/vesktop"
+      ".cache/chromium"
+      ".config/FreeTube"
+      ".config/lagrange"
+      ".config/chromium"
+      ".config/Bitwarden"
+      ".config/vesktop"
     ];
-  
+
     home.packages = lib.mkIf cfg.extras.enable (with pkgs; [
       lagrange
       bitwarden

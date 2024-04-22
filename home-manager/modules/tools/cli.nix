@@ -14,14 +14,13 @@ in
 
     programs.atuin = {
       enable = true;
-      enableFishIntegration = true;
       enableNushellIntegration = true;
-      enableBashIntegration = true;
     };
 
     programs.fish.enable = true;
     programs.nushell.enable = true;
-    programs.nushell.extraConfig = ''
+    programs.nushell.extraConfig = ''    
+      $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent.socket"
       $env.config.use_grid_icons = true
       $env.config.footer_mode = always
       $env.config.use_ansi_coloring = true

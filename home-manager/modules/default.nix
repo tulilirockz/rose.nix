@@ -1,8 +1,6 @@
 { ... }: {
   imports = [
-    ./tools/cli.nix
-    ./tools/dev.nix
-    ./tools/creation.nix
+    ./tools
     ./services
     ./desktops
     ./browsers.nix

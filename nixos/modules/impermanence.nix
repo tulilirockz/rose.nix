@@ -11,7 +11,7 @@ in
     enable = lib.mkEnableOption "impermanence";
     extraDirectories = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       example = [ "/var/log" ];
       description = "Extra Paths to be added to impermanence";
     };

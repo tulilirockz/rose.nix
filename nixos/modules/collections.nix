@@ -37,12 +37,13 @@ in
           kasts
           kolourpaint
           kweather
-        ]) ++ [
-        qpwgraph
-        vlc
-        keepassxc
-        qbittorrent
-      ]) ++
+        ] ++ [
+          qpwgraph
+          vlc
+          keepassxc
+          qbittorrent
+        ])
+      ) ++
       (optionals cfg.gnome.enable
         (with gnome; [
           gnome-tweaks
@@ -58,25 +59,27 @@ in
           gnome-tweaks
           dconf-editor
           polari
+        ]
+        ++
+        [
+          shortwave
+          gitg
+          transmission-gtk
+          gnome-solanum
+          gitg
+          gradience
+          impression
+          amberol
+          baobab
+          blanket
+          snapshot
+          loupe
+          gnome-firmware
+          gnome-podcasts
+          newsflash
+          fractal
+          folio
         ])
-      ++ [
-        shortwave
-        gitg
-        transmission-gtk
-        gnome-solanum
-        gitg
-        gradience
-        impression
-        amberol
-        baobab
-        blanket
-        snapshot
-        loupe
-        gnome-firmware
-        gnome-podcasts
-        newsflash
-        fractal
-      ]
       ) ++
       (optionals cfg.wm.enable [
         wlay

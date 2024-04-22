@@ -48,9 +48,8 @@ in
         focus = {
           followMouse = "always";
         };
-        bars = [];
-        input = {
-        };
+        bars = [ ];
+        input = { };
         modes = {
           resize = {
             Down = "resize grow height 10 px";

@@ -118,7 +118,6 @@
 
   security.sudo.enable = false;
   security.sudo-rs.enable = !(security.sudo.enable);
-
   home-manager = {
     extraSpecialArgs = {
       inherit preferences;

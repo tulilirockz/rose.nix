@@ -23,8 +23,8 @@
     programs = {
       tools = {
         dev.enable = true;
-        dev.impermanence.enable = true;
         dev.gui.enable = true;
+        dev.impermanence.enable = true;
         cli.enable = true;
         creation.enable = true;
         creation.impermanence.enable = true;

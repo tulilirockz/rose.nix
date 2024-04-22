@@ -129,7 +129,6 @@ const AppButton = () => {
     })
 }
 
-
 const LogoutButton = () => {
     return Widget.Button({
         child: Widget.Icon({icon: `system-log-out-symbolic`}),
@@ -148,7 +147,14 @@ const KdeConnectButton = () => {
     })
 }
 
-
+const ConectivityButton = () => {
+    return Widget.Button({
+        child: Widget.Icon({icon: `phone-symbolic`}),
+        on_primary_click: (_, event) => {
+            Utils.exec("kdeconnect-app")
+        },
+    })
+}
 
 // layout of the bar
 function Left() {

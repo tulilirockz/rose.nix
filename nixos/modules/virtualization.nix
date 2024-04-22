@@ -38,11 +38,14 @@ in
       ]
     );
 
-    environment.sessionVariables = if (!config.virtualisation.docker.enable) then ({
-      DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
-    }) else ({
-      DOCKER_HOST = "unix:///run/user/1000/docker.sock";
-    });
+    environment.sessionVariables =
+      if (!config.virtualisation.docker.enable) then
+        ({
+          DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
+        }) else
+        ({
+          DOCKER_HOST = "unix:///run/user/1000/docker.sock";
+        });
 
     virtualisation = {
       podman = {
@@ -53,8 +56,8 @@ in
         defaultNetwork.settings.dns_enabled = true;
       };
       docker = {
-        enable = true;
-        rootless.enable = true;
+        enable = false;
+        rootless.enable = false;
       };
       waydroid.enable = cfg.gui.enable;
       libvirtd.enable = true;

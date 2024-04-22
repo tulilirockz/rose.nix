@@ -35,6 +35,7 @@ in
       ".cache/mise"
       ".cache/pre-commit"
       ".cache/direnv"
+      ".config/asciinema"
       ".config/carapace"
       ".config/gh"
       ".config/lazygit"
@@ -49,7 +50,7 @@ in
       ".local/share/direnv"
       ".local/share/nvim"
     ];
-    
+
     programs.jujutsu = {
       enable = true;
       settings = {
@@ -111,7 +112,7 @@ in
         };
       };
     };
-    
+
     programs.zellij = {
       enable = true;
       settings = {
@@ -120,7 +121,7 @@ in
         pane_frames = false;
       };
     };
-    
+
     programs.helix = {
       enable = true;
       defaultEditor = true;
@@ -207,23 +208,23 @@ in
       hyfetch = {
         enable = true;
         settings = {
-            preset = "gendernonconforming1";
-            mode = "rgb";
-            light_dark = "dark";
-            lightness = 0.53;
-            color_align = {
-                mode = "custom";
-                custom_colors = {
-                    "1" = 1;
-                    "2" = 3;
-                };
-                fore_back = [];
+          preset = "gendernonconforming1";
+          mode = "rgb";
+          light_dark = "dark";
+          lightness = 0.53;
+          color_align = {
+            mode = "custom";
+            custom_colors = {
+              "1" = 1;
+              "2" = 3;
             };
-            backend = "neofetch";
-            args = null;
-            distro = null;
-            pride_month_shown = [];
-            pride_month_disable = false;
+            fore_back = [ ];
+          };
+          backend = "neofetch";
+          args = null;
+          distro = null;
+          pride_month_shown = [ ];
+          pride_month_disable = false;
         };
       };
       mise = {
