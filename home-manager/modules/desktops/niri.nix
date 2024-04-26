@@ -19,7 +19,6 @@ in
       "niri/autostart".text = ''
         ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
         ${lib.getExe config.rose.programs.desktops.ags.package} &
-        ${lib.getExe pkgs.networkmanagerapplet} &
         ${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket &
       '';
     };

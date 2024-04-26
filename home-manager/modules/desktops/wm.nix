@@ -15,7 +15,7 @@ in
       (writeScriptBin "xwayland-run-sway" ''
         ${lib.getExe pkgs.sway} -V &
         sleep 1
-        DISPLAY=:0 $@
+        DISPLAY=:0 WAYLAND_DISPLAY=wayland-2 $@
       '')
 
       (writeScriptBin "gamescope-run" ''

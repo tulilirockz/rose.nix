@@ -10,16 +10,19 @@
   ];
 
   system.stateVersion = "24.05";
+  networking.hostName = "studio";
 
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.systemd-boot.configurationLimit = 5;
-    loader.efi.canTouchEfiVariables = true;
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 5;
+      systemd-boot.memtest86.enable = true;
+      systemd-boot.netbootxyz.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    plymouth.enable = true;
     kernelPackages = pkgs.linuxPackages_zen;
-    kernel.sysctl."kernel.sysrq" = 1;
   };
-
-  networking.hostName = "studio";
 
   zramSwap.enable = true;
   zramSwap.memoryPercent = 75;
@@ -39,10 +42,9 @@
   };
 
   services.flatpak.enable = true;
-
   environment.localBinInPath = true;
   security.pam.services.${preferences.username}.showMotd = true;
-
+  
   rose = {
     system.impermanence.enable = true;
     programs.gaming = {
@@ -57,14 +59,15 @@
       enable = true;
       qt.enable = mkDefault false;
       gnome.enable = mkDefault false;
-      shared.enable = mkDefault false;
+      shared.enable = mkDefault true;
       wm.enable = mkDefault false;
     };
     networking = {
       enable = true;
+      wireless.enable = true;
+      networkManager = false;
       firewall.enable = false;
       tailscale.enable = true;
-      wireless.enable = true;
       ipfs.enable = false;
     };
     virtualization = {
@@ -107,13 +110,19 @@
     package = pkgs.nixVersions.unstable;
     gc = {
       automatic = true;
+      persistent = true;
       dates = "daily";
       options = "--delete-older-than 2d";
     };
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       use-xdg-base-directories = true;
+      auto-optimise-store = true;
+      allowed-users = [
+        "@wheel"
+      ];
     };
+    channel.enable = false;
   };
 
   security.sudo.enable = false;

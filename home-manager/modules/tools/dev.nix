@@ -117,7 +117,6 @@ in
       enable = true;
       settings = {
         default_shell = "nu";
-        default_layout = "compact";
         pane_frames = false;
       };
     };
@@ -230,12 +229,6 @@ in
       mise = {
         enable = true;
       };
-      navi = {
-        enable = true;
-      };
-      nix-index = {
-        enable = true;
-      };
       pyenv = {
         enable = true;
       };
@@ -244,8 +237,18 @@ in
       };
     };
 
-    home.packages = with pkgs; [
+    home.packages = (lib.optionals cfg.gui.enable (with pkgs; [
+      forge-sparks
+      gitg
+      gource
+      meld
+      gnome.gnome-disk-utility
+      okteta
+      wireshark
+      python3Packages.jupyterlab
+    ])) ++ (with pkgs; [
       unzip
+      lazygit
       buildah
       glab
       fd
@@ -262,10 +265,8 @@ in
       pre-commit
       fh
       android-tools
-      wireshark
       wormhole-rs
       lldb
-      okteta
       bubblewrap
       just
       waypipe
@@ -274,9 +275,6 @@ in
       cosign
       jsonnet
       inputs.agenix.packages.${pkgs.system}.default
-      gitg
-      gource
-      meld
       jujutsu
       melange
       dive
@@ -285,9 +283,15 @@ in
       gdu
       asciinema
       act
+      powershell
+      yt-dlp
+      lazygit
+      ffmpeg
+      cyme
+      uutils-coreutils
       wasmer
       go-task
-      gnome.gnome-disk-utility
+      (writeScriptBin "lsusb" "${lib.getExe pkgs.cyme} $@")
       (writeScriptBin "gh-jj" ''
         GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
       '')
@@ -301,6 +305,6 @@ in
         	sudo pkill qemu-nbd
       '')
       #(writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
-    ];
+    ]);
   };
 }

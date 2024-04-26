@@ -99,14 +99,19 @@ in
         pavucontrol
         libreoffice
         catppuccin-gtk
-        stremio
         mumble
         gnome-podcasts
         newsflash
         thunderbird
         monophony
         shortwave
+        keepassxc
+        localsend
         gnome.gnome-clocks
+        mpv
+        nodePackages.webtorrent-cli
+        mpvScripts.mpv-cheatsheet
+        mpvScripts.webtorrent-mpv-hook
       ])
     );
   };

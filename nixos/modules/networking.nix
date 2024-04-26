@@ -1,6 +1,9 @@
 { config, lib, ... }:
 let
   cfg = config.rose.networking;
+  networkConfig = {
+    DHCP = "yes"; DNSSEC = "yes"; DNSOverTLS = "yes"; DNS = [ "1.1.1.1" "1.0.0.1" ]; 
+  };
 in
 {
   options.rose.networking = with lib; {
@@ -36,6 +39,8 @@ in
         options.enable = mkEnableOption "Enable stuff if using Wifi";
       });
     };
+
+    networkManager = mkEnableOption "Use NetworkManager";
   };
 
   config = with lib; mkIf cfg.enable {
@@ -49,8 +54,37 @@ in
       enableGC = true;
     };
 
+    systemd.network = {
+      enable = !cfg.networkManager;
+      wait-online.enable = true;
+      networks = {
+         "40-wired" = {
+            enable = true;
+            matchConfig.Name = "en*";
+            inherit networkConfig;
+            dhcpV4Config.RouteMetric = 1024;
+         };
+         "40-wireless" = {
+            enable = true;
+            matchConfig.Name = "wl*";
+            inherit networkConfig;
+            dhcpV4Config.RouteMetric = 2048; 
+         };
+      };
+    };
+
+    services.resolved = {
+      enable = true;
+      dnssec = "true";
+      dnsovertls = "true";
+    };
+
+
+    networking.useNetworkd = !cfg.networkManager;
+    networking.useDHCP = cfg.networkManager;
+
     networking = {
-      networkmanager.enable = true;
+      networkmanager.enable = cfg.networkManager;
       networkmanager.wifi.backend = "iwd";
       wireless.iwd.enable = cfg.wireless.enable;
       wireless.iwd.settings = mkIf cfg.wireless.enable {
