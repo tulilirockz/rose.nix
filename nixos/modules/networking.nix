@@ -21,11 +21,14 @@ in
   options.rose.networking = with lib; {
     enable = mkEnableOption "Optionated networking defaults";
     firewall = mkOption {
+      default = { };
+      description = "Firewall configuration for a Desktop NixOS system";
       type = types.submodule (_: {
         options = {
           enable = mkEnableOption "Firewall w NFTables and rules";
           extraPorts = mkOption {
             default = { };
+            description = "Open extra ports for the firewall definitions";
             type = types.submodule (_: {
               options = {
                 udp = mkOption {
@@ -55,24 +58,36 @@ in
     };
 
     tailscale = mkOption {
+      default = { };
+      description = "VPN software for P2P-like communication";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable Tailscale";
       });
     };
 
     hosts = mkOption {
+      default = { };
+      description = "Very strict host files for safe web usage";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable strict hosts file";
       });
     };
 
     wireless = mkOption {
+      default = { };
+      description = "Wireless drivers and required definitions for Wi-Fi usage";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable stuff if using Wifi";
       });
     };
 
-    networkManager = mkEnableOption "Use NetworkManager";
+    networkManager = mkOption {
+      default = { };
+      description = "Use the NetworkManager service to manage networks (boo)";
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Use NetworkManager";
+      });
+    };
   };
 
   config =
@@ -84,7 +99,7 @@ in
       };
 
       systemd.network = {
-        enable = !cfg.networkManager;
+        enable = !cfg.networkManager.enable;
         networks = {
           # "40-wired" = {
           #   enable = true;
@@ -107,11 +122,11 @@ in
         dnsovertls = "true";
       };
 
-      networking.useNetworkd = !cfg.networkManager;
-      networking.useDHCP = cfg.networkManager;
+      networking.useNetworkd = !cfg.networkManager.enable;
+      networking.useDHCP = cfg.networkManager.enable;
 
       networking = {
-        networkmanager.enable = cfg.networkManager;
+        networkmanager.enable = cfg.networkManager.enable;
         networkmanager.wifi.backend = "iwd";
         wireless.iwd.enable = cfg.wireless.enable;
         wireless.iwd.settings = mkIf cfg.wireless.enable {

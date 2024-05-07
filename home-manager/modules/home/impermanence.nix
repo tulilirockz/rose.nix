@@ -32,7 +32,10 @@ in
         ".gnupg"
         ".ssh"
         ".mozilla"
+        ".cache/nix"
         ".thunderbird"
+        ".config/nautilus"
+        ".local/share/nautilus"
         ".config/news-flash"
         ".config/monophony"
         ".config/nix"
@@ -46,7 +49,6 @@ in
         ".local/share/in.cinny.app"
         ".local/share/cinny"
         ".local/state/wireplumber"
-        ".local/state/nvim"
         ".local/share/flatpak"
         ".local/share/keyrings"
         ".local/share/gnome-podcasts"
@@ -78,6 +80,10 @@ in
         }
         {
           directory = ".local/share/containers";
+          method = "symlink";
+        }
+        {
+          directory = ".local/share/docker";
           method = "symlink";
         }
       ] ++ cfg.extraDirectories;

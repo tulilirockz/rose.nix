@@ -1,14 +1,15 @@
 { lib, config, ... }:
 let
-  cfg = config.rose.programs.desktops.plasma;
+  cfg = config.rose.services.desktopManager.plasma;
 in
 {
-  options.rose.programs.desktops.plasma = with lib; {
-    enable = mkEnableOption "KDE Plasma Desktop";
-  };
+  options.rose.services.desktopManager.plasma.enable = lib.mkEnableOption "KDE Plasma Desktop";
+
   config = lib.mkIf cfg.enable {
-    rose.programs.collections.qt.enable = true;
-    rose.programs.desktops.shared.enable = true;
+    rose = {
+      programs.qt.enable = true;
+      services.desktopManager.shared.enable = true;
+    };
 
     services = {
       displayManager.sddm = {

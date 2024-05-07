@@ -66,7 +66,7 @@ in
           "Mod4+Q" = "exec ${lib.getExe pkgs.foot}";
           "Mod4+F" = "exec ${lib.getExe config.programs.chromium.package}";
           "Mod4+R" = "exec ${lib.getExe pkgs.fuzzel}";
-          "Mod4+E" = "exec ${lib.getExe pkgs.gnome.nautilus}";
+          "Mod4+E" = "exec ${lib.getExe pkgs.cosmic-files}";
           "Mod4+M" = "exec ${lib.getExe pkgs.wlogout}";
           "Mod4+L" = "exec ${lib.getExe pkgs.swaylock-effects}";
           "Mod4+Left" = "focus left";

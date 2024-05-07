@@ -5,29 +5,44 @@
   ...
 }:
 let
-  cfg = config.rose.programs.collections;
+  cfg = config.rose.programs;
 in
 {
-  options.rose.programs.collections = with lib; {
+  options.rose.programs = with lib; {
     enable = mkEnableOption "App Collections";
     gnome = mkOption {
+      default = { };
+      description = "Any GNOME(Circle) apps";
       type = types.submodule (_: {
         options.enable = mkEnableOption "GNOME apps (gtk)";
       });
     };
     wm = mkOption {
+      default = { };
+      description = "Programs for Window Manager environments, usually TUI apps";
       type = types.submodule (_: {
         options.enable = mkEnableOption "WM apps";
       });
     };
     shared = mkOption {
+      default = { };
+      description = "Programs for Any DE";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Programs for any DE";
       });
     };
     qt = mkOption {
+      default = { };
+      description = "Any KDE apps";
       type = types.submodule (_: {
         options.enable = mkEnableOption "QT apps";
+      });
+    };
+    cosmic = mkOption {
+      default = { };
+      description = "Any COSMIC Epoch apps";
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Cosmic apps";
       });
     };
   };
@@ -73,7 +88,7 @@ in
           ++ [
             shortwave
             gitg
-            transmission-gtk
+            fragments
             gnome-solanum
             gitg
             gradience
@@ -92,6 +107,7 @@ in
             drawing
             endeavour
             rnote
+            iotas
           ]
         ))
         ++ (optionals cfg.wm.enable [
@@ -100,7 +116,6 @@ in
           mpv
           zathura
           wl-clipboard
-          transmission-gtk
           gnome.nautilus
           swayimg
         ])
@@ -126,6 +141,12 @@ in
           nodePackages.webtorrent-cli
           mpvScripts.mpv-cheatsheet
           mpvScripts.webtorrent-mpv-hook
+        ])
+        ++ (optionals cfg.cosmic.enable [
+          cosmic-files
+          cosmic-edit
+          cosmic-tasks
+          cosmic-icons
         ])
       );
   };

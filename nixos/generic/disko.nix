@@ -11,11 +11,6 @@
       content = {
         type = "gpt";
         partitions = {
-          #boot = {
-          #  name = "boot";
-          #  size = "1M";
-          #  type = "EF02";
-          #};
           esp = {
             name = "ESP";
             size = "1G";
@@ -26,13 +21,6 @@
               mountpoint = "/boot";
             };
           };
-          #swap = {
-          #  size = "4G";
-          #  content = {
-          #    type = "swap";
-          #    resumeDevice = true;
-          #  };
-          #};
           root = {
             name = "root";
             size = "100%";
@@ -44,6 +32,14 @@
         };
       };
     };
+    nodev."/" = {
+      fsType = "tmpfs";
+      mountOptions = [
+        "size=2G"
+        "defaults"
+        "mode=755"
+      ];
+    };
     lvm_vg = {
       root_vg = {
         type = "lvm_vg";
@@ -53,12 +49,7 @@
             content = {
               type = "btrfs";
               extraArgs = [ "-f" ];
-
               subvolumes = {
-                "/root" = {
-                  mountpoint = "/";
-                };
-
                 "/persist" = {
                   mountOptions = [
                     "subvol=persist"

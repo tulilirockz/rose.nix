@@ -36,11 +36,18 @@ tasks:
       CONFIGURATION: live-system
   rebuild:local:
     cmds:
-      - nix run nixpkgs#nixos-rebuild -- --use-remote-sudo --flake {{.FLAKE_LOCATION}}#{{.CONFIGURATION}} {{.OPERATION}} {{.CLI_ARGS}}
+      - nix run nixpkgs#nixos-rebuild -- --use-remote-sudo --flake {{.FLAKE_LOCATION}}#{{.CONFIGURATION}} -L {{.OPERATION}} {{.CLI_ARGS}}
     vars:
       FLAKE_LOCATION: .
       CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
       OPERATION: switch
+  rebuild:boot:
+    cmds:
+      - nix run nixpkgs#nixos-rebuild -- --use-remote-sudo --flake {{.FLAKE_LOCATION}}#{{.CONFIGURATION}} -L {{.OPERATION}} {{.CLI_ARGS}}
+    vars:
+      FLAKE_LOCATION: .
+      CONFIGURATION: "{{.DEFAULT_CONFIGURATION}}"
+      OPERATION: boot
   rebuild:remote:
     desc: Refresh already installed system with a specified flake over SSH
     summary: Rebases the SSH'd current system configuration over to the new one on runtime (switch!)

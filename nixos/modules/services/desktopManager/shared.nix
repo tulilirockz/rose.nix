@@ -5,16 +5,18 @@
   ...
 }:
 let
-  cfg = config.rose.programs.desktops.shared;
+  cfg = config.rose.services.desktopManager.shared;
 in
 {
-  options.rose.programs.desktops.shared = {
-    enable = lib.mkEnableOption "Shared configuration for all desktops";
-  };
+  options.rose.services.desktopManager.shared.enable = lib.mkEnableOption "Shared configuration for all desktops";
 
   config = lib.mkIf cfg.enable {
-    rose.programs.collections.shared.enable = true;
+    rose.programs.shared.enable = true;
 
+    xdg = {
+      terminal-exec.enable = true;
+      portal.xdgOpenUsePortal = true;
+    };
     services.libinput.enable = true;
     security.rtkit.enable = true;
     services.pipewire = {

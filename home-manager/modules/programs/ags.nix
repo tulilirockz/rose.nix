@@ -21,10 +21,10 @@ in
       );
     };
     extraLibraries = mkOption {
-      type = with types; nullOr listOf package;
+      type = with types; listOf package;
+      default = [ ];
       example = [ pkgs.libdbusmenu-gtk3 ];
       description = "Required libraries and packages for your custom AGS setup";
-      default = null;
     };
   };
 

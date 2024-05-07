@@ -5,16 +5,16 @@
   ...
 }:
 let
-  cfg = config.rose.programs.desktops.gnome;
+  cfg = config.rose.services.desktopManager.gnome;
 in
 {
-  options.rose.programs.desktops.gnome = with lib; {
-    enable = mkEnableOption "GNOME Desktop";
-  };
+  options.rose.services.desktopManager.gnome.enable = lib.mkEnableOption "GNOME Desktop";
 
   config = lib.mkIf cfg.enable {
-    rose.programs.collections.gnome.enable = true;
-    rose.programs.desktops.shared.enable = true;
+    rose = {
+      programs.gnome.enable = true;
+      services.desktopManager.shared.enable = true;
+    };
 
     services.xserver = {
       displayManager.gdm.enable = true;

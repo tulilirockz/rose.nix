@@ -11,11 +11,14 @@ in
   options.rose.programs.gaming = with lib; {
     enable = mkEnableOption "Gaming Related";
     steam = mkOption {
+      description = "Steam and Unfree predicates";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Steam";
       });
     };
     others = mkOption {
+      default = { };
+      description = "Placeholder for other game types";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Other gaming platforms";
       });
@@ -23,7 +26,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    rose.system.unfree.extraPredicates = [
+    rose.system.unfree.extraPredicates = lib.mkIf cfg.steam.enable [
       "steam"
       "steam-original"
       "steam-run"
@@ -31,9 +34,10 @@ in
       "steamcmd"
     ];
     environment.systemPackages = with pkgs; [
-      steam-tui
       bottles
       heroic
+      steam-tui
+      steamcmd
     ];
     programs.steam = lib.mkIf cfg.steam.enable {
       enable = true;

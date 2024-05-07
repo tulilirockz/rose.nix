@@ -5,18 +5,18 @@
   ...
 }:
 let
-  cfg = config.rose.programs.desktops.wayfire;
+  cfg = config.rose.services.desktopManager.wayfire;
 in
 {
-  options.rose.programs.desktops.wayfire = {
-    enable = lib.mkEnableOption "Wayfire WM";
-  };
+  options.rose.services.desktopManager.wayfire.enable = lib.mkEnableOption "Wayfire WM";
 
   config = lib.mkIf cfg.enable {
-    rose.programs.desktops.wm.enable = true;
-    rose.programs.desktops.shared.enable = true;
+    rose = {
+      services.desktopManager.wm.enable = true;
+      programs.wm.enable = true;
+      programs.shared.enable = true;
+    };
 
-    xdg.portal.xdgOpenUsePortal = true;
     xdg.portal.wlr.settings = {
       screencast = {
         output_name = "HDMI-A-1";
@@ -26,7 +26,6 @@ in
       };
     };
     xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    programs.kdeconnect.enable = true;
     programs.wayfire = {
       enable = true;
       plugins = with pkgs.wayfirePlugins; [ wayfire-plugins-extra ];

@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.rose.programs.tools.creation;
+  cfg = config.rose.programs.creation;
 in
 {
-  options.rose.programs.tools.creation = with lib; {
+  options.rose.programs.creation = with lib; {
     enable = mkEnableOption "Tools for Content Creation";
     impermanence = mkOption {
       type = types.submodule (_: {

@@ -44,57 +44,40 @@ in
   };
 
   config =
-    with lib;
-    mkIf cfg.enable {
-      systemd.user.services."${rclone_prefix}@webui" = mkIf cfg.webui.enable {
-        Unit = {
+    lib.mkIf cfg.enable {
+      systemd.user.services."${rclone_prefix}@webui" = lib.mkIf cfg.webui.enable {
+        unitConfig = {
           Description = "Rclone Web UI";
           Documentation = "man:rclone(1)";
         };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = "${getExe cfg.package} rcd --rc-web-gui";
+        wantedBy = [ "default.target" ];
+        serviceConfig = {
+          type = "exec";
+          execStart = "${lib.getExe cfg.package} rcd --rc-web-gui";
         };
       };
 
-      systemd.user.services."${rclone_prefix}@gdrive" = mkIf cfg.gdrive.enable {
-        Unit = {
+      systemd.user.services."${rclone_prefix}@gdrive" = lib.mkIf cfg.gdrive.enable {
+        unitConfig = {
           Description = "Rclone Mounting for Google Drive";
           Documentation = "man:rclone(1)";
         };
-        Install = {
-          WantedBy = [ "network.target" ];
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = "${getExe (
-            pkgs.writers.writeNuBin "rclone-gdrive" ''
-              mkdir $"${cfg.gdrive.mountPath}"         
-              ${getExe cfg.package} mount gdrive: $"${cfg.onedrive.mountPath}" --vfs-cache-mode full
-            ''
-          )}";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          type = "exec";
+          script = "${lib.getExe cfg.package} mount gdrive: ${cfg.gdrive.mountPath}";
         };
       };
 
-      systemd.user.services."${rclone_prefix}@onedrive" = mkIf cfg.onedrive.enable {
-        Unit = {
+      systemd.user.services."${rclone_prefix}@onedrive" = lib.mkIf cfg.onedrive.enable {
+        unitConfig = {
           Description = "Rclone Mounting for OneDrive";
           Documentation = "man:rclone(1)";
         };
-        Install = {
-          WantedBy = [ "network.target" ];
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = "${getExe (
-            pkgs.writers.writeNuBin "rclone-onedrive" ''
-              mkdir $"${cfg.onedrive.mountPath}"
-              ${getExe cfg.package} mount onedrive: $"${cfg.onedrive.mountPath}" --vfs-cache-mode full
-            ''
-          )}";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          type = "exec";
+          script = "${lib.getExe cfg.package} mount onedrive: ${cfg.onedrive.mountPath}";
         };
       };
     };

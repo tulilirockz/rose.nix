@@ -26,6 +26,21 @@ in
 
     programs.niri.config = with config.colorScheme.palette; ''
       // This config is in the KDL format: https://kdl.dev
+      window-rule {
+          match app-id=r#"^org\.wezfurlong\.wezterm$"#
+          default-column-width {}
+      }
+
+      window-rule {
+          geometry-corner-radius 8
+          clip-to-geometry true
+      }
+      animations {
+        window-open {
+            duration-ms 200
+            curve "ease-out-cubic"
+        }
+      }
       input {
           keyboard {
               xkb {
@@ -66,12 +81,13 @@ in
 
       output "HDMI-A-1" {
           transform "normal" // normal, 90, 180, 270
-          mode "1920x1080@74.973" // niri msg outputs
+          mode "1920x1080" // niri msg outputs
+          variable-refresh-rate
       }
 
       layout {
           focus-ring {
-              width 2
+              width 3
               active-color 33 33 33 125
               inactive-color 80 80 80 255
               active-gradient from="#${base00}" to="#${base01}" angle=45 relative-to="workspace-view"
@@ -85,7 +101,7 @@ in
           default-column-width { proportion 0.5; }
           // If you leave the brackets empty, the windows themselves will decide their initial width.
           // default-column-width {}
-          gaps 16 // px
+          gaps 10 // px
           center-focused-column "never"
       }
       spawn-at-startup "${config.xdg.configFile."niri/autostart".target}"
@@ -98,7 +114,7 @@ in
           // `niri msg action do-something`.
           Mod+Shift+H { show-hotkey-overlay; }
           Mod+C { close-window; }
-          Mod+Q { spawn "${lib.getExe pkgs.rio}"; }
+          Mod+Q { spawn "${lib.getExe pkgs.wezterm}"; }
           Mod+F { spawn "${lib.getExe config.programs.chromium.package}"; }
           Mod+R { spawn "${lib.getExe config.rose.programs.ags.package}" "-t" "applauncher"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }

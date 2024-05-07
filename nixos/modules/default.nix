@@ -1,13 +1,11 @@
 { ... }:
 {
   imports = [
-    ./desktops
-    ./collections.nix
-    ./unfree.nix
-    ./gaming.nix
-    ./impermanence.nix
+    ./services
+    ./programs
+    ./system
+    ./hardware.nix
     ./networking.nix
-    ./sunshine.nix
     ./virtualization.nix
   ];
 }

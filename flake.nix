@@ -8,7 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager.url = "github:pjones/plasma-manager";
-    agenix.url = "github:ryantm/agenix";
     persist-retro.url = "github:Geometer1729/persist-retro";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -28,6 +27,10 @@
       flake = false;
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts";
     };
+    nuspawn = {
+      url = "github:tulilirockz/nuspawn";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -42,7 +45,7 @@
         theme = {
           name = "windows-10";
           type = "dark";
-          wallpaperPath = ./assets/purble.jpg;
+          wallpaperPath = ./assets/amiga.png;
           colorSchemeFromWallpaper = false;
           fontFamily = "IntoneMono Nerd Font";
           cursor.name = "Fuchsia";
@@ -73,7 +76,6 @@
               niri.nixosModules.niri
               home-manager.nixosModules.home-manager
               disko.nixosModules.disko
-              agenix.nixosModules.default
               persist-retro.nixosModules.persist-retro
               impermanence.nixosModules.impermanence
             ]
@@ -142,16 +144,54 @@
         portable-strict = mkHome "x86_64-linux" "portable";
       };
 
+      packages = forEachSupportedSystem (
+        { pkgs }:
+        {
+          docs =
+            let
+              moduleDocs = pkgs.nixosOptionsDoc {
+                options =
+                  (import (pkgs.path + "/nixos/lib/eval-config.nix") {
+                    baseModules = [
+                      ./nixos/modules
+                      { config._module.check = false; }
+                    ];
+                    modules = [ ];
+                  }).options;
+              };
+            in
+            pkgs.stdenv.mkDerivation {
+              src = ./.;
+              name = "docs";
+
+              # mkdocs dependencies
+              nativeBuildInputs = with pkgs; [
+                mkdocs
+                python3Packages.mkdocs-material
+                python3Packages.pygments
+              ];
+
+              # symlink our generated docs into the correct folder before generating
+              buildPhase = ''
+                mkdir -p docs
+                ln -s ${moduleDocs.optionsCommonMark} "./docs/nixos-options.md"
+                # generate the site
+                mkdocs build
+              '';
+
+              configurePhase = '''';
+
+              installPhase = ''
+                mv site $out
+              '';
+            };
+        }
+      );
+
       devShells = forEachSupportedSystem (
         { pkgs }:
         {
-          default = pkgs.mkShell {
-            packages = with pkgs; [
-              nil
-              go-task
-              nixpkgs-fmt
-            ];
-          };
+          default = pkgs.mkShell { packages = with pkgs; [ go-task ]; };
         }
       );
 

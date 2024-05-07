@@ -2,7 +2,6 @@
 {
   imports = [
     ./programs
-    ./services
-    ./impermanence.nix
+    ./home
   ];
 }

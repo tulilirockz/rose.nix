@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 with lib;
@@ -11,7 +12,16 @@ in
 {
   options.rose.virtualization = with lib; {
     enable = mkEnableOption "virtualization options";
+    unfree = mkOption {
+      default = { };
+      description = "Allow unfree configurations to be enabled";
+      type = types.submodule (_: {
+        options.enable = mkEnableOption "Unfree Virtualization Technologies";
+      });
+    };
     gui = mkOption {
+      default = { };
+      description = "GUI virtualization applications or related";
       type = types.submodule (_: {
         options.enable = mkEnableOption "Gui Virtualization Apps";
       });
@@ -21,7 +31,7 @@ in
   config =
     with lib;
     mkIf cfg.enable {
-      rose.system.unfree.extraPredicates = [
+      rose.system.unfree.extraPredicates = lib.mkIf cfg.unfree.enable [
         "vmware-workstation"
         "vmware-player"
       ];
@@ -49,37 +59,28 @@ in
             talosctl
             firecracker
             firectl
+            inputs.nuspawn.packages.${pkgs.system}.nuspawn
+            skopeo
           ]
         );
 
-      environment.sessionVariables =
-        if (!config.virtualisation.docker.rootless.enable) then
-          ({ DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock"; })
-        else
-          ({ DOCKER_HOST = "unix:///run/user/1000/docker.sock"; });
-
-      services.dockerRegistry = {
-        enable = true;
-        enableDelete = true;
-        enableGarbageCollect = true;
-      };
-
-      virtualisation = {
+      virtualisation = rec {
         podman = {
-          enable = true;
+          enable = !(docker.rootless.enable);
           autoPrune.enable = true;
-          dockerSocket.enable = !(config.virtualisation.docker.enable);
-          dockerCompat = !(config.virtualisation.docker.enable);
+          dockerSocket.enable = true;
+          dockerCompat = true;
           defaultNetwork.settings.dns_enabled = true;
         };
-        docker = {
+        docker.rootless = {
           enable = true;
-          rootless.enable = true;
+          setSocketVariable = true;
         };
-        waydroid.enable = cfg.gui.enable;
-        libvirtd.enable = true;
-        incus.enable = true;
-        #vmware.host.enable = cfg.gui.enable;
+        libvirtd = {
+          enable = true;
+          qemu.swtpm.enable = true;
+        };
+        vmware.host.enable = (cfg.gui.enable && cfg.unfree.enable);
       };
     };
 }

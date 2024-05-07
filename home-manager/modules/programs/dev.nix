@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.rose.programs.tools.dev;
+  cfg = config.rose.programs.dev;
 in
 {
-  options.rose.programs.tools.dev = with lib; {
+  options.rose.programs.dev = with lib; {
     enable = mkEnableOption "Development Tools";
     gui = mkOption {
       type = types.submodule (_: {
@@ -40,6 +40,7 @@ in
       ".config/gh"
       ".config/Code"
       ".config/lazygit"
+      ".config/lapce-stable"
       ".config/watson"
       ".config/direnv"
       ".config/packer"
@@ -50,6 +51,8 @@ in
       ".local/share/dotnet"
       ".local/share/direnv"
       ".local/share/nvim"
+      ".local/share/navi"
+      ".local/share/lapce-stable"
     ];
 
     programs.fzf.enable = true;
@@ -61,6 +64,7 @@ in
 
     programs.fish.enable = true;
     programs.nushell.enable = true;
+
     programs.nushell.extraConfig = ''
       $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent.socket"
       $env.config.use_grid_icons = true
@@ -68,6 +72,10 @@ in
       $env.config.use_ansi_coloring = true
       $env.config.edit_mode = vi
       $env.config.show_banner = false
+      $env.TERM = xterm-256color
+      def bg [...argv] {
+        systemd-run --user ...$argv
+      }
     '';
 
     programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
@@ -94,6 +102,8 @@ in
         };
         ui = {
           default-command = "log";
+          paginate = "never";
+          merge-editor = "meld";
           diff-editor = "meld";
         };
         signing = {
@@ -101,11 +111,16 @@ in
           backend = "ssh";
           key = config.programs.git.signing.key;
         };
+        git = {
+          auto-local-branch = true;
+        };
+        snapshot.max-new-file-size = "10MiB";
       };
     };
 
     programs.git = {
       enable = true;
+      package = pkgs.gitoxide;
       userEmail = "tulilirockz@outlook.com";
       userName = "Tulili";
       signing.key = "/home/tulili/.ssh/id_ed25519.pub";
@@ -181,10 +196,13 @@ in
         clojure-lsp
         dockerfile-language-server-nodejs
         nodePackages.typescript-language-server
+        nodePackages.bash-language-server
         terraform-lsp
+        lexical
+        glas
       ];
       settings = {
-        theme = "boo_berry";
+        theme = "base16_transparent";
         editor = {
           line-number = "relative";
           mouse = false;
@@ -209,18 +227,14 @@ in
     };
 
     programs = {
-      bun = {
-        enable = true;
-      };
-      fd = {
-        enable = true;
-      };
-      bacon = {
-        enable = true;
-      };
-      bat = {
-        enable = true;
-      };
+      bun.enable = true;
+      fd.enable = true;
+      bacon.enable = true;
+      bat.enable = true;
+      navi.enable = true;
+      gh.enable = true;
+      gh-dash.enable = true;
+      thefuck.enable = true;
       carapace = {
         enable = true;
         enableNushellIntegration = true;
@@ -229,19 +243,17 @@ in
         enable = true;
         goPath = ".local/share/go";
       };
-      gh = {
-        enable = true;
-      };
-      gh-dash = {
-        enable = true;
-      };
-      thefuck = {
-        enable = true;
-      };
     };
 
     home.sessionVariables = {
       FLAKE = "${inputs.self.outPath}";
+    };
+
+    programs.vscode = {
+      enable = true;
+      package = (
+        pkgs.writeScriptBin "code-wayland" "${lib.getExe pkgs.vscode} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@"
+      );
     };
 
     home.packages =
@@ -264,6 +276,24 @@ in
         nix-tree
         nix-output-monitor
         nh
+
+        debootstrap
+        dnf5
+        apk-tools
+
+        elixir
+        clojure
+        cargo
+        rustc
+        gleam
+        clang
+        erlang
+
+        cilium-cli
+        hubble
+        fluxctl
+        git
+        tektoncd-cli
 
         systemctl-tui
         unzip
@@ -291,7 +321,6 @@ in
         distrobox
         cosign
         jsonnet
-        inputs.agenix.packages.${pkgs.system}.default
         jujutsu
         melange
         dive
@@ -307,32 +336,19 @@ in
         yt-dlp
         woodpecker-cli
         lazygit
-        ffmpeg
+        ffmpeg-full
         cyme
-        debootstrap
-        uutils-coreutils
+        btop
+        slides
+        ascii-draw
+        presenterm
+        lapce
         wasmer
         go-task
         glow
         fastfetch
         dysk
         (writeScriptBin "lsusb" "${lib.getExe cyme} $@")
-        (writeScriptBin "df" "${lib.getExe dysk} $@")
-        (writeScriptBin "neofetch" "${lib.getExe fastfetch} $@")
-        (writeScriptBin "hyfetch" "${lib.getExe fastfetch} $@")
-        (writeScriptBin "gh-jj" ''
-          GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
-        '')
-        (writeScriptBin "mount-qcow" ''
-          	set -ex
-            QCOW_PATH=$1
-          	shift
-          	set -euox pipefail
-          	sudo modprobe nbd
-          	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
-          	sudo pkill qemu-nbd
-        '')
-        (writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
       ]);
   };
 }

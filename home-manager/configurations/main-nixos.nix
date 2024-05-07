@@ -22,25 +22,18 @@
   rose = {
     home.impermanence.enable = true;
     programs = {
-      tools = {
-        dev.enable = true;
-        dev.gui.enable = true;
-        dev.impermanence.enable = true;
-        creation.enable = true;
-        creation.impermanence.enable = true;
+      dev = {
+        enable = true;
+        gui.enable = true;
+        impermanence.enable = true;
       };
+      creation.enable = true;
       browsers = {
         enable = true;
         extras.enable = true;
         impermanence.enable = true;
       };
       desktops.${preferences.desktop}.enable = true;
-    };
-    services.rclone = {
-      enable = true;
-      webui.enable = false;
-      gdrive.enable = false;
-      onedrive.enable = true;
     };
   };
 
@@ -98,4 +91,5 @@
       uris = [ "qemu:///session" ];
     };
   };
+    
 }
