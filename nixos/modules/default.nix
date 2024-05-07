@@ -1,7 +1,9 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
-    ./collections.nix
     ./desktops
+    ./collections.nix
+    ./unfree.nix
     ./gaming.nix
     ./impermanence.nix
     ./networking.nix

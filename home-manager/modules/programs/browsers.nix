@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 let
   cfg = config.rose.programs.browsers;
@@ -31,12 +32,15 @@ in
       ".config/vesktop"
     ];
 
-    home.packages = lib.mkIf cfg.extras.enable (with pkgs; [
-      lagrange
-      bitwarden
-      vesktop
-      freetube
-    ]);
+    home.packages = lib.mkIf cfg.extras.enable (
+      with pkgs;
+      [
+        lagrange
+        bitwarden
+        vesktop
+        freetube
+      ]
+    );
 
     programs.chromium = {
       enable = true;

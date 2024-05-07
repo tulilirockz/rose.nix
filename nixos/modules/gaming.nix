@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.rose.programs.gaming;
 in
@@ -17,12 +22,23 @@ in
     };
   };
 
-  config = with lib; mkIf cfg.enable {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "steam" "steam-original" "steam-run" "steam-tui" "steamcmd" ];
-    environment.systemPackages = with pkgs; [ steam-tui bottles heroic ];
-    programs.steam = mkIf cfg.steam.enable {
+  config = lib.mkIf cfg.enable {
+    rose.system.unfree.extraPredicates = [
+      "steam"
+      "steam-original"
+      "steam-run"
+      "steam-tui"
+      "steamcmd"
+    ];
+    environment.systemPackages = with pkgs; [
+      steam-tui
+      bottles
+      heroic
+    ];
+    programs.steam = lib.mkIf cfg.steam.enable {
       enable = true;
-      gamescopeSession.enable = true;
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+      gamescopeSession.enable = false;
     };
   };
 }

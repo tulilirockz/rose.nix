@@ -1,5 +1,4 @@
-{ ... }: {
-  imports = [
-    ./rclone.nix
-  ];
+{ ... }:
+{
+  imports = [ ./rclone.nix ];
 }

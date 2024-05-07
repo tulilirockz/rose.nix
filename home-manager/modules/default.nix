@@ -1,9 +1,8 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
-    ./tools
+    ./programs
     ./services
-    ./desktops
-    ./browsers.nix
     ./impermanence.nix
   ];
 }

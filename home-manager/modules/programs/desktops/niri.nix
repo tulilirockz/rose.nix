@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, preferences
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  preferences,
+  ...
 }:
 let
   cfg = config.rose.programs.desktops.niri;
@@ -12,18 +13,18 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
-    rose.programs.desktops.ags.enable = true;
+    rose.programs.ags.enable = true;
 
     xdg.configFile = {
       "niri/autostart".executable = true;
       "niri/autostart".text = ''
         ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-        ${lib.getExe config.rose.programs.desktops.ags.package} &
+        ${lib.getExe config.rose.programs.ags.package} &
         ${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket &
       '';
     };
 
-    programs.niri.config = with config.colorScheme.palette ; ''
+    programs.niri.config = with config.colorScheme.palette; ''
       // This config is in the KDL format: https://kdl.dev
       input {
           keyboard {
@@ -99,7 +100,7 @@ in
           Mod+C { close-window; }
           Mod+Q { spawn "${lib.getExe pkgs.rio}"; }
           Mod+F { spawn "${lib.getExe config.programs.chromium.package}"; }
-          Mod+R { spawn "${lib.getExe config.rose.programs.desktops.ags.package}" "-t" "applauncher"; }
+          Mod+R { spawn "${lib.getExe config.rose.programs.ags.package}" "-t" "applauncher"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }
           Mod+M { spawn "${lib.getExe pkgs.wlogout}"; }
           Mod+T { switch-preset-column-width; }

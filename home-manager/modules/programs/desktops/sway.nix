@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, preferences
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  preferences,
+  ...
 }:
 let
   cfg = config.rose.programs.desktops.sway;
@@ -13,7 +14,7 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
-    rose.programs.desktops.ags.enable = true;
+    rose.programs.ags.enable = true;
 
     wayland.windowManager.sway = {
       enable = true;
@@ -27,10 +28,10 @@ in
       '';
       config = {
         terminal = "${pkgs.foot}/bin/footclient";
-        menu = "${lib.getExe config.rose.programs.desktops.ags.package}";
+        menu = "${lib.getExe config.rose.programs.ags.package}";
         startup = map toCommand [
           "${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath}"
-          "${lib.getExe config.rose.programs.desktops.ags.package}"
+          "${lib.getExe config.rose.programs.ags.package}"
         ];
         workspaceLayout = "tabbed";
         gaps = {

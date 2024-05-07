@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.rose.programs.desktops.gnome;
 in
@@ -17,7 +22,6 @@ in
     };
 
     programs.seahorse.enable = true;
-
 
     environment.systemPackages =
       (with pkgs.gnomeExtensions; [

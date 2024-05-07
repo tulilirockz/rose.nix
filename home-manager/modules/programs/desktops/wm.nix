@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, preferences
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  preferences,
+  ...
 }:
 let
   cfg = config.rose.programs.desktops.wm;
@@ -12,13 +13,13 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      (writeScriptBin "xwayland-run-sway" ''
-        ${lib.getExe pkgs.sway} -V &
+      (writeScriptBin "xsway" ''
+        ${lib.getExe sway} -V &
         sleep 1
         DISPLAY=:0 WAYLAND_DISPLAY=wayland-2 $@
       '')
 
-      (writeScriptBin "gamescope-run" ''
+      (writeScriptBin "xgamescope" ''
         ${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -e $@
       '')
     ];
@@ -105,27 +106,27 @@ in
             border-radius: 5px;
             color: #${base0D};
         }
-      
+
         #lock {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
         }
-      
+
         #logout {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
         }
-      
+
         #suspend {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
         }
-      
+
         #hibernate {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
         }
-      
+
         #shutdown {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
         }
-      
+
         #reboot {
             background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
         }

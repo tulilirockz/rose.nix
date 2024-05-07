@@ -1,4 +1,10 @@
-{ preferences, pkgs, lib, config, ... }:
+{
+  preferences,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.rose.programs.desktops.wm;
 in
@@ -9,20 +15,17 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.collections.wm.enable = true;
-    services.greetd.enable = true;
-    programs.regreet = {
+
+    services.greetd = {
       enable = true;
       settings = {
-        background = {
-          path = preferences.theme.wallpaperPath;
-          fit = "Fill";
-        };
-        GTK = {
-          application_prefer_dark_theme = preferences.theme.type == "dark";
-          cursor_theme_name = preferences.theme.cursor.name;
-          font_name = "${preferences.theme.fontFamily} 12";
-          icon_theme_name = preferences.theme.icon.name;
-          theme_name = "Catppuccin-Frappe-Standard-Blue-Dark";
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${pkgs.lib.getExe (
+            pkgs.writeScriptBin "niri-session-script" ''
+              XDG_SESSION_TYPE=wayland ${pkgs.niri}/bin/niri-session
+            ''
+          )}";
+          user = "greeter";
         };
       };
     };
@@ -35,12 +38,8 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        amdvlk
-      ];
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
+      extraPackages = with pkgs; [ amdvlk ];
+      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
     xdg.portal.enable = true;
 

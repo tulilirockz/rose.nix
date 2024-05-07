@@ -1,4 +1,9 @@
-{ preferences, config, lib, ... }:
+{
+  preferences,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.rose.home.impermanence;
 in
@@ -28,7 +33,6 @@ in
         ".ssh"
         ".mozilla"
         ".thunderbird"
-        ".var"
         ".config/news-flash"
         ".config/monophony"
         ".config/nix"
@@ -48,6 +52,10 @@ in
         ".local/share/gnome-podcasts"
         ".local/share/news-flash"
         ".local/share/news_flash"
+        {
+          directory = ".var";
+          method = "symlink";
+        }
         {
           directory = ".local/share/bottles";
           method = "symlink";

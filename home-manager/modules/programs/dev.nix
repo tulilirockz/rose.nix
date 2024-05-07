@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 let
   cfg = config.rose.programs.tools.dev;
@@ -32,12 +33,12 @@ in
       ".cache/NuGetPackages"
       ".cache/nvim"
       ".cache/cargo"
-      ".cache/mise"
       ".cache/pre-commit"
       ".cache/direnv"
       ".config/asciinema"
       ".config/carapace"
       ".config/gh"
+      ".config/Code"
       ".config/lazygit"
       ".config/watson"
       ".config/direnv"
@@ -50,6 +51,39 @@ in
       ".local/share/direnv"
       ".local/share/nvim"
     ];
+
+    programs.fzf.enable = true;
+
+    programs.atuin = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+
+    programs.fish.enable = true;
+    programs.nushell.enable = true;
+    programs.nushell.extraConfig = ''
+      $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent.socket"
+      $env.config.use_grid_icons = true
+      $env.config.footer_mode = always
+      $env.config.use_ansi_coloring = true
+      $env.config.edit_mode = vi
+      $env.config.show_banner = false
+    '';
+
+    programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
+      pkgs.lib.attrsets.mapAttrsToList (
+        var: value:
+        if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR") then
+          "$env.${toString var} = ${toString value}"
+        else
+          ""
+      ) config.home.sessionVariables
+    );
+
+    programs.zoxide = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
 
     programs.jujutsu = {
       enable = true;
@@ -80,14 +114,14 @@ in
         gpg.format = "ssh";
         init.defaultBranch = "main";
         core.excludesfile = "${pkgs.writers.writeText "gitignore" ''
-        .jj
-        .jj/*
-        /.jj
-        /.git
-        .git/*
-        .direnv
-        /.direnv
-        .direnv/*
+          .jj
+          .jj/*
+          /.jj
+          /.git
+          .git/*
+          .direnv
+          /.direnv
+          .direnv/*
         ''}";
       };
     };
@@ -125,14 +159,14 @@ in
       enable = true;
       defaultEditor = true;
       extraPackages = with pkgs; [
-        (python3.withPackages
-          (p: with p; [
+        (python3.withPackages (
+          p: with p; [
             python-lsp-server
             pylsp-mypy
             pylsp-rope
             python-lsp-ruff
-          ])
-        )
+          ]
+        ))
         yaml-language-server
         tailwindcss-language-server
         clang-tools
@@ -204,107 +238,101 @@ in
       thefuck = {
         enable = true;
       };
-      hyfetch = {
-        enable = true;
-        settings = {
-          preset = "gendernonconforming1";
-          mode = "rgb";
-          light_dark = "dark";
-          lightness = 0.53;
-          color_align = {
-            mode = "custom";
-            custom_colors = {
-              "1" = 1;
-              "2" = 3;
-            };
-            fore_back = [ ];
-          };
-          backend = "neofetch";
-          args = null;
-          distro = null;
-          pride_month_shown = [ ];
-          pride_month_disable = false;
-        };
-      };
-      mise = {
-        enable = true;
-      };
-      pyenv = {
-        enable = true;
-      };
-      watson = {
-        enable = true;
-      };
     };
 
-    home.packages = (lib.optionals cfg.gui.enable (with pkgs; [
-      forge-sparks
-      gitg
-      gource
-      meld
-      gnome.gnome-disk-utility
-      okteta
-      wireshark
-      python3Packages.jupyterlab
-    ])) ++ (with pkgs; [
-      unzip
-      lazygit
-      buildah
-      glab
-      fd
-      ripgrep
-      podman-compose
-      tldr
-      jq
-      yq
-      scc
-      nix-tree
-      just
-      iotop
-      nix-prefetch-git
-      pre-commit
-      fh
-      android-tools
-      wormhole-rs
-      lldb
-      bubblewrap
-      just
-      waypipe
-      cage
-      distrobox
-      cosign
-      jsonnet
-      inputs.agenix.packages.${pkgs.system}.default
-      jujutsu
-      melange
-      dive
-      poetry
-      earthly
-      gdu
-      asciinema
-      act
-      powershell
-      yt-dlp
-      lazygit
-      ffmpeg
-      cyme
-      uutils-coreutils
-      wasmer
-      go-task
-      (writeScriptBin "lsusb" "${lib.getExe pkgs.cyme} $@")
-      (writeScriptBin "gh-jj" ''
-        GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
-      '')
-      (writeScriptBin "mount-qcow" ''
-        	set -ex
-          QCOW_PATH=$1
-        	shift
-        	set -euox pipefail
-        	sudo modprobe nbd
-        	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
-        	sudo pkill qemu-nbd
-      '')
-      #(writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
-    ]);
+    home.sessionVariables = {
+      FLAKE = "${inputs.self.outPath}";
+    };
+
+    home.packages =
+      (lib.optionals cfg.gui.enable (
+        with pkgs;
+        [
+          forge-sparks
+          gitg
+          gource
+          meld
+          gnome.gnome-disk-utility
+          okteta
+          wireshark
+          python3Packages.jupyterlab
+        ]
+      ))
+      ++ (with pkgs; [
+        nix-prefetch-git
+        fh
+        nix-tree
+        nix-output-monitor
+        nh
+
+        systemctl-tui
+        unzip
+        lazygit
+        buildah
+        glab
+        fd
+        ripgrep
+        podman-compose
+        tldr
+        jq
+        yq
+        scc
+        just
+        iotop
+        pre-commit
+        android-tools
+        wormhole-rs
+        lldb
+        bubblewrap
+        just
+        waypipe
+        mkosi
+        cage
+        distrobox
+        cosign
+        jsonnet
+        inputs.agenix.packages.${pkgs.system}.default
+        jujutsu
+        melange
+        dive
+        #poetry
+        sshx
+        mprocs
+        earthly
+        cool-retro-term
+        gdu
+        asciinema
+        act
+        powershell
+        yt-dlp
+        woodpecker-cli
+        lazygit
+        ffmpeg
+        cyme
+        debootstrap
+        uutils-coreutils
+        wasmer
+        go-task
+        glow
+        fastfetch
+        dysk
+        (writeScriptBin "lsusb" "${lib.getExe cyme} $@")
+        (writeScriptBin "df" "${lib.getExe dysk} $@")
+        (writeScriptBin "neofetch" "${lib.getExe fastfetch} $@")
+        (writeScriptBin "hyfetch" "${lib.getExe fastfetch} $@")
+        (writeScriptBin "gh-jj" ''
+          GIT_DIR=.jj/repo/store/git ${lib.getExe pkgs.gh} $@ 
+        '')
+        (writeScriptBin "mount-qcow" ''
+          	set -ex
+            QCOW_PATH=$1
+          	shift
+          	set -euox pipefail
+          	sudo modprobe nbd
+          	sudo qemu-nbd $QCOW_PATH /dev/nbd0 &
+          	sudo pkill qemu-nbd
+        '')
+        (writeScriptBin "code-wayland" "${lib.getExe config.programs.vscode.package} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@")
+      ]);
   };
 }

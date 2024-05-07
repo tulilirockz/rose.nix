@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   cfg = config.rose.programs.tools.creation;
@@ -35,6 +36,7 @@ in
       gimp
       czkawka
       lmms
+      blockbench
     ];
 
     services.easyeffects.enable = true;

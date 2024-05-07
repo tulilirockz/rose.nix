@@ -1,9 +1,11 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.rose.services.sunshine;
   sunshinePort = 47990;
 in

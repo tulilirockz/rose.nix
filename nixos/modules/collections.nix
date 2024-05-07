@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.rose.programs.collections;
 in
@@ -28,91 +33,100 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with lib.lists; with pkgs; (
-      (optionals cfg.qt.enable
-        (with libsForQt5; [
-          kclock
-          alligator
-          kamoso
-          kasts
-          kolourpaint
-          kweather
-        ] ++ [
-          qpwgraph
-          vlc
-          keepassxc
-          qbittorrent
-        ])
-      ) ++
-      (optionals cfg.gnome.enable
-        (with gnome; [
-          gnome-tweaks
-          dconf-editor
-          nautilus
-          totem
-          sushi
-          gnome-weather
-          gnome-calendar
-          gnome-clocks
-          gnome-calculator
-          gnome-system-monitor
-          gnome-tweaks
-          dconf-editor
-          polari
-        ]
-        ++
-        [
-          shortwave
-          gitg
+    environment.systemPackages =
+      with lib.lists;
+      with pkgs;
+      (
+        (optionals cfg.qt.enable (
+          with libsForQt5;
+          [
+            kclock
+            alligator
+            kamoso
+            kasts
+            kolourpaint
+            kweather
+          ]
+          ++ [
+            qpwgraph
+            vlc
+            keepassxc
+            qbittorrent
+          ]
+        ))
+        ++ (optionals cfg.gnome.enable (
+          with gnome;
+          [
+            gnome-tweaks
+            dconf-editor
+            nautilus
+            totem
+            sushi
+            gnome-weather
+            gnome-calendar
+            gnome-clocks
+            gnome-calculator
+            gnome-system-monitor
+            gnome-tweaks
+            dconf-editor
+          ]
+          ++ [
+            shortwave
+            gitg
+            transmission-gtk
+            gnome-solanum
+            gitg
+            gradience
+            impression
+            amberol
+            baobab
+            blanket
+            snapshot
+            loupe
+            gnome-firmware
+            gnome-podcasts
+            newsflash
+            fractal
+            folio
+            rnote
+            drawing
+            endeavour
+            rnote
+          ]
+        ))
+        ++ (optionals cfg.wm.enable [
+          wlay
+          blueman
+          mpv
+          zathura
+          wl-clipboard
           transmission-gtk
-          gnome-solanum
-          gitg
-          gradience
-          impression
-          amberol
-          baobab
-          blanket
-          snapshot
-          loupe
-          gnome-firmware
+          gnome.nautilus
+          swayimg
+        ])
+        ++ (optionals cfg.shared.enable [
+          cinny-desktop
+          thunderbird
+          adw-gtk3
+          helvum
+          pavucontrol
+          libreoffice
+          catppuccin-gtk
+          mumble
           gnome-podcasts
           newsflash
-          fractal
-          folio
+          thunderbird
+          monophony
+          shortwave
+          keepassxc
+          localsend
+          gnome.gnome-clocks
+          bitwarden-cli
+          mpv
+          nodePackages.webtorrent-cli
+          mpvScripts.mpv-cheatsheet
+          mpvScripts.webtorrent-mpv-hook
         ])
-      ) ++
-      (optionals cfg.wm.enable [
-        wlay
-        blueman
-        mpv
-        zathura
-        wl-clipboard
-        transmission-gtk
-        gnome.nautilus
-        swayimg
-      ]) ++
-      (optionals cfg.shared.enable [
-        cinny-desktop
-        thunderbird
-        adw-gtk3
-        helvum
-        pavucontrol
-        libreoffice
-        catppuccin-gtk
-        mumble
-        gnome-podcasts
-        newsflash
-        thunderbird
-        monophony
-        shortwave
-        keepassxc
-        localsend
-        gnome.gnome-clocks
-        mpv
-        nodePackages.webtorrent-cli
-        mpvScripts.mpv-cheatsheet
-        mpvScripts.webtorrent-mpv-hook
-      ])
-    );
+      );
   };
 }

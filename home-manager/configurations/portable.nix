@@ -1,7 +1,6 @@
-{ preferences, ... }: {
-  imports = [
-    ../modules
-  ];
+{ preferences, ... }:
+{
+  imports = [ ../modules ];
 
   home = {
     username = preferences.username;

@@ -1,22 +1,23 @@
-{ preferences
-, pkgs
-, config
-, inputs
-, ...
-}: {
-  imports = [
-    ../modules
-  ];
+{
+  preferences,
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
+{
+  imports = [ ../modules ];
+
+  programs.home-manager.enable = true;
 
   colorScheme =
-    if (preferences.theme.colorSchemeFromWallpaper)
-    then
-      (inputs.nix-colors.lib.contrib { inherit pkgs; }).colorSchemeFromPicture
-        {
-          path = preferences.theme.wallpaperPath;
-          variant = preferences.theme.type;
-        }
-    else inputs.nix-colors.colorSchemes.${preferences.theme.name};
+    if (preferences.theme.colorSchemeFromWallpaper) then
+      (inputs.nix-colors.lib.contrib { inherit pkgs; }).colorSchemeFromPicture {
+        path = preferences.theme.wallpaperPath;
+        variant = preferences.theme.type;
+      }
+    else
+      inputs.nix-colors.colorSchemes.${preferences.theme.name};
 
   rose = {
     home.impermanence.enable = true;
@@ -25,7 +26,6 @@
         dev.enable = true;
         dev.gui.enable = true;
         dev.impermanence.enable = true;
-        cli.enable = true;
         creation.enable = true;
         creation.impermanence.enable = true;
       };
@@ -34,9 +34,7 @@
         extras.enable = true;
         impermanence.enable = true;
       };
-      desktops = {
-        ${preferences.desktop}.enable = true;
-      };
+      desktops.${preferences.desktop}.enable = true;
     };
     services.rclone = {
       enable = true;
@@ -45,8 +43,6 @@
       onedrive.enable = true;
     };
   };
-
-  programs.home-manager.enable = true;
 
   home = {
     username = preferences.username;
@@ -95,4 +91,11 @@
     uri=qemu+unix:///session
     save-on-quit=true
   '';
+
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///session" ];
+      uris = [ "qemu:///session" ];
+    };
+  };
 }

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.rose.programs.desktops.shared;
 in
@@ -9,13 +14,8 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.collections.shared.enable = true;
-    services.xserver = {
-      enable = true;
-      excludePackages = [ pkgs.xterm ];
-      libinput.enable = true;
-    };
 
-    hardware.pulseaudio.enable = false;
+    services.libinput.enable = true;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -33,7 +33,12 @@ in
     };
 
     fonts.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "IntelOneMono" ]; })
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "IntelOneMono"
+        ];
+      })
       cantarell-fonts
       inter
       fira-code-nerdfont

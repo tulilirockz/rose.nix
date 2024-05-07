@@ -1,9 +1,11 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.rose.system.impermanence;
 in
 {
@@ -63,9 +65,7 @@ in
         "/var/lib/iwd"
         "/etc/NetworkManager/system-connections"
       ] ++ cfg.extraDirectories;
-      files = [
-        "/etc/machine-id"
-      ];
+      files = [ "/etc/machine-id" ];
     };
 
     programs.fuse.userAllowOther = true;

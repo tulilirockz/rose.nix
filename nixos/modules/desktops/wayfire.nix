@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.rose.programs.desktops.wayfire;
 in
@@ -24,9 +29,7 @@ in
     programs.kdeconnect.enable = true;
     programs.wayfire = {
       enable = true;
-      plugins = with pkgs.wayfirePlugins; [
-        wayfire-plugins-extra
-      ];
+      plugins = with pkgs.wayfirePlugins; [ wayfire-plugins-extra ];
     };
   };
 }
