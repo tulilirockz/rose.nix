@@ -64,7 +64,7 @@ in
         keybindings = {
           "Mod4+C" = "kill";
           "Mod4+Q" = "exec ${lib.getExe pkgs.foot}";
-          "Mod4+F" = "exec ${lib.getExe config.programs.chromium.package}";
+          "Mod4+F" = "exec ${lib.getExe config.rose.programs.browsers.mainBrowser}";
           "Mod4+R" = "exec ${lib.getExe pkgs.fuzzel}";
           "Mod4+E" = "exec ${lib.getExe pkgs.cosmic-files}";
           "Mod4+M" = "exec ${lib.getExe pkgs.wlogout}";

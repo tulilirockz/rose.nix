@@ -54,7 +54,6 @@ in
       defaultUserShell = pkgs.nushell;
       mutableUsers = false;
       users.${preferences.username} = lib.mkIf cfg.tulili.enable {
-        group = "users";
         isNormalUser = true;
         initialHashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
         extraGroups = [

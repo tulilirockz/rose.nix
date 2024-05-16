@@ -38,15 +38,10 @@
     enabled-extensions = [
       "appindicatorsupport@rgcjonas.gmail.com"
       "blur-my-shell@aunetx"
-      "tiling-assistant@leleat-on-github"
     ];
     favorite-apps = [
       "org.gnome.Nautilus.desktop"
-      "firefox.desktop"
-      "Alacritty.desktop"
-      "com.rafaelmardojai.Blanket.desktop"
-      "org.gnome.Solanum.desktop"
-      "Waydroid.desktop"
+      "ungoogled-chromium.desktop"
       "virt-manager.desktop"
     ];
   };

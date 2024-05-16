@@ -69,7 +69,7 @@ in
         binding_logout = <super> KEY_M
         command_print = ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})" - | ${pkgs.wl-clipboard}/bin/wl-copy
         command_terminal = ${pkgs.foot}/bin/footclient
-        command_browser = ${lib.getExe config.programs.chromium.package}        
+        command_browser = ${lib.getExe config.rose.programs.browsers.mainBrowser}        
         command_launcher = ${lib.getExe config.rose.programs.ags.package}
         command_files = ${lib.getExe pkgs.gnome.nautilus}
         command_logout = ${lib.getExe pkgs.wlogout}

@@ -2,7 +2,7 @@
   description = "Tulip's Aux configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +56,6 @@
         locale = "en_US.UTF-8";
         timeZone = "America/Sao_Paulo";
         desktop = "niri";
-        desktop_is_wm = true;
         username = "tulili";
       };
 

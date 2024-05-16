@@ -32,7 +32,7 @@ in
       }
 
       window-rule {
-          geometry-corner-radius 8
+          geometry-corner-radius 4
           clip-to-geometry true
       }
       animations {
@@ -87,7 +87,7 @@ in
 
       layout {
           focus-ring {
-              width 3
+              width 1
               active-color 33 33 33 125
               inactive-color 80 80 80 255
               active-gradient from="#${base00}" to="#${base01}" angle=45 relative-to="workspace-view"
@@ -115,8 +115,8 @@ in
           Mod+Shift+H { show-hotkey-overlay; }
           Mod+C { close-window; }
           Mod+Q { spawn "${lib.getExe pkgs.wezterm}"; }
-          Mod+F { spawn "${lib.getExe config.programs.chromium.package}"; }
-          Mod+R { spawn "${lib.getExe config.rose.programs.ags.package}" "-t" "applauncher"; }
+          Mod+F { spawn "${lib.getExe config.rose.programs.browsers.mainBrowser}"; }
+          Mod+R { spawn "${lib.getExe pkgs.fuzzel}"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }
           Mod+M { spawn "${lib.getExe pkgs.wlogout}"; }
           Mod+T { switch-preset-column-width; }

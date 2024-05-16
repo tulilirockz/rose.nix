@@ -42,10 +42,29 @@ in
     '';
 
     dconf.settings = {
+      "org/gnome/evolution/mail" = {
+        prompt-check-if-default-mailer = false;
+        layout = 1;
+      };
+      "/com/github/wwmm/easyeffects/streaminputs" = {
+        plugins = ["echo_canceller#0" "rnnoise#0"];
+      };
+      "/com/github/wwmm/easyeffects/streaminputs/rnnoise/0" = {
+        enable-vad = true;
+      };
       "org/virt-manager/virt-manager/connections" = {
         autoconnect = [ "qemu:///session" ];
         uris = [ "qemu:///session" ];
       };
+      "org/virt-manager/virt-manager/new-vm" = {
+        "storage-format" = "raw";
+        "graphics-type" = "spice";
+        "cpu-default" = "host-passthrough";
+        firmware = "uefi";
+        "enable-cpu-poll" = false;
+        "cpu-usage" = false;
+        "xmleditor-enabled" = true;
+      };    
     };
   };
 }

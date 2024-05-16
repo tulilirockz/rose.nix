@@ -265,8 +265,8 @@ in
           gource
           meld
           gnome.gnome-disk-utility
-          okteta
           wireshark
+          gitg
           python3Packages.jupyterlab
         ]
       ))

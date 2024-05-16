@@ -47,7 +47,6 @@ in
         ];
         use-xdg-base-directories = true;
         auto-optimise-store = true;
-        allowed-users = [ "@wheel" ];
       };
       channel.enable = false;
     };

@@ -49,7 +49,6 @@ in
 
     programs.fuse.userAllowOther = true;
 
-    systemd.sysusers.enable = false;
     system.etc.overlay.enable = true;
     system.etc.overlay.mutable = true;
   };

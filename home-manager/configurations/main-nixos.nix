@@ -34,6 +34,7 @@
         enable = true;
         extras.enable = true;
         impermanence.enable = true;
+        mainBrowser = pkgs.epiphany;
       };
       desktops.${preferences.desktop}.enable = true;
     };

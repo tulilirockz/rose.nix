@@ -19,7 +19,7 @@ in
         options = {
           enable = mkEnableOption "Onedrive";
           mountPath = mkOption {
-            default = "($env.HOME)/OneDrive";
+            default = "$\{HOME\}/OneDrive";
             type = types.str;
             description = "Mount Path for OneDrive";
           };
@@ -33,7 +33,7 @@ in
         options = {
           enable = mkEnableOption "Google Drive";
           mountPath = mkOption {
-            default = "($env.HOME)/Drive";
+            default = "$\{HOME\}/GoogleDrive";
             type = types.str;
             description = "Mount Path for Google Drive";
           };
@@ -57,8 +57,8 @@ in
       };
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        type = "exec";
-        execStart = "${lib.getExe cfg.package} rcd --rc-web-gui";
+        Type = "exec";
+        ExecStart = "${lib.getExe cfg.package} rcd --rc-web-gui";
       };
     };
 
@@ -69,8 +69,8 @@ in
       };
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        type = "exec";
-        script = "${lib.getExe cfg.package} mount gdrive: ${cfg.gdrive.mountPath}";
+        Type = "exec";
+        ExecStart = "${lib.getExe cfg.package} mount gdrive: ${cfg.gdrive.mountPath}";
       };
     };
 
@@ -81,8 +81,8 @@ in
       };
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        type = "exec";
-        script = "${lib.getExe cfg.package} mount onedrive: ${cfg.onedrive.mountPath}";
+        Type = "exec";
+        ExecStart = "${lib.getExe cfg.package} mount onedrive: ${cfg.onedrive.mountPath}";
       };
     };
   };

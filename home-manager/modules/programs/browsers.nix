@@ -11,6 +11,7 @@ in
 {
   options.rose.programs.browsers = with lib; {
     enable = mkEnableOption "Multiple Browsers";
+    mainBrowser = mkPackageOption pkgs "ungoogled-chromium" { };
     extras = mkOption {
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable Impermanence support";
@@ -30,7 +31,24 @@ in
       ".config/chromium"
       ".config/Bitwarden"
       ".config/vesktop"
+      ".config/epiphany"
+      ".local/share/epiphany"
     ];
+
+    dconf.settings = lib.mkIf cfg.extras.enable {
+      "org/gnome/epiphany/web" = {
+        enable-webextensions = true;
+        show-developer-actions = true;
+        enable-mouse-gestures = true;
+        switch-to-new-tab = true;
+        use-google-search-suggestions = true;
+        web-extensions-active = [
+          "uBlock Origin"
+          "Bitwarden Password Manager"
+        ];
+        ask-for-default = false;
+      };
+    };
 
     home.packages = lib.mkIf cfg.extras.enable (
       with pkgs;
@@ -39,6 +57,7 @@ in
         bitwarden
         vesktop
         freetube
+        epiphany
       ]
     );
 
@@ -58,7 +77,7 @@ in
     };
 
     programs.firefox = {
-      enable = true;
+      enable = cfg.extras.enable;
       package = pkgs.firefox;
       policies = {
         "CaptivePortal" = false;
@@ -66,7 +85,7 @@ in
         "DisableTelemetry" = true;
         "DisablePocket" = true;
       };
-      profiles.personal = {
+      profiles.default = {
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
           bitwarden
           ublock-origin

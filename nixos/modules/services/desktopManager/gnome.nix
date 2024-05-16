@@ -25,10 +25,8 @@ in
 
     environment.systemPackages =
       (with pkgs.gnomeExtensions; [
-        dash-to-dock
-        blur-my-shell
         appindicator
-        tiling-assistant
+        paperwm
       ])
       ++ [ pkgs.gnome-randr ];
 

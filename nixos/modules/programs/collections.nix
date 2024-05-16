@@ -9,7 +9,6 @@ let
 in
 {
   options.rose.programs = with lib; {
-    enable = mkEnableOption "App Collections";
     gnome = mkOption {
       default = { };
       description = "Any GNOME(Circle) apps";
@@ -47,7 +46,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     environment.systemPackages =
       with lib.lists;
       with pkgs;
@@ -90,7 +89,6 @@ in
             gitg
             fragments
             gnome-solanum
-            gitg
             gradience
             impression
             amberol
@@ -105,9 +103,8 @@ in
             folio
             rnote
             drawing
-            endeavour
-            rnote
-            iotas
+            evolution
+            tuba
           ]
         ))
         ++ (optionals cfg.wm.enable [
@@ -120,8 +117,6 @@ in
           swayimg
         ])
         ++ (optionals cfg.shared.enable [
-          cinny-desktop
-          thunderbird
           adw-gtk3
           helvum
           pavucontrol
@@ -130,13 +125,10 @@ in
           mumble
           gnome-podcasts
           newsflash
-          thunderbird
           monophony
           shortwave
-          keepassxc
           localsend
           gnome.gnome-clocks
-          bitwarden-cli
           mpv
           nodePackages.webtorrent-cli
           mpvScripts.mpv-cheatsheet

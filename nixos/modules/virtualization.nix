@@ -61,6 +61,7 @@ in
             firectl
             inputs.nuspawn.packages.${pkgs.system}.nuspawn
             skopeo
+            OVMF
           ]
         );
 
