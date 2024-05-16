@@ -1,8 +1,4 @@
-{
-  pkgs,
-  preferences,
-  ...
-}:
+{ pkgs, preferences, ... }:
 {
   system.stateVersion = "24.05";
   networking.hostName = "studio";
@@ -54,6 +50,12 @@
         tulili.enable = true;
       };
     };
-    services.desktopManager.${preferences.desktop}.enable = true;
+    services = {
+      desktopManager.${preferences.desktop}.enable = true;
+      rclone = {
+        enable = true;
+        onedrive.enable = true;
+      };
+    };
   };
 }

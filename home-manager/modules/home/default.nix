@@ -1,5 +1,7 @@
-{
-  imports = [
-    ./impermanence.nix
-  ];
+{ 
+  imports = [ 
+    ./impermanence.nix 
+    ./gui.nix
+    ./general.nix    
+  ]; 
 }
