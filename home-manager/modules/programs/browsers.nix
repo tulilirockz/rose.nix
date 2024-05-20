@@ -11,7 +11,7 @@ in
 {
   options.rose.programs.browsers = with lib; {
     enable = mkEnableOption "Multiple Browsers";
-    mainBrowser = mkPackageOption pkgs "ungoogled-chromium" { };
+    mainBrowser = mkPackageOption pkgs "chromium" { };
     extras = mkOption {
       type = types.submodule (_: {
         options.enable = mkEnableOption "Enable Impermanence support";
@@ -63,7 +63,6 @@ in
 
     programs.chromium = {
       enable = true;
-      package = pkgs.ungoogled-chromium;
       commandLineArgs = [
         "--enable-features=VaapiVideoDecodeLinuxGL"
         "--ozone-platform=wayland"
@@ -86,15 +85,6 @@ in
         "DisablePocket" = true;
       };
       profiles.default = {
-        extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-          bitwarden
-          ublock-origin
-          sponsorblock
-          darkreader
-          tridactyl
-          youtube-shorts-block
-        ];
-
         search.force = true;
 
         settings = {

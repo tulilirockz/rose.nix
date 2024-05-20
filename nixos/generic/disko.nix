@@ -55,7 +55,7 @@
                     "subvol=persist"
                     "noatime"
                   ];
-                  mountpoint = "/persist";
+                  mountpoint = "/nix/persist";
                 };
 
                 "/nix" = {

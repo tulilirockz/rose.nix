@@ -63,9 +63,10 @@ in
     };
 
     programs.fish.enable = true;
-    programs.nushell.enable = true;
-
-    programs.nushell.extraConfig = ''
+    programs.nushell = {
+      enable = true;
+      package = pkgs.nushellFull;
+      extraConfig = ''
       $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent.socket"
       $env.config.use_grid_icons = true
       $env.config.footer_mode = always
@@ -78,7 +79,7 @@ in
       }
     '';
 
-    programs.nushell.extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
+      extraEnv = pkgs.lib.concatMapStringsSep "\n" (string: string) (
       pkgs.lib.attrsets.mapAttrsToList (
         var: value:
         if (var != "XCURSOR_PATH" && var != "TMUX_TMPDIR") then
@@ -87,6 +88,7 @@ in
           ""
       ) config.home.sessionVariables
     );
+    };
 
     programs.zoxide = {
       enable = true;
@@ -249,13 +251,6 @@ in
       FLAKE = "${inputs.self.outPath}";
     };
 
-    programs.vscode = {
-      enable = true;
-      package = (
-        pkgs.writeScriptBin "code-wayland" "${lib.getExe pkgs.vscode} --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@"
-      );
-    };
-
     home.packages =
       (lib.optionals cfg.gui.enable (
         with pkgs;
@@ -274,8 +269,6 @@ in
         nix-prefetch-git
         fh
         nix-tree
-        nix-output-monitor
-        nh
 
         debootstrap
         dnf5
@@ -295,7 +288,7 @@ in
         git
         tektoncd-cli
 
-        systemctl-tui
+        zed-editor
         unzip
         lazygit
         buildah
@@ -308,8 +301,6 @@ in
         yq
         scc
         just
-        iotop
-        pre-commit
         android-tools
         wormhole-rs
         lldb

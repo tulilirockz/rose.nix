@@ -13,7 +13,9 @@
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
-
+  
+  i18n.defaultLocale = "en_US.UTF-8";
+  
   rose = {
     hardware = {
       enable = true;
@@ -34,7 +36,7 @@
       gaming = {
         enable = true;
         steam.enable = true;
-        others.enable = true;
+        others.enable = false;
       };
       gnome.enable = true;
     };

@@ -9,7 +9,6 @@ let
   cfg = config.rose.programs.desktops.wayfire;
   autoStartScript = pkgs.writeScriptBin "wf-autostart.sh" ''
     ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-    ${lib.getExe config.rose.programs.ags.package}
   '';
 in
 {
@@ -17,7 +16,6 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
-    rose.programs.ags.enable = true;
 
     xdg.configFile = {
       "wayfire.ini".text = ''
@@ -70,7 +68,7 @@ in
         command_print = ${lib.getExe pkgs.grim} -g \"$(${lib.getExe pkgs.slurp})" - | ${pkgs.wl-clipboard}/bin/wl-copy
         command_terminal = ${pkgs.foot}/bin/footclient
         command_browser = ${lib.getExe config.rose.programs.browsers.mainBrowser}        
-        command_launcher = ${lib.getExe config.rose.programs.ags.package}
+        command_launcher = ${lib.getExe pkgs.fuzzel}
         command_files = ${lib.getExe pkgs.gnome.nautilus}
         command_logout = ${lib.getExe pkgs.wlogout}
 

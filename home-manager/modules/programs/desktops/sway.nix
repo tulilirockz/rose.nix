@@ -14,7 +14,6 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
-    rose.programs.ags.enable = true;
 
     wayland.windowManager.sway = {
       enable = true;
@@ -28,10 +27,8 @@ in
       '';
       config = {
         terminal = "${pkgs.foot}/bin/footclient";
-        menu = "${lib.getExe config.rose.programs.ags.package}";
         startup = map toCommand [
           "${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath}"
-          "${lib.getExe config.rose.programs.ags.package}"
         ];
         workspaceLayout = "tabbed";
         gaps = {

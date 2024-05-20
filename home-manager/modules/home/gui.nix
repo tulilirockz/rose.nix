@@ -1,6 +1,5 @@
 {
   config,
-  preferences,
   pkgs,
   lib,
   ...
@@ -17,7 +16,7 @@ in
       gtk.enable = true;
       x11.enable = true;
       package = pkgs.fuchsia-cursor;
-      name = preferences.theme.cursor.name;
+      name = "Fuchsia";
       size = 16;
     };
 
@@ -25,11 +24,11 @@ in
       enable = true;
       theme = {
         package = pkgs.adw-gtk3;
-        name = preferences.theme.gtk.name;
+        name = "adw-gtk3-dark";
       };
       iconTheme = {
         package = pkgs.gnome.adwaita-icon-theme;
-        name = preferences.theme.icon.name;
+        name = "Adwaita";
       };
     };
 
@@ -42,16 +41,6 @@ in
     '';
 
     dconf.settings = {
-      "org/gnome/evolution/mail" = {
-        prompt-check-if-default-mailer = false;
-        layout = 1;
-      };
-      "/com/github/wwmm/easyeffects/streaminputs" = {
-        plugins = ["echo_canceller#0" "rnnoise#0"];
-      };
-      "/com/github/wwmm/easyeffects/streaminputs/rnnoise/0" = {
-        enable-vad = true;
-      };
       "org/virt-manager/virt-manager/connections" = {
         autoconnect = [ "qemu:///session" ];
         uris = [ "qemu:///session" ];

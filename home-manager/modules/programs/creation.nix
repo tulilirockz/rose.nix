@@ -18,7 +18,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    rose.home.impermanence.extraDirectories = [
+    rose.home.impermanence.extraDirectories = lib.mkIf cfg.impermanence.enable [
       ".local/share/krita"
       ".config/GIMP"
       ".config/libresprite"

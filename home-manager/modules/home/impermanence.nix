@@ -19,7 +19,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.persistence."/persist/home/${preferences.username}" = {
+    home.persistence."/nix/persist/home/${preferences.username}" = {
       allowOther = true;
       directories = [
         "Downloads"
@@ -43,8 +43,6 @@ in
         ".config/kdeconnect"
         ".config/rclone"
         ".config/libreoffice"
-        ".config/evolution"
-        ".local/share/evolution"
         ".local/state/wireplumber"
         ".local/share/flatpak"
         ".local/share/keyrings"

@@ -14,8 +14,8 @@ in
     };
     persistenceRoot = mkOption {
       type = types.str;
-      default = "/persist";
-      example = "/nix/persist";
+      default = "/nix/persist";
+      example = "/persist";
       description = "Place where persistent files are mounted to";
     };
   };
@@ -29,6 +29,7 @@ in
       };
     };
 
+    environment.etc."systemd/nspawn".source = "${cfg.persistenceRoot}/system/etc/systemd/nspawn";
     environment.etc."machine-id".text = "6a819e8d9a3e406abf68c03da0ba4d49";
     fileSystems."${cfg.persistenceRoot}".neededForBoot = true;
     environment.persistence."${cfg.persistenceRoot}/system" = {
@@ -44,6 +45,7 @@ in
         "/var/lib/libvirt"
         "/var/lib/tailscale"
         "/var/lib/iwd"
+        "/etc/systemd/nspawn"
       ] ++ cfg.extraDirectories;
     };
 

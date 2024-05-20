@@ -51,11 +51,11 @@ in
     security.sudo.enable = false;
 
     users = {
-      defaultUserShell = pkgs.nushell;
+      defaultUserShell = pkgs.nushellFull;
       mutableUsers = false;
       users.${preferences.username} = lib.mkIf cfg.tulili.enable {
         isNormalUser = true;
-        initialHashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
+        hashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
         extraGroups = [
           "wheel"
           "libvirtd"
@@ -80,7 +80,6 @@ in
             [
               plasma-manager.homeManagerModules.plasma-manager
               persist-retro.nixosModules.home-manager.persist-retro
-              nix-colors.homeManagerModules.default
               impermanence.nixosModules.home-manager.impermanence
             ]
             ++ [ ../../../home-manager/configurations/main-nixos.nix ];

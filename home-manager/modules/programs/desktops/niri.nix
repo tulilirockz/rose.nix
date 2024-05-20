@@ -13,18 +13,16 @@ in
 
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
-    rose.programs.ags.enable = true;
 
     xdg.configFile = {
       "niri/autostart".executable = true;
       "niri/autostart".text = ''
         ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-        ${lib.getExe config.rose.programs.ags.package} &
         ${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket &
       '';
     };
 
-    programs.niri.config = with config.colorScheme.palette; ''
+    programs.niri.config =  ''
       // This config is in the KDL format: https://kdl.dev
       window-rule {
           match app-id=r#"^org\.wezfurlong\.wezterm$"#
@@ -40,11 +38,15 @@ in
             duration-ms 200
             curve "ease-out-cubic"
         }
+        window-close {
+            duration-ms 200
+            curve "ease-out-cubic"
+        }
       }
       input {
           keyboard {
               xkb {
-                  // For more information, see xkeyboard-config(7).
+                  // xkeyboard-config(7).
                   layout "us,br"
                   options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
               }
@@ -53,7 +55,6 @@ in
               track-layout "global"
           }
 
-          // Based off of libinput
           touchpad {
               tap
               // dwt
@@ -90,8 +91,6 @@ in
               width 1
               active-color 33 33 33 125
               inactive-color 80 80 80 255
-              active-gradient from="#${base00}" to="#${base01}" angle=45 relative-to="workspace-view"
-              inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
           }
           preset-column-widths {
               proportion 0.33333
@@ -99,8 +98,6 @@ in
               proportion 0.66667
           }
           default-column-width { proportion 0.5; }
-          // If you leave the brackets empty, the windows themselves will decide their initial width.
-          // default-column-width {}
           gaps 10 // px
           center-focused-column "never"
       }
@@ -118,7 +115,9 @@ in
           Mod+F { spawn "${lib.getExe config.rose.programs.browsers.mainBrowser}"; }
           Mod+R { spawn "${lib.getExe pkgs.fuzzel}"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }
-          Mod+M { spawn "${lib.getExe pkgs.wlogout}"; }
+          XF86AudioRaiseVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+          XF86AudioLowerVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+
           Mod+T { switch-preset-column-width; }
           Mod+V { maximize-column; }
           Mod+X { fullscreen-window; }
@@ -127,9 +126,6 @@ in
           Alt+Print { screenshot-window; }
           Mod+Shift+E { quit; }
           Mod+Shift+P { power-off-monitors; }
-
-          XF86AudioRaiseVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-          XF86AudioLowerVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
 
           Mod+Left  { focus-column-left; }
           Mod+Right { focus-column-right; }

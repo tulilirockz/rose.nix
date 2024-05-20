@@ -77,6 +77,14 @@ in
           enable = true;
           setSocketVariable = true;
         };
+        docker.daemon.settings = {
+          default-runtime = "runc";
+          runtimes = {
+            youki = {
+              path = pkgs.youki;
+            };
+          };
+        };
         libvirtd = {
           enable = true;
           qemu.swtpm.enable = true;

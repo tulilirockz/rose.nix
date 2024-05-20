@@ -24,7 +24,6 @@ in
     zramSwap.memoryPercent = 75;
 
     services.automatic-timezoned.enable = true;
-    i18n.defaultLocale = preferences.locale;
 
     hardware = {
       bluetooth.enable = true;

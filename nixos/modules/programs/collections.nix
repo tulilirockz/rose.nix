@@ -99,11 +99,9 @@ in
             gnome-firmware
             gnome-podcasts
             newsflash
-            fractal
             folio
             rnote
             drawing
-            evolution
             tuba
           ]
         ))
@@ -128,11 +126,8 @@ in
           monophony
           shortwave
           localsend
-          gnome.gnome-clocks
+          thunderbird
           mpv
-          nodePackages.webtorrent-cli
-          mpvScripts.mpv-cheatsheet
-          mpvScripts.webtorrent-mpv-hook
         ])
         ++ (optionals cfg.cosmic.enable [
           cosmic-files
