@@ -37,6 +37,7 @@ in
       czkawka
       lmms
       blockbench
+      video-trimmer
     ];
 
     services.easyeffects.enable = true;

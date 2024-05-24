@@ -1,9 +1,4 @@
-{
-  preferences,
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 # Generated with nix run github:pjones/plasma-manager
 let
   cfg = config.rose.programs.desktops.plasma;
@@ -17,7 +12,7 @@ in
       workspace = {
         theme = "breeze-dark";
         colorScheme = "BreezeDark";
-        wallpaper = "${preferences.theme.wallpaperPath}";
+        wallpaper = "${../../../../assets/amiga.png}";
       };
       spectacle.shortcuts = {
         captureRectangularRegion = "Print";

@@ -41,7 +41,8 @@ in
         with lib.lists;
         with pkgs;
         (
-          (optionals cfg.gui.enable [
+          (optionals config.virtualisation.podman.enable (with pkgs; [ buildah ]))
+          ++ (optionals cfg.gui.enable [
             virt-viewer
             gnome.gnome-boxes
           ])
@@ -60,11 +61,56 @@ in
             firecracker
             firectl
             inputs.nuspawn.packages.${pkgs.system}.nuspawn
-            skopeo
             OVMF
+            
+            skopeo
+            distrobox
+            debootstrap
+            arch-install-scripts
+            dnf5
+            (writeScriptBin "dnf" "${lib.getExe pkgs.dnf5} $@")
+            apk-tools
+            pacman
+            rpm           
+            bubblewrap
+            proot
+            lilipod
           ]
         );
 
+      environment.etc."libvirt/qemu.conf".text = ''
+        nvram = [ "/run/libvirt/nix-ovmf/AAVMF_CODE.fd:/run/libvirt/nix-ovmf/AAVMF_VARS.fd", "/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd" ]
+      '';
+      environment.etc."qemu/firmware/default.json".source = pkgs.writers.writeJSON "default.json" {
+        description = "UEFI firmware for x86_64";
+        interface-types = [ "uefi" ];
+        mapping = {
+          device = "flash";
+          executable = {
+            filename = "${pkgs.OVMF.fd}/FV/OVMF_CODE.fd";
+            format = "raw";
+          };
+          nvram-template = {
+            filename = "${pkgs.OVMF.fd}/FV/OVMF_VARS.fd";
+            format = "raw";
+          };
+        };
+        targets = [
+          {
+            architecture = "x86_64";
+            machines = [
+              "pc-i440fx-*"
+              "pc-q35-*"
+            ];
+          }
+        ];
+        features = [
+          "acpi-s3"
+          "amd-sev"
+          "verbose-dynamic"
+        ];
+        tags = [ ];
+      };
       virtualisation = rec {
         podman = {
           enable = !(docker.rootless.enable);
@@ -73,15 +119,20 @@ in
           dockerCompat = true;
           defaultNetwork.settings.dns_enabled = true;
         };
+        containers.containersConf.settings = {
+          engine = {
+            runtime = "${pkgs.crun}/bin/crun";
+          };
+        };
         docker.rootless = {
           enable = true;
           setSocketVariable = true;
-        };
-        docker.daemon.settings = {
-          default-runtime = "runc";
-          runtimes = {
-            youki = {
-              path = pkgs.youki;
+          daemon.settings = {
+            default-runtime = "crun";
+            runtimes = {
+              crun = {
+                path = pkgs.crun;
+              };
             };
           };
         };

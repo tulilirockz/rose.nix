@@ -25,7 +25,7 @@ in
       enable = true;
       settings = {
         default_session = lib.mkIf cfg.tuigreet.enable {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${pkgs.lib.getExe (
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --user-menu --greeting 'Thank you for helping us help you help us all.' --remember --remember-session --asterisks --power-shutdown '${pkgs.systemd}/bin/systemctl poweroff' --power-reboot '${pkgs.systemd}/bin/systemctl reboot' --power-no-setsid --width 140 --theme border=magenta;text=magenta;prompt=lightmagenta;time=magenta;action=lightmagenta;button=magenta;container=gray;input=magenta --cmd ${pkgs.lib.getExe (
             pkgs.writeScriptBin "niri-session-script" ''
               XDG_SESSION_TYPE=wayland ${pkgs.niri}/bin/niri-session
             ''

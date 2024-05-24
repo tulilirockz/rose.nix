@@ -7,7 +7,6 @@ tasks:
   default:
     cmds: 
       - task: rebuild:local
-      - task: store:gc
   repo:update:
     cmds:
       - nix flake lock

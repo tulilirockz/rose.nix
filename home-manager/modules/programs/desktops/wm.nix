@@ -22,6 +22,12 @@ in
     services.kdeconnect.enable = true;
     services.udiskie.enable = true;
 
+    services.mako.enable = true;
+    programs.wpaperd.enable = true;
+    programs.fuzzel.enable = true;
+
+    services.ssh-agent.enable = true;
+
     programs.wezterm = {
       enable = true;
       extraConfig = ''

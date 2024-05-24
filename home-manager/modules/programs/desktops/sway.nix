@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  preferences,
   ...
 }:
 let
@@ -27,9 +26,7 @@ in
       '';
       config = {
         terminal = "${pkgs.foot}/bin/footclient";
-        startup = map toCommand [
-          "${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath}"
-        ];
+        startup = map toCommand [ ];
         workspaceLayout = "tabbed";
         gaps = {
           inner = 5;

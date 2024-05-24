@@ -3,7 +3,6 @@
   pkgs,
   lib,
   inputs,
-  preferences,
   ...
 }:
 let
@@ -26,7 +25,7 @@ in
       localBinInPath = true;
       systemPackages = with pkgs; [
         (writeScriptBin "sudo" ''
-          ${pkgs.systemd}/bin/systemd-run --uid=0 --gid=0 -d -E TERM=$TERM -E PATH=$PATH -t -q -P -G $@
+          ${pkgs.systemd}/bin/systemd-run --uid=0 --gid=0 --same-dir -E TERM=$TERM -E PATH=$PATH --pty --quiet --pipe --collect $@
         '')
       ];
       defaultPackages = pkgs.lib.mkForce (
@@ -39,7 +38,7 @@ in
           mkpasswd
           util-linux
           stdenv.cc.libc
-          bashInteractive
+          zsh
           util-linux
           netcat
           uutils-coreutils-noprefix
@@ -53,15 +52,23 @@ in
     users = {
       defaultUserShell = pkgs.nushellFull;
       mutableUsers = false;
-      users.${preferences.username} = lib.mkIf cfg.tulili.enable {
+      users.root = {
+        hashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
+      };
+      users.tulili = lib.mkIf cfg.tulili.enable {
+        group = "tulili";
         isNormalUser = true;
         hashedPassword = "$6$iea8d6J3Sppre8Sy$.Oyx.gAZfZjIe3t7f98boN8lyQMoTdqyVT/WheOdLrMuJFH7ptgoUQvdUJxYLFZBoUYlyH6cEhssuBt2BUX1E1";
         extraGroups = [
           "wheel"
           "libvirtd"
           "qemu"
+          "wireshark"
         ];
         useDefaultShell = true;
+      };
+      groups.tulili = {
+        gid = 1000;
       };
     };
 
@@ -69,20 +76,17 @@ in
 
     home-manager = {
       extraSpecialArgs = {
-        inherit preferences;
         inherit inputs;
       };
       useGlobalPkgs = true;
       users = {
         tulili = _: {
-          imports =
-            with inputs;
-            [
-              plasma-manager.homeManagerModules.plasma-manager
-              persist-retro.nixosModules.home-manager.persist-retro
-              impermanence.nixosModules.home-manager.impermanence
-            ]
-            ++ [ ../../../home-manager/configurations/main-nixos.nix ];
+          imports = with inputs; [
+            plasma-manager.homeManagerModules.plasma-manager
+            persist-retro.nixosModules.home-manager.persist-retro
+            impermanence.nixosModules.home-manager.impermanence
+            ../../../home-manager/configurations/main-nixos.nix
+          ];
         };
       };
     };

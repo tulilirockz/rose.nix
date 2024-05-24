@@ -13,10 +13,10 @@ in
       description = "Extra Paths to be added to impermanence";
     };
     persistenceRoot = mkOption {
-      type = types.str;
-      default = "/nix/persist";
-      example = "/persist";
       description = "Place where persistent files are mounted to";
+      type = types.str;
+      default = "/persist";
+      example = "/nix/persist";
     };
   };
 

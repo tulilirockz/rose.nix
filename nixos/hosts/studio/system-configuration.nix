@@ -1,6 +1,6 @@
-{ pkgs, preferences, ... }:
+{ pkgs, ... }:
 {
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   networking.hostName = "studio";
 
   boot = {
@@ -13,9 +13,9 @@
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  
+
   i18n.defaultLocale = "en_US.UTF-8";
-  
+
   rose = {
     hardware = {
       enable = true;
@@ -36,7 +36,7 @@
       gaming = {
         enable = true;
         steam.enable = true;
-        others.enable = false;
+        others.enable = true;
       };
       gnome.enable = true;
     };
@@ -44,16 +44,21 @@
       impermanence.enable = true;
       nixos = {
         enable = true;
-        autoUpgrade.enable = true;
+        autoUpgrade.enable = false;
       };
       unfree.enable = true;
       users = {
         enable = true;
         tulili.enable = true;
       };
+      theme = {
+        enable = true;
+        polarity = "dark";
+        homeManager.enable = true;
+      };
     };
     services = {
-      desktopManager.${preferences.desktop}.enable = true;
+      desktopManager.niri.enable = true;
       rclone = {
         enable = true;
         onedrive.enable = true;

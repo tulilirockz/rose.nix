@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  preferences,
   ...
 }:
 let
@@ -14,15 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     rose.programs.desktops.wm.enable = true;
 
-    xdg.configFile = {
-      "niri/autostart".executable = true;
-      "niri/autostart".text = ''
-        ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-        ${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket &
-      '';
-    };
-
-    programs.niri.config =  ''
+    programs.niri.config = ''
       // This config is in the KDL format: https://kdl.dev
       window-rule {
           match app-id=r#"^org\.wezfurlong\.wezterm$"#
@@ -83,7 +74,6 @@ in
       output "HDMI-A-1" {
           transform "normal" // normal, 90, 180, 270
           mode "1920x1080" // niri msg outputs
-          variable-refresh-rate
       }
 
       layout {
@@ -101,7 +91,6 @@ in
           gaps 10 // px
           center-focused-column "never"
       }
-      spawn-at-startup "${config.xdg.configFile."niri/autostart".target}"
       prefer-no-csd
       screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
       hotkey-overlay {
@@ -114,6 +103,7 @@ in
           Mod+Q { spawn "${lib.getExe pkgs.wezterm}"; }
           Mod+F { spawn "${lib.getExe config.rose.programs.browsers.mainBrowser}"; }
           Mod+R { spawn "${lib.getExe pkgs.fuzzel}"; }
+          Mod+D { spawn "${lib.getExe pkgs.wezterm}" "start" "${pkgs.peaclock}/bin/peaclock"; }
           Mod+E { spawn "${lib.getExe pkgs.gnome.nautilus}"; }
           XF86AudioRaiseVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
           XF86AudioLowerVolume { spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }

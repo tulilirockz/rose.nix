@@ -35,7 +35,7 @@
     nodev."/" = {
       fsType = "tmpfs";
       mountOptions = [
-        "size=2G"
+        "size=4G"
         "defaults"
         "mode=755"
       ];
@@ -55,7 +55,7 @@
                     "subvol=persist"
                     "noatime"
                   ];
-                  mountpoint = "/nix/persist";
+                  mountpoint = "/persist";
                 };
 
                 "/nix" = {

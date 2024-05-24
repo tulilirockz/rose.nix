@@ -21,8 +21,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    system.autoUpgrade = lib.mkIf cfg.autoUpgrade.enable {
-      enable = true;
+    systemd.oomd.enableUserSlices = true;
+
+    services.automatic-timezoned.enable = true;
+
+    system.autoUpgrade = {
+      enable = cfg.autoUpgrade.enable;
       dates = "12:00";
       flake = inputs.self.outPath;
       flags = [
@@ -35,7 +39,7 @@ in
 
     nix = {
       gc = {
-        automatic = true;
+        automatic = cfg.autoUpgrade.enable;
         persistent = true;
         dates = "daily";
         options = "--delete-older-than 2d";

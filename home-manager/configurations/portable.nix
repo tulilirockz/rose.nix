@@ -1,11 +1,11 @@
-{ preferences, ... }:
+{ ... }:
 {
   imports = [ ../modules ];
 
-  home = {
-    username = preferences.username;
-    homeDirectory = "/home/${preferences.username}";
-    stateVersion = "24.05";
+  home = rec {
+    username = "tulili";
+    homeDirectory = "/home/${username}";
+    stateVersion = "24.11";
   };
 
   programs = {

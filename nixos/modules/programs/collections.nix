@@ -71,7 +71,6 @@ in
         ++ (optionals cfg.gnome.enable (
           with gnome;
           [
-            gnome-tweaks
             dconf-editor
             nautilus
             totem
@@ -85,29 +84,12 @@ in
             dconf-editor
           ]
           ++ [
-            shortwave
-            gitg
-            fragments
             gnome-solanum
             gradience
-            impression
-            amberol
-            baobab
-            blanket
-            snapshot
-            loupe
-            gnome-firmware
-            gnome-podcasts
-            newsflash
-            folio
-            rnote
-            drawing
-            tuba
           ]
         ))
         ++ (optionals cfg.wm.enable [
           wlay
-          blueman
           mpv
           zathura
           wl-clipboard
@@ -128,6 +110,21 @@ in
           localsend
           thunderbird
           mpv
+
+          shortwave
+          #fragments
+          impression
+          amberol
+          baobab
+          blanket
+          snapshot
+          loupe
+          transmission
+          gnome-firmware
+          gnome-podcasts
+          newsflash
+          folio
+          tuba
         ])
         ++ (optionals cfg.cosmic.enable [
           cosmic-files

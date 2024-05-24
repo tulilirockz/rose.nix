@@ -8,12 +8,12 @@ let
   cfg = config.rose.networking;
   networkConfig = {
     DHCP = "yes";
-    DNSSEC = "yes";
+    DNSSEC = "no";
     DNSOverTLS = "yes";
     DNS = [
+      "1.1.1.3"
+      "1.1.1.2"
       "1.1.1.1"
-      "1.0.0.1"
-      "10.128.0.15"
     ];
   };
 in
@@ -36,18 +36,22 @@ in
                   description = "Extra ports open in firewall";
                   default = [ ];
                   example = [
-                    22
-                    2222
+                    51413 # Transmission
+                    24800
+                    # Input Leap
                   ];
                 };
 
                 tcp = mkOption {
                   type = types.listOf types.port;
                   description = "Extra ports open in firewall";
-                  default = [ ];
+                  default = [
+
+                  ];
                   example = [
-                    22
-                    2222
+                    51413 # Transmission
+                    24800
+                    # Input Leap
                   ];
                 };
               };
@@ -90,69 +94,62 @@ in
     };
   };
 
-  config =
-    with lib;
-    mkIf cfg.enable {
-      services.tailscale = mkIf cfg.tailscale.enable {
-        enable = true;
-        useRoutingFeatures = "client";
-      };
+  config = lib.mkIf cfg.enable {
+    services.tailscale = {
+      enable = cfg.tailscale.enable;
+      useRoutingFeatures = "client";
+    };
 
-      systemd.network = {
-        enable = !cfg.networkManager.enable;
-        networks = {
-          # "40-wired" = {
-          #   enable = true;
-          #   matchConfig.Name = "en*";
-          #   inherit networkConfig;
-          #   dhcpV4Config.RouteMetric = 1024;
-          # };
-          "40-wireless" = {
-            enable = true;
-            matchConfig.Name = "wl*";
-            inherit networkConfig;
-            dhcpV4Config.RouteMetric = 2048;
-          };
+    systemd.network = {
+      enable = !cfg.networkManager.enable;
+      networks = {
+        # "40-wired" = {
+        #   enable = true;
+        #   matchConfig.Name = "en*";
+        #   inherit networkConfig;
+        #   dhcpV4Config.RouteMetric = 1024;
+        # };
+        "40-wireless" = {
+          enable = true;
+          matchConfig.Name = "wl*";
+          inherit networkConfig;
+          dhcpV4Config.RouteMetric = 2048;
         };
-      };
-
-      services.resolved = {
-        enable = true;
-        dnssec = "true";
-        dnsovertls = "true";
-      };
-
-      networking.useNetworkd = !cfg.networkManager.enable;
-      networking.useDHCP = cfg.networkManager.enable;
-
-      networking = {
-        networkmanager.enable = cfg.networkManager.enable;
-        networkmanager.wifi.backend = "iwd";
-        wireless.iwd.enable = cfg.wireless.enable;
-        wireless.iwd.settings = mkIf cfg.wireless.enable {
-          Network = {
-            EnableIPV6 = true;
-          };
-          Settings = {
-            AutoConnect = true;
-          };
-        };
-        nftables.enable = true;
-        firewall = {
-          enable = cfg.firewall.enable;
-          allowedUDPPorts = [
-            51413 # Transmission
-            24800 # Input Leap
-          ] ++ cfg.firewall.extraPorts.udp;
-          allowedTCPPorts = [
-            51413 # Transmission
-            24800 # Input Leap
-          ] ++ cfg.firewall.extraPorts.tcp;
-          extraInputRules = ''
-            ip saddr 192.168.0.0/24 accept
-          '';
-        };
-        extraHosts = lib.mkIf (cfg.hosts.enable) (builtins.readFile inputs.unified-hosts-strict.outPath);
       };
     };
+
+    services.resolved = {
+      enable = true;
+      dnssec = "false";
+      dnsovertls = "true";
+      llmnr = "true";
+    };
+
+    networking.useNetworkd = !cfg.networkManager.enable;
+    networking.useDHCP = cfg.networkManager.enable;
+
+    networking = {
+      networkmanager.enable = cfg.networkManager.enable;
+      networkmanager.wifi.backend = "iwd";
+      wireless.iwd.enable = cfg.wireless.enable;
+      wireless.iwd.settings = lib.mkIf cfg.wireless.enable {
+        Network = {
+          EnableIPV6 = true;
+        };
+        Settings = {
+          AutoConnect = true;
+        };
+      };
+      nftables.enable = true;
+      firewall = {
+        enable = cfg.firewall.enable;
+        allowedUDPPorts = cfg.firewall.extraPorts.udp;
+        allowedTCPPorts = cfg.firewall.extraPorts.tcp;
+        extraInputRules = ''
+          ip saddr 192.168.0.0/24 accept
+        '';
+      };
+      extraHosts = lib.mkIf (cfg.hosts.enable) (builtins.readFile inputs.unified-hosts-strict.outPath);
+    };
+  };
 }

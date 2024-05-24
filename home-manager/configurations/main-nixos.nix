@@ -1,8 +1,4 @@
-{
-  preferences,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [ ../modules ];
 
@@ -28,7 +24,7 @@
         impermanence.enable = true;
         mainBrowser = pkgs.chromium;
       };
-      desktops.${preferences.desktop}.enable = true;
+      desktops.niri.enable = true;
     };
   };
 }

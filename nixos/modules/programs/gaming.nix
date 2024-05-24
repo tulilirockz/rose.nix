@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -26,23 +27,35 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    rose.system.unfree.extraPredicates = lib.mkIf cfg.steam.enable [
-      "steam"
-      "steam-original"
-      "steam-run"
-      "steam-tui"
-      "steamcmd"
-    ];
-    environment.systemPackages = with pkgs; [
-      bottles
-      heroic
-      steam-tui
-      steamcmd
-    ];
-    programs.steam = lib.mkIf cfg.steam.enable {
-      enable = true;
+    rose.system.unfree.extraPredicates =
+      (lib.lists.optionals cfg.steam.enable [
+        "steam"
+        "steam-original"
+        "steam-run"
+        "steam-tui"
+        "steamcmd"
+      ]);
+    environment.systemPackages =
+      with pkgs;
+      [ mangohud ]
+      ++ (lib.lists.optionals cfg.steam.enable (
+        with pkgs;
+        [
+          steam-tui
+          steamcmd
+        ]
+      ))
+      ++ (lib.lists.optionals cfg.others.enable (
+        with pkgs;
+        [
+          bottles
+          heroic
+          inputs.umu.packages.${pkgs.system}.umu
+        ]
+      ));
+    programs.steam = {
+      enable = cfg.steam.enable;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
-      gamescopeSession.enable = false;
     };
   };
 }

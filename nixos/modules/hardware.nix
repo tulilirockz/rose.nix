@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  preferences,
-  ...
-}:
+{ config, lib, ... }:
 let
   cfg = config.rose.hardware;
 in
@@ -22,8 +17,6 @@ in
   config = lib.mkIf cfg.enable {
     zramSwap.enable = true;
     zramSwap.memoryPercent = 75;
-
-    services.automatic-timezoned.enable = true;
 
     hardware = {
       bluetooth.enable = true;

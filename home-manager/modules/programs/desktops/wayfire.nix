@@ -2,14 +2,10 @@
   config,
   lib,
   pkgs,
-  preferences,
   ...
 }:
 let
   cfg = config.rose.programs.desktops.wayfire;
-  autoStartScript = pkgs.writeScriptBin "wf-autostart.sh" ''
-    ${lib.getExe pkgs.swaybg} -m fill -i ${preferences.theme.wallpaperPath} &
-  '';
 in
 {
   options.rose.programs.desktops.wayfire.enable = lib.mkEnableOption "Wayfire Compositor Configuration";
@@ -20,7 +16,7 @@ in
     xdg.configFile = {
       "wayfire.ini".text = ''
         [core]
-        plugins = animate autostart command vswitch simple-tile move zoom decorate
+        plugins = animate command vswitch simple-tile move zoom decorate
         close_top_view = <super> KEY_C
         preferred_decoration_mode = client
         vwidth = 3
@@ -71,9 +67,6 @@ in
         command_launcher = ${lib.getExe pkgs.fuzzel}
         command_files = ${lib.getExe pkgs.gnome.nautilus}
         command_logout = ${lib.getExe pkgs.wlogout}
-
-        [autostart]
-        shell = ${lib.getExe autoStartScript}
       '';
     };
   };

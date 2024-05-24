@@ -29,6 +29,14 @@
       flake = false;
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts";
     };
+    umu = {
+      url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,16 +47,6 @@
       ...
     }@inputs:
     let
-      preferences = {
-        theme = {
-          name = "windows-10";
-          type = "dark";
-          wallpaperPath = ./assets/amiga.png;
-        };
-        desktop = "niri";
-        username = "tulili";
-      };
-
       supportedSystems = [
         "x86_64-linux"
         "aarch64-darwin"
@@ -60,7 +58,7 @@
     in
     {
       nixosModules = rec {
-        default = rose; 
+        default = rose;
         rose = import ./nixos/modules;
       };
       homeManagerModules = rec {
@@ -76,7 +74,6 @@
 
             specialArgs = {
               inherit inputs;
-              inherit preferences;
             };
 
             modules =
@@ -87,6 +84,7 @@
                 disko.nixosModules.disko
                 persist-retro.nixosModules.persist-retro
                 impermanence.nixosModules.impermanence
+                stylix.nixosModules.stylix
               ]
               ++ [
                 (import ./nixos/generic/disko.nix { inherit device; })
@@ -101,7 +99,6 @@
 
             extraSpecialArgs = {
               inherit inputs;
-              inherit preferences;
             };
 
             modules =
@@ -110,6 +107,7 @@
                 plasma-manager.homeManagerModules.plasma-manager
                 impermanence.nixosModules.home-manager.impermanence
                 persist-retro.nixosModules.home-manager.persist-retro
+                stylix.homeManagerModules.stylix
               ]
               ++ [
                 ./home-manager/configurations/${configuration}.nix
@@ -123,7 +121,7 @@
           };
       };
 
-      nixosConfigurations = with inputs.self.lib ; {
+      nixosConfigurations = with inputs.self.lib; {
         studio = mkSystem "studio" "x86_64-linux" "/dev/disk/by-uuid/cc73375c-ac4f-4d7e-9db8-362d5b84a245";
         light = mkSystem "light" "x86_64-linux" "/dev/sda";
         minimal = mkSystem "minimal" "x86_64-linux" "/dev/sda";

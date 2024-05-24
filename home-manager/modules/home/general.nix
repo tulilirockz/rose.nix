@@ -1,9 +1,4 @@
-{
-  config,
-  preferences,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   cfg = config.rose.home.general;
 in
@@ -12,10 +7,10 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.home-manager.enable = true;
-    home = {
-      username = preferences.username;
-      homeDirectory = "/home/${preferences.username}";
-      stateVersion = "24.05";
+    home = rec {
+      username = "tulili";
+      homeDirectory = "/home/${username}";
+      stateVersion = "24.11";
 
       sessionVariables = rec {
         GNUPGHOME = "${XDG_DATA_HOME}/gnupg";

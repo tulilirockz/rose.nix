@@ -1,9 +1,4 @@
-{
-  preferences,
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   cfg = config.rose.home.impermanence;
 in
@@ -19,7 +14,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.persistence."/nix/persist/home/${preferences.username}" = {
+    home.persistence."/persist/home/tulili" = {
       allowOther = true;
       directories = [
         "Downloads"
